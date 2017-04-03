@@ -5,14 +5,15 @@
  */
 
 public class Canarinho extends Ave{
-	public Canarinho(int tamahoPasso, int alturaVoo){
-		super(alturaVoo, tamahoPasso);
-		this.tamanhoPasso = tamahoPasso;
+	public Canarinho(int tamanhoPasso, int alturaVoo){
+		super(tamanhoPasso, alturaVoo);
+		this.tamanhoPasso = tamanhoPasso;
 		this.alturaVoo = alturaVoo;
 	}
 
-	public String Cantar(){
-		return "cantata";
+	public String cantar(){
+		String cantando = this.produzirSom();
+		return  cantando + "PIU";
 	}
 }
 

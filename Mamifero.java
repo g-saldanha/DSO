@@ -7,14 +7,14 @@
  public abstract class Mamifero extends Animal {
 	 private int volumeSom;
 
-	 public Mamifero(int tamanhoPasso, int volumeSom){
+	 public Mamifero(int volumeSom, int tamanhoPasso){
 		super(tamanhoPasso);
 		this.volumeSom = volumeSom;
 	 }
 
 	 @Override
 	 public String produzirSom(){
-		 return "som";
+		 return "MAMIFERO: PRODUZ SOM: "+this.volumeSom;
 	 }
 
 	 public int getVolumeSom() {

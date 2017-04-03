@@ -21,13 +21,11 @@ public abstract class Animal {
 	}
 
 	public String mover(){
-		String mover = "Moveu"+this.tamanhoPasso;
+		String mover = "ANIMAL: DESLOCOU "+this.tamanhoPasso;
 		return mover;
 	}
 
-	public String produzirSom() {
-		return somProduzido =  ;
-	}
+	public abstract String produzirSom();
 }
 
 

@@ -7,7 +7,7 @@
 	public abstract class Ave extends Animal{
 		protected int alturaVoo;
 
-		public Ave(int alturaVoo, int tamanhoPasso){
+		public Ave(int tamanhoPasso, int alturaVoo){
 			super(tamanhoPasso);
 			this.alturaVoo = alturaVoo;
 			this.tamanhoPasso = tamanhoPasso;
@@ -27,13 +27,13 @@
 
 		@Override
 		public String mover(){
-			return "moveu-se";
+			return super.mover() + " VOANDO";
 		}
 
 		@Override
 		public String produzirSom() {
 
-			return "produziu Som";
+			return "AVE: PRODUZ SOM: ";
 		}
 
 	}
