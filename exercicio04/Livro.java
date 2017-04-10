@@ -8,7 +8,7 @@ public class Livro {
 	private String titulo;
 	private int ano;
 	private Editora editora;
-	private ArrayList<Autor> autores;
+	private List<Autor> autores = new ArrayList<>();
 
 	private ArrayList<Capitulo> capitulos = new ArrayList<>();
 
@@ -63,21 +63,34 @@ public class Livro {
 
 	public void incluirAutor(Autor autor){
 		//tratar igualdade
+		if(!autores.contains(autor)){
+			autores.add(autor);
+		}
 
 	}
 
 	public void excluirAutor(Autor autor){
 		//tratar null
+		if(autores.contains(autor)){
+			autores.remove(autor);
+		}
 
 	}
 
 	public void excluiCapitulo(String tituloCapitulo){
 		//tratar null
+		Capitulo capituloExcluir = findCapituloByTitulo(tituloCapitulo);
+		if (capituloExcluir != null) {
+			capitulos.remove(capituloExcluir);
+		}
 	}
 
 	public void incluiCapitulo(int numero, String tituloCapitulo) {
 		//tratar igualdade
-
+		Capitulo capituloIncluir = findCapituloByTitulo(tituloCapitulo);
+		if(capituloIncluir == null){
+			capitulos.add(new Capitulo(numero, tituloCapitulo));
+		}
 
 	}
 

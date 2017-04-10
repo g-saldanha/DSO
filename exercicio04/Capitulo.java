@@ -24,6 +24,7 @@ public class Capitulo {
 	public void setTitulo(String titulo){
 		this.titulo = titulo;
 	}
+	
 
 
 }
