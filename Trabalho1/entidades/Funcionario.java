@@ -4,30 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Funcionario {
-	private int id;
 	private int numeroMatricula;
 	private String nome;
 	private int dataNascimento;
 	private int telefone;
-	private String cargo;
-	private List<Veiculo> tiposDeVeiculo;
+	public enum Cargo{DIRETORIA, COMUM};
+	private ArrayList<Veiculo> tiposDeVeiculo;
+	private Cargo cargo;
 	
-	public Funcionario(int id, int numeroMatricula, String nome, int dataNascimento, int telefone, String cargo) {
-		this.id = id;
+	public Funcionario(int numeroMatricula, String nome, int dataNascimento, int telefone, Cargo cargo, ArrayList<Veiculo> carros) {
 		this.numeroMatricula = numeroMatricula;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.telefone = telefone;
 		this.cargo = cargo;
-		this.tiposDeVeiculo = new ArrayList<>();
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+		this.tiposDeVeiculo = carros;
 	}
 
 	public int getNumeroMatricula() {
@@ -62,11 +53,11 @@ public class Funcionario {
 		this.telefone = telefone;
 	}
 
-	public String getCargo() {
+	public Cargo getCargo() {
 		return cargo;
 	}
 
-	public void setCargo(String cargo) {
+	public void setCargo(Cargo cargo) {
 		this.cargo = cargo;
 	}
 

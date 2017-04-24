@@ -1,7 +1,6 @@
 package Trabalho1.entidades;
 
 public class Veiculo {
-	private int id;
 	private String placa;
 	private String modelo;
 	private String marca;
