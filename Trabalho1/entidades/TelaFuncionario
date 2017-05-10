@@ -187,12 +187,15 @@ public class TelaFuncionario {
                     this.exibeFuncionario(funcionarioAAlterarCargo);
                     System.out.println("digite 1 para cargo Estagiario, 2 para cargo Programador, 3 para cargo diretor");
                     int novoCargo = sc.nextInt();
-                    owner.alteraCargo(funcionarioAAlterarCargo, novoCargo);
+                    try {
+                        owner.alteraCargo(funcionarioAAlterarCargo, novoCargo);
+                    } catch (CadastroIncorretoException ex) {
+                        System.out.println(ex.getMessage());
+                      }
                 } else {
                     this.mensagemFuncionarioNaoEncontrado();
                 }
-                break;               
-            
+                break;                
         }
         
     }
