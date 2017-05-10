@@ -103,7 +103,7 @@ public class ControladorFuncionario {
          funcionario.setTelefone(telefone);
      }
      
-     public void alteraCargo(Funcionario funcionario, int digito) {
+     public void alteraCargo(Funcionario funcionario, int digito) throws CadastroIncorretoException {
          if(digito == 1) {
              funcionario.setCargo(ESTAGIARIO);
          }
@@ -113,6 +113,10 @@ public class ControladorFuncionario {
          if(digito == 3) {
              funcionario.setCargo(DIRETOR);
          }
+	 
+	 if(digito > 3) {
+             throw new CadastroIncorretoException("cargo nao existente!!") ;
+         }    
      }
      
 
