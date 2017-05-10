@@ -1,0 +1,235 @@
+package br.ine5605.ufsc.apresentacao;
+
+import Enum.Cargo;
+import br.ine5605.ufsc.apresentacao.Exception.CadastroIncorretoException;
+import br.ine5605.ufsc.controladores.ControladorFuncionario;
+import br.ufsc.ine5605.entidades.Funcionario;
+import java.util.Scanner;
+
+
+
+public class TelaFuncionario {
+    
+    private ControladorFuncionario owner;
+    private Scanner sc;
+    
+    public TelaFuncionario(ControladorFuncionario owner) {
+        this.owner = owner;
+        sc = new Scanner(System.in);
+    }
+    
+    public void exibeTelaFuncionario() {
+        int opcao = 0;
+        do {
+        System.out.println("\nBem vindo a tela do funcionario");
+        System.out.println("Digite 1 para cadastrar funcionario");
+        System.out.println("Digite 2 para alterar funcionario");
+        System.out.println("Digite 3 para excluir funcionario");
+        System.out.println("Digite 4 para listar funcionarios cadastrados");
+        System.out.println("Digite 0 para retornar ao menu principal");
+        opcao = sc.nextInt();
+        trataOpcao(opcao);
+        }while(opcao != 0);
+    }
+
+    public void trataOpcao(int opcao) {
+        switch(opcao) {
+            case 1:
+                telaCadastroFuncionario();
+                break;
+            case 2:
+                telaAlteraFuncionario();  
+                break;
+            case 3:
+                telaRemoveFuncionario();
+                break;
+            case 4: 
+                owner.exibeFuncionariosCadastrados();
+        }
+    }
+
+    public void telaCadastroFuncionario() {
+        System.out.println("\nBem vindo a tela de cadastro de funcionario");      
+        sc.nextLine();
+        
+        System.out.println("\nInsira o nome do funcionario");
+        String nome = sc.nextLine();
+        
+        System.out.println("\nInsira o numero de matricula do funcionario");
+        int matricula = sc.nextInt();
+        sc.nextLine();
+        
+        System.out.println("\nInsira a data de nascimento do funcionario");
+        int dataNascimento = sc.nextInt();
+        sc.nextLine();
+        
+        System.out.println("\nInsira o telefone do funcionario");
+        int telefone = sc.nextInt();
+        sc.nextLine();
+        
+        System.out.println("\nCARGO: digite 1 para estagiario, 2 para programador, 3 para diretor");
+        int digito = sc.nextInt();
+        switch(digito) {
+            case 1:
+                 try {
+                    owner.cadastraFuncionario(matricula, nome, dataNascimento, telefone, Cargo.ESTAGIARIO);
+                } catch (CadastroIncorretoException ex) {
+              System.out.println(ex.getMessage());
+                  }
+                 break;
+            case 2:
+                 try {
+                    owner.cadastraFuncionario(matricula, nome, dataNascimento, telefone, Cargo.PROGRAMADOR);
+                 } catch (CadastroIncorretoException ex) {
+              System.out.println(ex.getMessage());
+                   }
+                 break;
+            case 3:
+                 try {
+                    owner.cadastraFuncionario(matricula, nome, dataNascimento, telefone, Cargo.DIRETOR);
+                 } catch (CadastroIncorretoException ex) {
+              System.out.println(ex.getMessage());
+                   }
+                 break;
+        }
+
+        if(digito > 3) {
+        System.out.println("Cargo inexistente");
+        }
+    }
+
+    public void telaAlteraFuncionario() {
+        if(owner.haFuncionarios() ==  false){
+            return;
+        }
+        
+        System.out.println("\nBem vindo a tela de alteracao de funcionario");
+        System.out.println("Digite 1 para alterar o numero de matricula do funcionario");
+        System.out.println("Digite 2 para alterar o nome do funcionario");
+        System.out.println("Digite 3 para alterar a data de nascimento do funcionario");
+        System.out.println("Digite 4 para alterar o telefone do funcionario");
+        System.out.println("Digite 5 para alterar o cargo do funcionario");
+        System.out.println("Digite 6 para voltar");
+        sc.nextLine();
+        this.trataOpcaoAlteracao(sc.nextInt());
+    }
+    
+    public void trataOpcaoAlteracao(int opcao) {
+        
+        switch(opcao) {
+            case 1:
+                System.out.println("insira a matricula do funcionario a ser alterado");
+                int matricula = sc.nextInt();
+                sc.nextLine();
+                Funcionario funcionarioAAlterar = owner.getFuncionario(matricula);
+                if(funcionarioAAlterar != null) {
+                    System.out.println("funcionario escolhido para alteracao: ");
+                    this.exibeFuncionario(funcionarioAAlterar);
+                    System.out.println("Digite a nova matricula ");
+                    int novaMatricula = sc.nextInt();
+                    owner.alteraMatricula(matricula, novaMatricula);
+                } else {
+                    this.mensagemFuncionarioNaoEncontrado();
+                }
+                break;
+            case 2:
+                System.out.println("insira a matricula do funcionario a ser alterado");
+                int matricula2 = sc.nextInt();
+                sc.nextLine();
+                Funcionario funcionarioAAlterarNome = owner.getFuncionario(matricula2);
+                if (funcionarioAAlterarNome != null) {
+                    System.out.println("funcionario escolhido para alteracao: ");
+                    this.exibeFuncionario(funcionarioAAlterarNome);
+                    System.out.println("digite o novo nome");
+                    String novoNome = sc.nextLine();
+                    owner.alteraNome(funcionarioAAlterarNome, novoNome);
+                } else {
+                    this.mensagemFuncionarioNaoEncontrado();
+                }
+                break;
+            case 3:
+                System.out.println("insira a matricula do funcionario a ser alterado");
+                int matricula3 = sc.nextInt();
+                sc.nextLine();
+                Funcionario funcionarioAAlterarData = owner.getFuncionario(matricula3);
+                if (funcionarioAAlterarData != null) {
+                    System.out.println("funcionario escolhido para alteracao: ");
+                    this.exibeFuncionario(funcionarioAAlterarData);
+                    System.out.println("digite a nova data");
+                    int novaData = sc.nextInt();
+                    owner.alteraData(funcionarioAAlterarData, novaData);
+                } else {
+                    this.mensagemFuncionarioNaoEncontrado();
+                }
+                break;
+            case 4:
+                System.out.println("insira a matricula do funcionario a ser alterado");
+                int matricula4 = sc.nextInt();
+                sc.nextLine();
+                Funcionario funcionarioAAlterarTelefone = owner.getFuncionario(matricula4);
+                if(funcionarioAAlterarTelefone != null) {
+                    System.out.println("funcionario escolhido para alteracao: ");
+                    this.exibeFuncionario(funcionarioAAlterarTelefone);
+                    System.out.println("digite o novo telefone");
+                    int novoTelefone = sc.nextInt();
+                    owner.alteraTelefone(funcionarioAAlterarTelefone, novoTelefone);
+                } else {
+                    this.mensagemFuncionarioNaoEncontrado();
+                }
+                break;
+            case 5:
+                System.out.println("insira a matricula do funcionario a ser alterado");
+                int matricula5 = sc.nextInt();
+                sc.nextLine();
+                Funcionario funcionarioAAlterarCargo = owner.getFuncionario(matricula5);
+                if (funcionarioAAlterarCargo != null) {
+                    System.out.println("funcionario escolhido para alteracao: ");
+                    this.exibeFuncionario(funcionarioAAlterarCargo);
+                    System.out.println("digite 1 para cargo Estagiario, 2 para cargo Programador, 3 para cargo diretor");
+                    int novoCargo = sc.nextInt();
+                    owner.alteraCargo(funcionarioAAlterarCargo, novoCargo);
+                } else {
+                    this.mensagemFuncionarioNaoEncontrado();
+                }
+                break;               
+            
+        }
+        
+    }
+
+
+    public void telaRemoveFuncionario() {
+        if(owner.haFuncionarios() == false) {
+            return;
+        }    
+        System.out.println("\nBem vindo a tela de remocao de funcionario");
+        System.out.println("\nInsira a matricula do funcionario a ser removido");
+        int matricula = sc.nextInt();
+        Funcionario funcionarioARemover = owner.getFuncionario(matricula);
+        if(funcionarioARemover != null) {
+            owner.excluiFuncionario(funcionarioARemover);
+        } else {
+            System.out.println("Erro ao excluir funcionario");
+        }
+       
+        
+    }
+    
+    
+    
+    public void mensagemNaoHaFuncionarios() {
+        System.out.println("Nao ha funcionarios cadastrados\n");
+    }
+    public void mensagemFuncionarioNaoEncontrado() {
+        System.out.println("funcionario nao encontrado\n");
+    }
+    
+     public void exibeFuncionario(Funcionario funcionario) {
+        System.out.println("Nome do funcionario: " + funcionario.getNome() + " \nNumero de matricula: " + funcionario.getNumeroMatricula() + "\nData de nascimento: " + funcionario.getDataNascimento() +"\ntelefone: " + funcionario.getTelefone() +"\ncargo: " + funcionario.getCargo());
+    }
+
+ 
+    
+    
+    
+}
