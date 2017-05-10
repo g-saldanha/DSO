@@ -1,0 +1,17 @@
+package br.ufsc.ine5605.trabalho1;
+
+import br.ine5605.ufsc.controladores.ControladorPrincipal;
+
+
+public class Trabalho {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+        ControladorPrincipal controladorPrincipal = ControladorPrincipal.getIntance();        
+        controladorPrincipal.inicia();
+    }
+    
+}
