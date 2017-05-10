@@ -1,0 +1,28 @@
+package Enum;
+
+public enum Cargo {
+    
+    ESTAGIARIO(1),
+    PROGRAMADOR(2),
+    DIRETOR(3);
+    
+    
+    private int codigo;
+    
+    Cargo(int codigo) {
+        this.codigo = codigo;
+    }
+    
+    public int getCodigo() {
+        return this.codigo;
+    }
+    
+    public static Cargo getCargo(int codigo){
+        for(Cargo cargo : Cargo.values()){
+            if(codigo == cargo.codigo)
+                return cargo;
+        }
+    return null;
+    }
+    
+}
