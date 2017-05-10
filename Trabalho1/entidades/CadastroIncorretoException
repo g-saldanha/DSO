@@ -1,0 +1,9 @@
+package br.ine5605.ufsc.apresentacao.Exception;
+
+
+public class CadastroIncorretoException extends Exception {
+    
+    public CadastroIncorretoException(String erro){
+        super(erro);
+    }
+}
