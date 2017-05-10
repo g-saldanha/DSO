@@ -210,12 +210,13 @@ public class TelaFuncionario {
         int matricula = sc.nextInt();
         Funcionario funcionarioARemover = owner.getFuncionario(matricula);
         if(funcionarioARemover != null) {
+            this.exibeFuncionario(funcionarioARemover);
             owner.excluiFuncionario(funcionarioARemover);
+            System.out.println("funcionario removido com sucesso");
         } else {
-            System.out.println("Erro ao excluir funcionario");
+            System.out.println("funcionario nao existente");
         }
-       
-        
+ 
     }
     
     
