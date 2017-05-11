@@ -5,37 +5,42 @@
  */
 package br.ine5605.ufsc.controladores;
 
+import java.util.ArrayList;
+
+import br.ine5605.ufsc.apresentacao.TelaFuncionario;
 import br.ine5605.ufsc.apresentacao.Exception.CadastroIncorretoException;
 import br.ufsc.ine5605.entidades.Funcionario;
-import java.util.ArrayList;
-import br.ine5605.ufsc.apresentacao.TelaFuncionario;
+import br.ufsc.ine5605.entidades.Funcionario.Cargo;
+import br.ufsc.ine5605.entidades.Veiculo;
 /**
  *
  * @author Caio
  */
 public class ControladorFuncionario {
     
-    private final ControladorPrincipal owner;
     private TelaFuncionario telaFuncionario;
     private ArrayList<Funcionario> funcionarios;
+    private static ControladorFuncionario instance;
     
-    
-    public ControladorFuncionario(ControladorPrincipal owner) {
-        this.owner = owner;
-        this.telaFuncionario = new TelaFuncionario(this);
-        this.funcionarios = new ArrayList<>();
+    private ControladorFuncionario (){
+    	this.funcionarios = new ArrayList<>();
+    	this.telaFuncionario = new TelaFuncionario(this);
     }
     
-    public void cadastraFuncionario(int numeroMatricula, String nome, int dataNascimento, int telefone, String cargo) throws CadastroIncorretoException {
+    public static ControladorFuncionario getInstance(){
+        if(instance == null)
+            instance = new ControladorFuncionario();
+        
+        return instance;
+    }
+    
+    public void cadastraFuncionario(int numeroMatricula, String nome, int dataNascimento, int telefone, Cargo cargo, ArrayList<Veiculo> tiposDeVeiculo) throws CadastroIncorretoException {
         
         verificaMatricula(numeroMatricula);
         
-        
-        Funcionario novoFuncionario = new Funcionario(numeroMatricula, nome, dataNascimento, telefone, cargo);
+        Funcionario novoFuncionario = new Funcionario(numeroMatricula, nome, dataNascimento, telefone, cargo, tiposDeVeiculo);
 
             funcionarios.add(novoFuncionario);
-        
-        
     }
     
     public void excluiFuncionario(Funcionario funcionario) {
@@ -82,6 +87,12 @@ public class ControladorFuncionario {
             }
         }
     }
+    
+     
+
+	public Veiculo pegaVeiculo(String opt) {
+		return ControladorPrincipal.getInstance().pegaVeiculo(opt);
+	}
 }
     
     

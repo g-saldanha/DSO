@@ -9,12 +9,13 @@ package br.ufsc.ine5605.entidades;
  *
  * @author Caio
  */
-public abstract class Veiculo {
+public class Veiculo {
 	private String placa;
 	private String modelo;
 	private String marca;
 	private int ano;
 	private int km;
+	protected int tipo;
 	
 	public Veiculo(String placa, String modelo, String marca, int ano, int km){
 		this.placa = placa;
@@ -83,9 +84,15 @@ public abstract class Veiculo {
 	public void setKm(int km) {
 		this.km = km;
 	}
+	
+	public int getTipo(){
+		return tipo;
+	}
 
 
 
-	abstract Veiculo pegaVeiculo(String placa);
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
 	
 }

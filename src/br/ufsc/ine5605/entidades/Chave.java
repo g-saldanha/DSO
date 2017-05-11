@@ -10,22 +10,15 @@ package br.ufsc.ine5605.entidades;
  * @author 08801473931
  */
 public class Chave {
-    private int id;
     private String placa;
 	private boolean isAlugada;
 	
 	
 	public Chave(String placa) {
-		this.id = 1903912; //fazer um gerador de id
 		this.placa = placa;
 		this.isAlugada = false;
 	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	public String getPlaca() {
 		return placa;
 	}

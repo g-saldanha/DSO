@@ -9,16 +9,22 @@ import br.ufsc.ine5605.entidades.Moto;
 import br.ufsc.ine5605.entidades.Veiculo;
 
 public class ControladorVeiculos {
-	public final ControladorPrincipal owner;
+	private static ControladorVeiculos instance;
 	private ArrayList<Veiculo> veiculos;
 	private TelaVeiculo telaVeiculo;
 	
 	
-	public ControladorVeiculos (ControladorPrincipal owner){
-		this.owner = owner;
+	public ControladorVeiculos (){
 		this.veiculos = new ArrayList<>();
 		this.telaVeiculo = new TelaVeiculo(this);
 	}
+	
+	public static ControladorVeiculos getInstance(){
+        if(instance == null)
+            instance = new ControladorVeiculos();
+        
+        return instance;
+    }
 	
 	public void cadastraVeiculo(String placa, String modelo, String marca, int ano, int km, int tipo){
 		if(!checkExists(placa)){
@@ -31,13 +37,14 @@ public class ControladorVeiculos {
 				novo = new Caminhonete(placa, modelo, marca, ano, km);
 			}
 			veiculos.add(novo);
-			ControladorChave.adicionarChave(placa);
+			ControladorPrincipal.getInstance().adicionarChave(placa);
 		}
 	}
 	
 	public void removeVeiculo(String placa){
 		if(checkExists(placa)){
 			veiculos.remove(pegaVeiculo(placa));
+			ControladorPrincipal.getInstance().deletarChave(placa);
 		}
 	}
 	
@@ -57,5 +64,16 @@ public class ControladorVeiculos {
 			}
 		}
 		return false;
+	}
+	
+	public void exibirVeiculos(){
+		for(Veiculo v : this.veiculos){
+			telaVeiculo.exibeVeiculos(v);
+		}
+	}
+
+	public void exibeTelaVeiculos() {
+		telaVeiculo.exibeTelaVeiculo();
+		
 	}
 }

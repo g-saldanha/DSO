@@ -5,11 +5,16 @@
  */
 package br.ine5605.ufsc.apresentacao;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import br.ine5605.ufsc.apresentacao.Exception.CadastroIncorretoException;
 import br.ine5605.ufsc.controladores.ControladorFuncionario;
 import br.ufsc.ine5605.entidades.Funcionario;
+import br.ufsc.ine5605.entidades.Funcionario.Cargo;
+import br.ufsc.ine5605.entidades.Veiculo;
 
 /**
  *
@@ -61,9 +66,8 @@ public class TelaFuncionario {
     }
 
     public void telaCadastroFuncionario() throws CadastroIncorretoException{
+    	ArrayList<Veiculo> tiposDeVeiculo = new ArrayList<>();
         System.out.println("\nBem vindo a tela de cadastro de funcionario");      
-        sc.nextLine();
-        
         System.out.println("\nInsira o nome do funcionario");
         String nome = sc.nextLine();
         
@@ -80,9 +84,31 @@ public class TelaFuncionario {
         sc.nextLine();
         
         System.out.println("\nInsira o cargo do funcionario");
-        String cargo = sc.nextLine();
+        System.out.println("1.Diretoria");
+        System.out.println("2.Comum");
+        int selecaoCargo = sc.nextInt();
+        Cargo cargo = Cargo.COMUM;
+        if (selecaoCargo == 1) {
+			cargo = Cargo.DIRETORIA;
+		} 
+        String opt = "";
+
         
-        owner.cadastraFuncionario(matricula, nome, dataNascimento, telefone, cargo);
+        while (!opt.equals("N")) {
+        	System.out.println("Quer adicionar um veículo que o funcionário pode usar?");
+            System.out.println("Digite 'S' para Sim");
+            System.out.println("Digite 'N' para Não");
+        	System.out.println("Digite a placa do veículo que o funcionário terá acesso");
+        	opt = sc.next();
+        	Veiculo v = owner.pegaVeiculo(opt);
+        	if(v != null) { 
+        		tiposDeVeiculo.add(v);
+        	} else {
+        		System.out.println("Veículo Inexistente");
+        	}
+		}
+        
+        owner.cadastraFuncionario(matricula, nome, dataNascimento, telefone, cargo, tiposDeVeiculo);
     }
 
     public void telaAlteraFuncionario() {
@@ -133,7 +159,4 @@ public class TelaFuncionario {
         }
         
     }
-    
-    
-    
 }

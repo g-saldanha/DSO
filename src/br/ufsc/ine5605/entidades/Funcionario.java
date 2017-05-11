@@ -17,16 +17,18 @@ public class Funcionario {
  	private String nome;
  	private int dataNascimento;
  	private int telefone;
- 	private enum cargo{DIRETORIA, COMUM};
+ 	public enum Cargo{DIRETORIA, COMUM};
+ 	Cargo cargo;
  	private ArrayList<Veiculo> tiposDeVeiculo;
+ 	private Chave chave;
  	
- 	public Funcionario(int numeroMatricula, String nome, int dataNascimento, int telefone, String cargo) {	
+ 	public Funcionario(int numeroMatricula, String nome, int dataNascimento, int telefone, Cargo cargo, ArrayList<Veiculo> tiposDeVeiculo) {	
  		this.numeroMatricula = numeroMatricula;
  		this.nome = nome;
  		this.dataNascimento = dataNascimento;
  		this.telefone = telefone;
  		this.cargo = cargo;
- 		this.tiposDeVeiculo = new ArrayList<>();
+ 		this.tiposDeVeiculo = tiposDeVeiculo;
 	}
 
  
@@ -62,11 +64,11 @@ public class Funcionario {
  		this.telefone = telefone;
  	}
  
- 	public String getCargo() {
+ 	public Cargo getCargo() {
  		return cargo;
  	}
  
- 	public void setCargo(String cargo) {
+ 	public void setCargo(Cargo cargo) {
  		this.cargo = cargo;
  	}
  
@@ -78,8 +80,29 @@ public class Funcionario {
  		this.tiposDeVeiculo = tiposDeVeiculo;
  	}
  	
- 	
- 	
- 
+ 	public Chave getChave() {
+		return chave;
+	}
+
+
+	public void setChave(Chave chave) {
+		this.chave = chave;
+	}
+
+
+	public void adicionarTipoDeVeiculo(Veiculo veiculo){
+ 		if(!tiposDeVeiculo.contains(veiculo)){
+ 			tiposDeVeiculo.add(veiculo);
+ 		}
+ 	}
+
+
+	public boolean checaPlacas(Chave c) {
+		for (Veiculo veiculo : tiposDeVeiculo) {
+			if(c.getPlaca().equals(veiculo.getPlaca()))
+				return true;
+		}
+		return false;
+	}
  }
 

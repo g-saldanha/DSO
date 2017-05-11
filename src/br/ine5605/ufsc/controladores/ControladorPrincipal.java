@@ -6,6 +6,8 @@
 package br.ine5605.ufsc.controladores;
 
 import br.ine5605.ufsc.apresentacao.TelaPrincipal;
+import br.ufsc.ine5605.entidades.Funcionario;
+import br.ufsc.ine5605.entidades.Veiculo;
 
 /**
  *
@@ -16,15 +18,19 @@ public class ControladorPrincipal {
     private static ControladorPrincipal instance;
     
     private ControladorFuncionario controladorFuncionario;
+    private ControladorChave CC;
+    private ControladorVeiculos CV;
     private TelaPrincipal telaPrincipal;
     
     
     private ControladorPrincipal() {
-        this.controladorFuncionario = new ControladorFuncionario(this);
+        this.controladorFuncionario = ControladorFuncionario.getInstance();
+        this.CV = ControladorVeiculos.getInstance();
+        this.CC = ControladorChave.getInstance();
         this.telaPrincipal = new TelaPrincipal(this);
     }
     
-     public static ControladorPrincipal getIntance(){
+     public static ControladorPrincipal getInstance(){
         if(instance == null)
             instance = new ControladorPrincipal();
         
@@ -35,8 +41,33 @@ public class ControladorPrincipal {
         telaPrincipal.exibeMenuPrincipal();
     }
     
-    public static void exibeTelaFuncionario() {
+    public void exibeTelaFuncionario() {
         controladorFuncionario.exibeTelaFuncionario();
     }
+    
+    public void exibeTelaVeiculos(){
+    	CV.exibeTelaVeiculos();
+    }
+    
+    public void adicionarChave(String Placa){
+    	CC.adicionarChave(Placa);
+    }
+    
+    public void deletarChave(String Placa){
+    	CC.deletarChave(Placa);
+    }
+    
+    public void exibeTelaChave(){
+    	CC.exibeTelaChave();
+    }
+
+	public Veiculo pegaVeiculo(String opt) {
+		return ControladorVeiculos.getInstance().pegaVeiculo(opt);
+	}
+
+	public Funcionario pegaFuncionario(int matricula) {
+		return ControladorFuncionario.getInstance().getFuncionario(matricula);
+	}
+    
     
 }

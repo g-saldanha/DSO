@@ -18,7 +18,7 @@ public class Claviculario {
      */
     public static void main(String[] args) {
         
-        ControladorPrincipal controladorPrincipal = ControladorPrincipal.getIntance();        
+        ControladorPrincipal controladorPrincipal = ControladorPrincipal.getInstance();        
         controladorPrincipal.inicia();
         
     }
