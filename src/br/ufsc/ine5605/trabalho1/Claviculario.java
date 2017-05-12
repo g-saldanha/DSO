@@ -5,6 +5,8 @@
  */
 package br.ufsc.ine5605.trabalho1;
 
+import java.io.IOException;
+
 import br.ine5605.ufsc.controladores.ControladorPrincipal;
 
 /**
@@ -16,10 +18,11 @@ public class Claviculario {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
         
         ControladorPrincipal controladorPrincipal = ControladorPrincipal.getInstance();        
         controladorPrincipal.inicia();
+        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         
     }
     

@@ -3,7 +3,9 @@ package br.ine5605.ufsc.controladores;
 import java.util.ArrayList;
 
 import br.ine5605.ufsc.apresentacao.TelaRegistro;
+import br.ufsc.ine5605.entidades.Funcionario;
 import br.ufsc.ine5605.entidades.Registro;
+import br.ufsc.ine5605.entidades.Veiculo;
 
 public class ControladorRegistro {
 	private ArrayList<Registro> registros;
@@ -26,12 +28,12 @@ public class ControladorRegistro {
 		for (Registro registro : registros) {
 			telaRegistro.exibeRegistros(registro);
 		}
-		telaRegistro.exibeTelaRegistro();
+		telaRegistro.exibirTela();
 	}
 
 	public void exibTelaRegistrosPorFiltro(int matricula) {
 		for (Registro registro : registros) {
-			if(matricula == registro.getMatricula()){
+			if(matricula == registro.getFuncionario().getNumeroMatricula()){
 				telaRegistro.exibeRegistros(registro);
 			}
 		}	
@@ -51,6 +53,11 @@ public class ControladorRegistro {
 				telaRegistro.exibeRegistros(registro);
 			}
 		}	
+	}
+
+	public void adicionarRegistro(int date, int mes, int hours, Funcionario f, Veiculo v, boolean b, String string) {
+		Registro r = new Registro(date, mes, hours, f, v, b, string);
+		registros.add(r);
 	}
 	
 	

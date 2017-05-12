@@ -12,68 +12,74 @@ public class ControladorVeiculos {
 	private static ControladorVeiculos instance;
 	private ArrayList<Veiculo> veiculos;
 	private TelaVeiculo telaVeiculo;
-	
-	
-	public ControladorVeiculos (){
+
+	public ControladorVeiculos() {
 		this.veiculos = new ArrayList<>();
 		this.telaVeiculo = new TelaVeiculo(this);
 	}
-	
-	public static ControladorVeiculos getInstance(){
-        if(instance == null)
-            instance = new ControladorVeiculos();
-        
-        return instance;
-    }
-	
-	public void cadastraVeiculo(String placa, String modelo, String marca, int ano, int km, int tipo){
-		if(!checkExists(placa)){
+
+	public static ControladorVeiculos getInstance() {
+		if (instance == null)
+			instance = new ControladorVeiculos();
+
+		return instance;
+	}
+
+	public void cadastraVeiculo(String placa, String modelo, String marca, int ano, int km, int tipo) {
+		if (!checkExists(placa)) {
 			Veiculo novo = null;
-			if(tipo == 1){
+			if (tipo == 1) {
 				novo = new Moto(placa, modelo, marca, ano, km);
-			} else if(tipo == 2){
+			} else if (tipo == 2) {
 				novo = new Carro(placa, modelo, marca, ano, km);
-			} else if(tipo == 3){
+			} else if (tipo == 3) {
 				novo = new Caminhonete(placa, modelo, marca, ano, km);
 			}
 			veiculos.add(novo);
 			ControladorPrincipal.getInstance().adicionarChave(placa);
+		} else {
+			System.out.println("Veiculo de mesma placa já existe");
 		}
 	}
-	
-	public void removeVeiculo(String placa){
-		if(checkExists(placa)){
-			veiculos.remove(pegaVeiculo(placa));
+
+	public void removeVeiculo(String placa) {
+		if (checkExists(placa)) {
+			Veiculo v = pegaVeiculo(placa);
+			if(ControladorPrincipal.getInstance().pegaChave(placa).isAlugada()){
+				System.out.println("Veiculo Alugado Não Pode Ser Excluido");
+				return;
+			}
+			veiculos.remove(v);
 			ControladorPrincipal.getInstance().deletarChave(placa);
 		}
 	}
-	
-	public Veiculo pegaVeiculo(String placa){
+
+	public Veiculo pegaVeiculo(String placa) {
 		for (Veiculo v : veiculos) {
-			if(checkExists(placa)){
+			if (checkExists(placa)) {
 				return v;
 			}
 		}
 		return null;
 	}
-	
-	public boolean checkExists(String placa){
+
+	public boolean checkExists(String placa) {
 		for (Veiculo v : veiculos) {
-			if(v.getPlaca().equals(placa)){
+			if (v.getPlaca().equals(placa)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	public void exibirVeiculos(){
-		for(Veiculo v : this.veiculos){
+
+	public void exibirVeiculos() {
+		for (Veiculo v : this.veiculos) {
 			telaVeiculo.exibeVeiculos(v);
 		}
 	}
 
 	public void exibeTelaVeiculos() {
-		telaVeiculo.exibeTelaVeiculo();
-		
+		telaVeiculo.exibirTela();
+
 	}
 }

@@ -7,15 +7,13 @@ package br.ine5605.ufsc.apresentacao;
 
 import java.util.Scanner;
 
-import br.ine5605.ufsc.controladores.ControladorChave;
 import br.ine5605.ufsc.controladores.ControladorPrincipal;
-import br.ufsc.ine5605.entidades.Registro;
 
 /**
  *
  * @author Caio
  */
-public class TelaPrincipal {
+public class TelaPrincipal implements Tela{
     private final ControladorPrincipal owner;
     private Scanner sc;
 
@@ -24,7 +22,7 @@ public class TelaPrincipal {
         this.sc = new Scanner(System.in);
     }
 
-    public void exibeMenuPrincipal() {
+    public void exibirTela() {
         int opcao = 0;        
         do{
             System.out.println("\nBem vindo ao sistema claviculario");;

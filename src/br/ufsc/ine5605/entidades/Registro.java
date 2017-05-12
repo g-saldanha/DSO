@@ -4,53 +4,58 @@ import java.util.Date;
 import java.util.Timer;
 
 public class Registro {
-	private Date data;
-	private Timer hora;
-	private int matricula;
+	private int data;
+	private int mes;
+	private int hora;
+	private Funcionario funcionario;
 	private Veiculo veiculo;
 	private boolean motivo;
 	private int kmAndados;
 	private String mensagem;
 	
-	public Registro(Date data, Timer hora, int matricula, Veiculo veiculo, boolean motivo, int kmAndados, String mensagem) {
-		super();
+	public Registro(int data, int mes, int hora, Funcionario funcionario, Veiculo veiculo, boolean motivo, String mensagem) {
+		
 		this.data = data;
+		this.mes = mes;
 		this.hora = hora;
-		this.matricula = matricula;
+		this.funcionario = funcionario;
 		this.veiculo = veiculo;
 		this.motivo = motivo;
-		this.kmAndados = kmAndados;
 		this.mensagem = mensagem;
 	}
 
 
-	public Date getData() {
+	public int getData() {
 		return data;
+	}
+	
+	public int getMes(){
+		return mes;
 	}
 
 
-	public void setData(Date data) {
+	public void setData(int data) {
 		this.data = data;
 	}
 
 
-	public Timer getHora() {
+	public int getHora() {
 		return hora;
 	}
 
 
-	public void setHora(Timer hora) {
+	public void setHora(int hora) {
 		this.hora = hora;
 	}
 
 
-	public int getMatricula() {
-		return matricula;
+	public Funcionario getFuncionario() {
+		return funcionario;
 	}
 
 
-	public void setMatricula(int matricula) {
-		this.matricula = matricula;
+	public void setFuncionario(Funcionario f) {
+		this.funcionario = f;
 	}
 
 

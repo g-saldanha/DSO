@@ -5,7 +5,10 @@
  */
 package br.ine5605.ufsc.controladores;
 
+import java.util.Calendar;
+
 import br.ine5605.ufsc.apresentacao.TelaPrincipal;
+import br.ufsc.ine5605.entidades.Chave;
 import br.ufsc.ine5605.entidades.Funcionario;
 import br.ufsc.ine5605.entidades.Veiculo;
 
@@ -40,7 +43,7 @@ public class ControladorPrincipal {
     }
     
     public void inicia(){
-        telaPrincipal.exibeMenuPrincipal();
+        telaPrincipal.exibirTela();
     }
     
     public void exibeTelaFuncionario() {
@@ -75,6 +78,23 @@ public class ControladorPrincipal {
 		CR.exibeTelaRegistro();
 		
 	}
+	
+	public Chave pegaChave(String placa){
+		return CC.getChave(placa);
+	}
+
+	public void adicionarRegistro(int date, int mes, int hours, Funcionario f, Veiculo v, boolean b, String string) {
+		ControladorRegistro.getInstance().adicionarRegistro(date, mes, hours, f, v,b, string);
+		
+	}
+
+	public void bloquearFuncionario(Funcionario f) {
+		ControladorFuncionario.bloquearFuncionario(f);
+		
+	}
+	
+	
+
     
     
 }
