@@ -1,17 +1,95 @@
-/*Se um funcionário tentar retirar a chave de um veículo, 
- * digitando sua matrícula e a placa e tiver seu acesso negado, 
- * deve ser emitida uma mensagem com o motivo da negação de acesso
- * (matrícula não existe, não possui acesso ao veículo, veículo indisponível ou acesso bloqueado) e 
- * deve ser armazenado um registro da data e hora da tentativa de acesso negada. Deve ser registrado: 
- * data e hora da tentativa de acesso, matrícula do funcionário, veículo e o motivo de negação de acesso.
- * Na devolução da chave do veículo, o funcionário digita a sua matrícula, a placa do veículo, 
- * quantos quilômetros andou e o sistema libera o compartimento para a chave do veículo e atualiza a quilometragem 
- * atual do veículo. O funcionário então coloca a chave do veículo no lugar e o sistema registra um evento de 
- * “Veículo Devolvido”.
- */
-
 package br.ufsc.ine5605.entidades;
 
-public class Registro {
+import java.util.Date;
+import java.util.Timer;
 
+public class Registro {
+	private Date data;
+	private Timer hora;
+	private int matricula;
+	private Veiculo veiculo;
+	private boolean motivo;
+	private int kmAndados;
+	private String mensagem;
+	
+	public Registro(Date data, Timer hora, int matricula, Veiculo veiculo, boolean motivo, int kmAndados, String mensagem) {
+		super();
+		this.data = data;
+		this.hora = hora;
+		this.matricula = matricula;
+		this.veiculo = veiculo;
+		this.motivo = motivo;
+		this.kmAndados = kmAndados;
+		this.mensagem = mensagem;
+	}
+
+
+	public Date getData() {
+		return data;
+	}
+
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+
+	public Timer getHora() {
+		return hora;
+	}
+
+
+	public void setHora(Timer hora) {
+		this.hora = hora;
+	}
+
+
+	public int getMatricula() {
+		return matricula;
+	}
+
+
+	public void setMatricula(int matricula) {
+		this.matricula = matricula;
+	}
+
+
+	public Veiculo getVeiculo() {
+		return veiculo;
+	}
+
+
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
+	}
+
+
+	public boolean getMotivo() {
+		return motivo;
+	}
+
+
+	public void setMotivo(boolean motivo) {
+		this.motivo = motivo;
+	}
+
+
+	public int getKmAndados() {
+		return kmAndados;
+	}
+
+
+	public void setKmAndados(int kmAndados) {
+		this.kmAndados = kmAndados;
+	}
+
+
+	public String getMensagem() {
+		return mensagem;
+	}
+
+
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
+	}
 }

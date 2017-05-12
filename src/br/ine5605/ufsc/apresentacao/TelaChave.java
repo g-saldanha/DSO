@@ -1,5 +1,6 @@
 package br.ine5605.ufsc.apresentacao;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import br.ine5605.ufsc.controladores.ControladorChave;
@@ -18,6 +19,7 @@ public class TelaChave {
 	
 	public void exibeTelaChave() {
 		do{
+			cls();
 			System.out.println("\n Bem Vindo ao Claviculário");
 			System.out.println("Digite 1 para Exibir Chaves");
 			System.out.println("Digite 2 para Pegar Chave");
@@ -29,6 +31,7 @@ public class TelaChave {
 	}
 	
 	public void tratadorOpcao(){
+		cls();
 		switch (this.opcao) {
 		case 1:
 			System.out.println("Lista de Chaves");
@@ -54,6 +57,7 @@ public class TelaChave {
 	private void exibeTelaPegar() {
 		int tentativas = 0;
 		Funcionario f = null;
+		cls();
 		
 		while(tentativas < 3){
 			System.out.println("Digite a sua matrícula");
@@ -80,20 +84,24 @@ public class TelaChave {
 					break;
 				} else
 				if(result == -1){
-					
+					System.out.println("Usuario nao possui acesso a chave");
 				} else {
-					
+					System.out.println("Usuario já possui chave");
 				}
 				
 			}
 			tentativas++;
 		} while (tentativas < 3);
 		
+		if(tentativas >= 3){
+			System.out.println("Usuario Bloqueado");
+		}
 		
 		
 	}
 
 	private void exibeTelaDevolver() {
+		cls();
 		System.out.println("\nBem vindo a tela de cadastro de funcionario");
 		System.out.println("Digite a sua matrícula");
 		int matricula = sc.nextInt();
@@ -104,8 +112,14 @@ public class TelaChave {
 		System.out.println("Digite a Kilometragem atual do veículo");
 		int km = sc.nextInt();
         
-        
-		
 	}
-	
+
+	public static void cls(){
+		try {
+			Runtime.getRuntime().exec("clear");
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		} 
+	}
 }

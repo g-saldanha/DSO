@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import br.ine5605.ufsc.controladores.ControladorChave;
 import br.ine5605.ufsc.controladores.ControladorPrincipal;
+import br.ufsc.ine5605.entidades.Registro;
 
 /**
  *
@@ -27,15 +28,15 @@ public class TelaPrincipal {
         int opcao = 0;        
         do{
             System.out.println("\nBem vindo ao sistema claviculario");;
-            System.out.println("Digite 1 para menu do funcionario");
+            System.out.println("-----------------------------------");
+            System.out.println("Digite 1 para menu do Funcionario");
             System.out.println("Digite 2 para menu do Veículo");
             System.out.println("Digite 3 para menu da Chave");
-            System.out.println("Digite 4 para menu do Aluguel");            
+            System.out.println("Digite 4 para menu de Relatórios");            
             System.out.println("Digite 0 para encerrar");
             opcao = sc.nextInt();
             trataOpcao(opcao);
         } while(opcao != 0);     
-       
         System.exit(0);
         
     }
@@ -48,9 +49,11 @@ public class TelaPrincipal {
             ControladorPrincipal.getInstance().exibeTelaVeiculos();
             break;
         case 3:
-            ControladorChave.getInstance().exibeTelaChave();
+            ControladorPrincipal.getInstance().exibeTelaChave();
+            break;
         case 4:
-            
+            ControladorPrincipal.getInstance().exibeTelaRegistro();
+            break;
         default:
             break;
         }

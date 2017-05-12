@@ -20,6 +20,7 @@ public class ControladorPrincipal {
     private ControladorFuncionario controladorFuncionario;
     private ControladorChave CC;
     private ControladorVeiculos CV;
+    private ControladorRegistro CR;
     private TelaPrincipal telaPrincipal;
     
     
@@ -27,6 +28,7 @@ public class ControladorPrincipal {
         this.controladorFuncionario = ControladorFuncionario.getInstance();
         this.CV = ControladorVeiculos.getInstance();
         this.CC = ControladorChave.getInstance();
+        this.CR = ControladorRegistro.getInstance();
         this.telaPrincipal = new TelaPrincipal(this);
     }
     
@@ -67,6 +69,11 @@ public class ControladorPrincipal {
 
 	public Funcionario pegaFuncionario(int matricula) {
 		return ControladorFuncionario.getInstance().getFuncionario(matricula);
+	}
+
+	public void exibeTelaRegistro() {
+		CR.exibeTelaRegistro();
+		
 	}
     
     

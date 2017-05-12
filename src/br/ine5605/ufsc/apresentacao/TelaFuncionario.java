@@ -69,28 +69,30 @@ public class TelaFuncionario {
     	ArrayList<Veiculo> tiposDeVeiculo = new ArrayList<>();
         System.out.println("\nBem vindo a tela de cadastro de funcionario");      
         System.out.println("\nInsira o nome do funcionario");
-        String nome = sc.nextLine();
+        String nome = sc.next();
         
         System.out.println("\nInsira o numero de matricula do funcionario");
         int matricula = sc.nextInt();
-        sc.nextLine();
         
         System.out.println("\nInsira a data de nascimento do funcionario");
         int dataNascimento = sc.nextInt();
-        sc.nextLine();
         
         System.out.println("\nInsira o telefone do funcionario");
         int telefone = sc.nextInt();
-        sc.nextLine();
         
         System.out.println("\nInsira o cargo do funcionario");
         System.out.println("1.Diretoria");
         System.out.println("2.Comum");
         int selecaoCargo = sc.nextInt();
         Cargo cargo = Cargo.COMUM;
-        if (selecaoCargo == 1) {
-			cargo = Cargo.DIRETORIA;
-		} 
+        while(selecaoCargo != 0){
+        	if (selecaoCargo == 1) {
+				cargo = Cargo.DIRETORIA;
+				break;
+			}
+        	selecaoCargo = sc.nextInt();
+        	
+        }
         String opt = "";
 
         
@@ -98,6 +100,10 @@ public class TelaFuncionario {
         	System.out.println("Quer adicionar um veículo que o funcionário pode usar?");
             System.out.println("Digite 'S' para Sim");
             System.out.println("Digite 'N' para Não");
+            opt = sc.next();
+            if(opt.equals("N")){
+            	break;
+            }
         	System.out.println("Digite a placa do veículo que o funcionário terá acesso");
         	opt = sc.next();
         	Veiculo v = owner.pegaVeiculo(opt);
