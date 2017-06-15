@@ -29,7 +29,7 @@ public class FuncionarioDAO {
                 this.persist();
             } catch (IOException ex) {
                 System.out.println(ex);
-              //Logger.getLogger(MapeadorEleitor.class.getName()).log(Level.SEVERE, null, ex);  
+		      //Logger.getLogger(FuncionarioDAO.class.getName()).log(Level.SEVERE, null, ex);  
             }
             this.load();
 	}
