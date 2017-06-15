@@ -1,0 +1,137 @@
+import Enum.OpcoesMenuFuncionario;
+import br.ufsc.ine5605.grupo3.controladores.ControladorFuncionario;
+import br.ufsc.ine5605.grupo3.entidades.Funcionario;
+import br.ufsc.ine5605.grupo3.entidades.Funcionario.Cargo;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Scanner;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
+
+/**
+ *
+ * @author Caio
+ */
+public class TelaFuncionario extends JFrame {
+    
+    private ControladorFuncionario owner;
+    private Scanner sc;
+    
+    private FuncionarioTableModel modelo;
+    private JPanel painelFundo;
+    private JPanel painelBotoes;
+    private JTable tabela;
+    private JScrollPane barraRolagem;
+    private JButton btCadastrar;
+    private JButton btExcluir;
+    private JButton btVoltar;  
+    
+    private GerenciadorDeBotoes gerenciadorBotoes;
+    
+    private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+    
+        public TelaFuncionario() {
+        super("Menu Funcionario"); 
+        
+        this.owner = ControladorFuncionario.getInstance();
+        sc = new Scanner(System.in);
+                        
+        this.iniciaComponentes();        
+        
+        setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+    }
+
+    void atualizaFuncionario(Funcionario funcionario) {
+        owner.alteraFuncionario(funcionario);
+        modelo.atualizarDados(owner.getFuncionarios());
+    }
+
+    public void iniciaComponentes() {
+        criaJTable();
+        criaJanela();
+    }
+
+    private void criaJTable() {
+       modelo = new FuncionarioTableModel(this, owner.getFuncionarios());
+       tabela = new JTable(modelo);
+       tabela.setModel(modelo);
+       setupCargos(tabela,tabela.getColumnModel().getColumn(2));
+    }
+
+    private void criaJanela() {
+        gerenciadorBotoes = new GerenciadorDeBotoes();
+        
+        btCadastrar = new JButton("Cadastrar");           
+        btVoltar = new JButton("Voltar");               
+        btExcluir = new JButton("Excluir Funcionario");
+        
+        btCadastrar.setActionCommand(OpcoesMenuFuncionario.CADASTRAR.toString());
+        btVoltar.setActionCommand(OpcoesMenuFuncionario.VOLTAR.toString());
+        btExcluir.setActionCommand(OpcoesMenuFuncionario.EXCLUIR.toString());
+        
+        painelBotoes = new JPanel();
+        barraRolagem = new JScrollPane(tabela);
+        painelFundo = new JPanel();
+        painelFundo.setLayout(new BorderLayout());
+        
+        painelFundo.add(BorderLayout.CENTER, barraRolagem);
+        painelBotoes.add(btCadastrar);
+        painelBotoes.add(btVoltar);
+        painelBotoes.add(btExcluir);
+        painelFundo.add(BorderLayout.SOUTH, painelBotoes);
+
+        getContentPane().add(painelFundo);
+        setSize(500, 320);
+        
+        btCadastrar.addActionListener(gerenciadorBotoes);
+        btVoltar.addActionListener(gerenciadorBotoes);
+        btExcluir.addActionListener(gerenciadorBotoes);
+    }
+
+    private void setupCargos(JTable tabela, TableColumn colunaCargo) {
+        JComboBox<Cargo> cbCargos = new JComboBox<>(Cargo.values());      
+        colunaCargo.setCellEditor(new DefaultCellEditor(cbCargos));
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setToolTipText("Click for combo box");
+        colunaCargo.setCellRenderer(renderer);
+        
+    }
+
+   
+   
+
+    
+    
+    
+    private class GerenciadorDeBotoes implements ActionListener {
+
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            if(e.getActionCommand().equals(OpcoesMenuFuncionario.EXCLUIR.name())){
+                int linhaSelecionada = tabela.getSelectedRow();  
+                owner.excluiFuncionario((Funcionario) modelo.getFuncionario(linhaSelecionada));
+                modelo.atualizarDados(owner.getFuncionarios());
+                modelo.fireTableRowsDeleted(linhaSelecionada, linhaSelecionada);
+            }
+            else if(e.getActionCommand().equals(OpcoesMenuFuncionario.VOLTAR.name())){
+                owner.voltar();
+            }            
+            else if(e.getActionCommand().equals(OpcoesMenuFuncionario.CADASTRAR.name())){
+                owner.exibeTelaCadastroFuncionario();
+                setVisible(false);
+            } 
+            
+            
+            
+        }
+    }
