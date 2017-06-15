@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import br.ufsc.ine5605.grupo3.apresentacao.TelaChave;
+import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaChaves;
 import br.ufsc.ine5605.grupo3.entidades.Chave;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario.Cargo;
@@ -12,11 +13,10 @@ import br.ufsc.ine5605.grupo3.entidades.Veiculo;
 public class ControladorChave {
 	private static ControladorChave instance;
 	private static ArrayList<Chave> chaves;
-	private TelaChave telaChave;
+	private TelaChaves telaChaves;
 
 	private ControladorChave() {
-		this.chaves = new ArrayList<>();
-		this.telaChave = new TelaChave(this);
+		this.telaChaves = new TelaChaves();
 	}
 
 	public static ControladorChave getInstance() {
@@ -44,7 +44,7 @@ public class ControladorChave {
 	public void exibirChaves() {
 		int index = 0;
 		for (Chave c : chaves) {
-			this.telaChave.exibeTelaExibicao(c, index);
+//			this.telaChave.exibeTelaExibicao(c, index);
 			index++;
 		}
 	}
@@ -71,7 +71,7 @@ public class ControladorChave {
 	}
 
 	public void exibeTelaChave() {
-		this.telaChave.exibirTela();
+		telaChaves.setVisible(true);
 	}
 
 	public Funcionario pegaFuncionario(int matricula) {

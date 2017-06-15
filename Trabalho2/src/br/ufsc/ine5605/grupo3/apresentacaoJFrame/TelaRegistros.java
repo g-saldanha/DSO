@@ -16,8 +16,7 @@ public class TelaRegistros extends JFrame implements Tela {
     private JTable tRegistros;
     private JScrollPane scrollPane;
 
-    public TelaRegistros(ControladorRegistro ctrl) {
-        this.ctrl = ctrl;
+    public TelaRegistros() {
         this.inic();
     }
 
@@ -32,19 +31,26 @@ public class TelaRegistros extends JFrame implements Tela {
     @Override
     public void inic(){
 //        Definir Container e Layout
-    Container container = this.getContentPane();
-    container.setLayout(new GridBagLayout());
-    GridBagConstraints constraints = new GridBagConstraints();
+        Container container = this.getContentPane();
+        container.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
 
 //    Instanciando os componentes
-    bemVindo = new JLabel();
-    lista = new JLabel();
-    ver = new JButton();
-    sair = new JButton();
-    voltar = new JButton();
-    tRegistros = new JTable();
+        bemVindo = new JLabel();
+        lista = new JLabel();
+        ver = new JButton();
+        sair = new JButton();
+        voltar = new JButton();
+        tRegistros = new JTable();
 
-//
+//    Configurando texto
+        bemVindo.setText("Bem vindo a Tela de registros");
+        lista.setText("Lista de Registros");
+        ver.setText("Ver Registro");
+        sair.setText("Sair");
+        voltar.setText("voltar");
+
+//        Setando Layout
     }
 
 
@@ -56,6 +62,6 @@ public class TelaRegistros extends JFrame implements Tela {
 
     @Override
     public void sair() {
-
+        this.dispose();
     }
 }

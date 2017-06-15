@@ -7,25 +7,25 @@ package br.ufsc.ine5605.grupo3.controladores;
 
 import java.util.ArrayList;
 
-import br.ufsc.ine5605.grupo3.apresentacao.TelaFuncionario;
 import br.ufsc.ine5605.grupo3.apresentacao.Exception.CadastroIncorretoException;
+import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaFuncionarios;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario.Cargo;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
 
 /**
  *
- * @author Caio
+ * @author Caio & Gabriel
  */
 public class ControladorFuncionario {
 
-	private TelaFuncionario telaFuncionario;
+	private TelaFuncionarios telaFuncionarios;
 	private FuncionarioDAO funcionarios;
 	private static ControladorFuncionario instance;
 
 	private ControladorFuncionario() {
-		this.funcionarios = new FuncionarioDAO();
-		this.telaFuncionario = new TelaFuncionario(this);
+		this.telaFuncionarios = new TelaFuncionarios();
+
 	}
 
 	public static ControladorFuncionario getInstance() {
@@ -71,7 +71,7 @@ public class ControladorFuncionario {
 		}
 	}
 
-	public Funcionario getFuncionario(int numeroMatricula) {
+	public Funcionario getFuncionario(Integer numeroMatricula) {
 		for (Funcionario funcionario : this.funcionarios.getList()) {
 			if (funcionario.getNumeroMatricula() == numeroMatricula) {
 				return funcionario;
@@ -82,7 +82,7 @@ public class ControladorFuncionario {
 
 	public boolean haFuncionarios() {
 		if (this.funcionarios.isEmpty()) {
-			this.telaFuncionario.mensagemNaoHaFuncionarios();
+//			this.telaFuncionario.mensagemNaoHaFuncionarios();
 			return false;
 		}
 		return true;
@@ -90,16 +90,16 @@ public class ControladorFuncionario {
 
 	public void exibeFuncionariosCadastrados() {
 		if (this.funcionarios.isEmpty()) {
-			this.telaFuncionario.mensagemNaoHaFuncionarios();
+//			this.telaFuncionario.mensagemNaoHaFuncionarios();
 			return;
 		}
 		for (Funcionario funcionario : this.funcionarios.getList()) {
-			this.telaFuncionario.exibeFuncionario(funcionario);
+//			this.telaFuncionario.exibeFuncionario(funcionario);
 		}
 	}
 
 	public void exibeTelaFuncionario() {
-		this.telaFuncionario.exibirTela();
+		this.telaFuncionarios.setVisible(true);
 	}
 
 	public void verificaMatricula(int matricula) throws CadastroIncorretoException {
@@ -123,4 +123,7 @@ public class ControladorFuncionario {
 
 	}
 
+    public void voltarMenuPrincipal() {
+
+    }
 }

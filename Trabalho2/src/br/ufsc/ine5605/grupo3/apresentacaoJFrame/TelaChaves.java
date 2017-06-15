@@ -1,15 +1,15 @@
 package br.ufsc.ine5605.grupo3.apresentacaoJFrame;
 
 import br.ufsc.ine5605.grupo3.controladores.ControladorChave;
-import br.ufsc.ine5605.grupo3.controladores.ControladorPrincipal;
-import br.ufsc.ine5605.grupo3.controladores.ControladorVeiculos;
 import br.ufsc.ine5605.grupo3.entidades.Chave;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class TelaChaves extends JFrame implements Tela {
+public class TelaChaves extends JFrame implements Tela, ActionListener{
 //    Atributos
     private ControladorChave ctrl;
     private JLabel bemVindo;
@@ -22,9 +22,8 @@ public class TelaChaves extends JFrame implements Tela {
     private JButton voltar;
     private JButton sair;
 
-    public TelaChaves(ControladorChave ctrl) {
+    public TelaChaves() {
         this.inic();
-        this.ctrl = ctrl;
     }
 
     @Override
@@ -39,6 +38,8 @@ public class TelaChaves extends JFrame implements Tela {
         lista = new JLabel();
         tChaves = new JTable();
         pegar = new JButton();
+        pegar.setActionCommand("Pegar");
+        pegar.addActionListener(this);
         devolver = new JButton();
         remover = new JButton();
         voltar = new JButton();
@@ -86,6 +87,8 @@ public class TelaChaves extends JFrame implements Tela {
 //        Fim tabela
 
 
+
+
 //        Configurando o Layout
         setSize(800, 600);
         setVisible(true);
@@ -117,5 +120,17 @@ public class TelaChaves extends JFrame implements Tela {
     @Override
     public void sair() {
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getActionCommand().equals("Pegar")){
+            int j =  Integer.parseInt(JOptionPane.showInputDialog("Insira Sua Matrícula"));
+            String placa = (String) tChaves.getValueAt(tChaves.getSelectedRow(),1);
+            ctrl.cederChave(ctrl.pegaFuncionario(j), ctrl.getChave(placa));
+            
+
+
+        }
     }
 }

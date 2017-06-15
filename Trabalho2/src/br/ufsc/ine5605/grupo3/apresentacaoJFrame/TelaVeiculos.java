@@ -6,8 +6,10 @@ import br.ufsc.ine5605.grupo3.entidades.Veiculo;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class TelaVeiculos extends JFrame implements Tela{
+public class TelaVeiculos extends JFrame implements Tela, ActionListener{
 
     //    Atributos
     private ControladorVeiculos ctrl;
@@ -21,9 +23,8 @@ public class TelaVeiculos extends JFrame implements Tela{
     private JButton voltar;
     private JButton sair;
 
-    public TelaVeiculos(ControladorVeiculos controladorVeiculos){
+    public TelaVeiculos(){
         this.inic();
-        this.ctrl = controladorVeiculos;
     }
 
     @Override
@@ -52,6 +53,22 @@ public class TelaVeiculos extends JFrame implements Tela{
         remover.setText("Remover Veículos");
         voltar.setText("Voltar");
         sair.setText("Sair");
+
+//        Configurando eventos dos botões
+        adicionar.setActionCommand("Adicionar");
+        adicionar.addActionListener(this);
+
+        editar.setActionCommand("Editar");
+        editar.addActionListener(this);
+
+        remover.setActionCommand("Remover");
+        remover.addActionListener(this);
+
+        voltar.setActionCommand("Voltar");
+        voltar.addActionListener(this);
+
+        sair.setActionCommand("Sair");
+        sair.addActionListener(this);
 
 //        Adicionando e instanciando na Tela os componentes
         constraints.gridx = 1;
@@ -90,6 +107,7 @@ public class TelaVeiculos extends JFrame implements Tela{
         setSize(800, 600);
         setVisible(true);
 
+
         //        Botão de fechar
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -115,6 +133,31 @@ public class TelaVeiculos extends JFrame implements Tela{
 
     @Override
     public void sair() {
+        this.dispose();
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Adicionar")) {
+
+        }
+
+        if (e.getActionCommand().equals("Editar")){
+
+        }
+        if (e.getActionCommand().equals("Remover")){
+            String v = (String) tVeiculos.getValueAt(tVeiculos.getSelectedRow(), 0);
+            ControladorVeiculos.getInstance().removeVeiculo(v);
+        }
+        if (e.getActionCommand().equals("Voltar")){
+            this.setVisible(false);
+            this.ctrl.voltarMenuPrincipal();
+
+        }
+        if (e.getActionCommand().equals("Sair")){
+            this.sair();
+        }
 
     }
 }

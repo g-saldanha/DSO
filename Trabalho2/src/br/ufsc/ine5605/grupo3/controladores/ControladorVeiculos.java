@@ -2,7 +2,6 @@ package br.ufsc.ine5605.grupo3.controladores;
 
 import java.util.ArrayList;
 
-import br.ufsc.ine5605.grupo3.apresentacao.TelaVeiculo;
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaVeiculos;
 import br.ufsc.ine5605.grupo3.entidades.Caminhonete;
 import br.ufsc.ine5605.grupo3.entidades.Carro;
@@ -12,11 +11,10 @@ import br.ufsc.ine5605.grupo3.entidades.Veiculo;
 public class ControladorVeiculos {
 	private static ControladorVeiculos instance;
 	private ArrayList<Veiculo> veiculos;
-	private TelaVeiculos telaVeiculo;
+	private TelaVeiculos telaVeiculos;
 
 	public ControladorVeiculos() {
-		this.veiculos = new ArrayList<>();
-		this.telaVeiculo = new TelaVeiculos(this);
+		this.telaVeiculos = new TelaVeiculos();
 	}
 
 	public static ControladorVeiculos getInstance() {
@@ -84,5 +82,13 @@ public class ControladorVeiculos {
 
     public ArrayList<Veiculo> getVeiculos() {
         return veiculos;
+    }
+
+    public void voltarMenuPrincipal() {
+	    ControladorPrincipal.getInstance().voltarMenuPrincipal();
+    }
+
+    public void exibeTelaVeiculos() {
+	    telaVeiculos.setVisible(true);
     }
 }

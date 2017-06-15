@@ -5,9 +5,6 @@
  */
 package br.ufsc.ine5605.grupo3.controladores;
 
-import java.util.Calendar;
-
-import br.ufsc.ine5605.grupo3.apresentacao.TelaPrincipal;
 import br.ufsc.ine5605.grupo3.entidades.Chave;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
@@ -19,20 +16,10 @@ import br.ufsc.ine5605.grupo3.entidades.Veiculo;
 public class ControladorPrincipal {
     
     private static ControladorPrincipal instance;
-    
-    private ControladorFuncionario controladorFuncionario;
-    private ControladorChave CC;
-    private ControladorVeiculos CV;
-    private ControladorRegistro CR;
-    private TelaPrincipal telaPrincipal;
-    
-    
+    private br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaPrincipal telaPrincipal;
+
     private ControladorPrincipal() {
-        this.controladorFuncionario = ControladorFuncionario.getInstance();
-        this.CV = ControladorVeiculos.getInstance();
-        this.CC = ControladorChave.getInstance();
-        this.CR = ControladorRegistro.getInstance();
-        this.telaPrincipal = new TelaPrincipal(this);
+        this.telaPrincipal = new br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaPrincipal();
     }
     
      public static ControladorPrincipal getInstance(){
@@ -41,27 +28,14 @@ public class ControladorPrincipal {
         
         return instance;
     }
-    
-    public void inicia(){
-        telaPrincipal.exibirTela();
-    }
-    
-    public void exibeTelaFuncionario() {
-        controladorFuncionario.exibeTelaFuncionario();
-    }
-    
 
     
     public void adicionarChave(String Placa){
-    	CC.adicionarChave(Placa);
+    	ControladorChave.getInstance().adicionarChave(Placa);
     }
     
     public void deletarChave(String Placa){
-    	CC.deletarChave(Placa);
-    }
-    
-    public void exibeTelaChave(){
-    	CC.exibeTelaChave();
+    	ControladorChave.getInstance().deletarChave(Placa);
     }
 
 	public Veiculo pegaVeiculo(String opt) {
@@ -71,14 +45,9 @@ public class ControladorPrincipal {
 	public Funcionario pegaFuncionario(int matricula) {
 		return ControladorFuncionario.getInstance().getFuncionario(matricula);
 	}
-
-	public void exibeTelaRegistro() {
-		CR.exibeTelaRegistro();
-		
-	}
 	
 	public Chave pegaChave(String placa){
-		return CC.getChave(placa);
+		return ControladorChave.getInstance().getChave(placa);
 	}
 
 	public void adicionarRegistro(int date, int mes, int hours, Funcionario f, Veiculo v, boolean b, String string) {
@@ -90,9 +59,33 @@ public class ControladorPrincipal {
 		ControladorFuncionario.bloquearFuncionario(f);
 		
 	}
-	
-	
 
-    
-    
+	public void fechaTelaPrincipal(){
+	    telaPrincipal.setVisible(false);
+    }
+
+
+    public void voltarMenuPrincipal() {
+        telaPrincipal.setVisible(true);
+    }
+
+    public void exibeTelaVeiculos() {
+        fechaTelaPrincipal();
+	    ControladorVeiculos.getInstance().exibeTelaVeiculos();
+    }
+
+    public void exibeTelaChaves(){
+        fechaTelaPrincipal();
+        ControladorChave.getInstance().exibeTelaChave();
+    }
+
+    public void exibeTelaRegistros(){
+        fechaTelaPrincipal();
+        ControladorRegistro.getInstance().exibeTelaRegistro();
+    }
+
+    public void exibeTelaFuncionarios(){
+        fechaTelaPrincipal();
+        ControladorFuncionario.getInstance().exibeTelaFuncionario();
+    }
 }
