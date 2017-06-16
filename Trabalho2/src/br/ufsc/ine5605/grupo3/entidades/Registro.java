@@ -1,8 +1,5 @@
 package br.ufsc.ine5605.grupo3.entidades;
 
-import java.util.Date;
-import java.util.Timer;
-
 public class Registro {
 	private int data;
 	private int mes;

@@ -1,7 +1,6 @@
 package br.ufsc.ine5605.grupo3.apresentacaoJFrame;
 
 import br.ufsc.ine5605.grupo3.controladores.ControladorPrincipal;
-import br.ufsc.ine5605.grupo3.controladores.ControladorVeiculos;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,20 +1,21 @@
 package br.ufsc.ine5605.grupo3.controladores;
 
-import java.util.ArrayList;
-
+import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaCadastroVeiculo;
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaVeiculos;
-import br.ufsc.ine5605.grupo3.entidades.Caminhonete;
-import br.ufsc.ine5605.grupo3.entidades.Carro;
-import br.ufsc.ine5605.grupo3.entidades.Moto;
-import br.ufsc.ine5605.grupo3.entidades.Veiculo;
+import br.ufsc.ine5605.grupo3.entidades.*;
+
+import java.util.ArrayList;
 
 public class ControladorVeiculos {
 	private static ControladorVeiculos instance;
 	private ArrayList<Veiculo> veiculos;
 	private TelaVeiculos telaVeiculos;
+	private TelaCadastroVeiculo telaCadastroVeiculo;
 
 	public ControladorVeiculos() {
 		this.telaVeiculos = new TelaVeiculos();
+		this.telaCadastroVeiculo = new TelaCadastroVeiculo();
+		this.veiculos = new ArrayList<>();
 	}
 
 	public static ControladorVeiculos getInstance() {
@@ -33,18 +34,18 @@ public class ControladorVeiculos {
 		}
 	}
 
-	public void cadastraVeiculo(String placa, String modelo, String marca, Integer ano, Integer km, Integer tipo) {
+	public void cadastraVeiculo(String placa, String modelo, String marca, Integer ano, Integer km, Tipo tipo) {
 		if (!this.checkExists(placa)) {
 			Veiculo novo = null;
-			if (tipo == 1) {
+			if (tipo.equals(Tipo.MOTO)) {
 				novo = new Moto(placa, modelo, marca, ano, km);
-			} else if (tipo == 2) {
+			} else if (tipo.equals(Tipo.CARRO)) {
 				novo = new Carro(placa, modelo, marca, ano, km);
-			} else if (tipo == 3) {
+			} else if (tipo.equals(Tipo.CAMINHONETE)) {
 				novo = new Caminhonete(placa, modelo, marca, ano, km);
 			}
 			this.veiculos.add(novo);
-			ControladorPrincipal.getInstance().adicionarChave(placa);
+//			ControladorPrincipal.getInstance().adicionarChave(placa);
 		} else {
 			System.out.println("Veiculo de mesma placa já existe");
 		}
@@ -89,6 +90,11 @@ public class ControladorVeiculos {
     }
 
     public void exibeTelaVeiculos() {
+		telaVeiculos.atualizaLista();
 	    telaVeiculos.setVisible(true);
     }
+
+    public void exibeTelaCadastroVeiculo(){
+		telaCadastroVeiculo.setVisible(true);
+	}
 }

@@ -1,14 +1,13 @@
 package br.ufsc.ine5605.grupo3.controladores;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-
-import br.ufsc.ine5605.grupo3.apresentacao.TelaChave;
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaChaves;
 import br.ufsc.ine5605.grupo3.entidades.Chave;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario.Cargo;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ControladorChave {
 	private static ControladorChave instance;

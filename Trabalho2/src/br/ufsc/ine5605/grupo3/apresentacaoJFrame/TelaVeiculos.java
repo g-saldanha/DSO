@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
 public class TelaVeiculos extends JFrame implements Tela, ActionListener{
 
     //    Atributos
-    private ControladorVeiculos ctrl;
     private JLabel bemVindo;
     private JLabel lista;
     private JTable tVeiculos;
@@ -122,7 +121,7 @@ public class TelaVeiculos extends JFrame implements Tela, ActionListener{
         tbModelo.addColumn("Km");
         tbModelo.addColumn("Tipo");
 
-        for (Veiculo v : ctrl.getVeiculos()) {
+        for (Veiculo v : ControladorVeiculos.getInstance().getVeiculos()) {
             tbModelo.addRow(new Object[]{v.getPlaca(),v.getModelo(),v.getMarca(),
             v.getAno(), v.getKm(),v.getTipo()});
         }
@@ -140,7 +139,8 @@ public class TelaVeiculos extends JFrame implements Tela, ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Adicionar")) {
-
+            this.setVisible(false);
+            ControladorVeiculos.getInstance().exibeTelaCadastroVeiculo();
         }
 
         if (e.getActionCommand().equals("Editar")){
@@ -152,7 +152,7 @@ public class TelaVeiculos extends JFrame implements Tela, ActionListener{
         }
         if (e.getActionCommand().equals("Voltar")){
             this.setVisible(false);
-            this.ctrl.voltarMenuPrincipal();
+            ControladorVeiculos.getInstance().voltarMenuPrincipal();
 
         }
         if (e.getActionCommand().equals("Sair")){

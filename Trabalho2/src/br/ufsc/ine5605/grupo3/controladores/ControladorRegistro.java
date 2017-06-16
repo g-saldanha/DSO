@@ -1,12 +1,11 @@
 package br.ufsc.ine5605.grupo3.controladores;
 
-import java.util.ArrayList;
-
-import br.ufsc.ine5605.grupo3.apresentacao.TelaRegistro;
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaRegistros;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
 import br.ufsc.ine5605.grupo3.entidades.Registro;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
+
+import java.util.ArrayList;
 
 public class ControladorRegistro {
 	private ArrayList<Registro> registros;

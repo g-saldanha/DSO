@@ -7,7 +7,7 @@ package br.ufsc.ine5605.grupo3.controladores;
 
 import java.util.ArrayList;
 
-import br.ufsc.ine5605.grupo3.apresentacao.Exception.CadastroIncorretoException;
+import br.ufsc.ine5605.grupo3.apresentacaoJFrame.Exception.CadastroIncorretoException;
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaFuncionarios;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario.Cargo;
@@ -67,7 +67,7 @@ public class ControladorFuncionario {
 				System.out.println("Funcionario com chave não pode ser excluido");
 				return;
 			}
-			this.funcionarios.remove(funcionario.getNumeroMatricula());
+			this.funcionarios.remove(funcionario);
 		}
 	}
 
