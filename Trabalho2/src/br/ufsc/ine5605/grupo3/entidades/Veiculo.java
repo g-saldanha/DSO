@@ -15,7 +15,7 @@ public class Veiculo {
 	private String marca;
 	private Integer ano;
 	private Integer km;
-	protected Integer tipo;
+	protected Tipo tipo;
 	
 	public Veiculo(String placa, String modelo, String marca, Integer ano, Integer km){
 		this.placa = placa;
@@ -85,13 +85,13 @@ public class Veiculo {
 		this.km = km;
 	}
 	
-	public int getTipo(){
+	public Tipo getTipo(){
 		return tipo;
 	}
 
 
 
-	public void setTipo(Integer tipo) {
+	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
 	}
 	

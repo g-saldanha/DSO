@@ -8,14 +8,15 @@ import java.util.ArrayList;
 
 public class ControladorVeiculos {
 	private static ControladorVeiculos instance;
-	private ArrayList<Veiculo> veiculos;
+	private VeiculosDAO veiculos;
 	private TelaVeiculos telaVeiculos;
 	private TelaCadastroVeiculo telaCadastroVeiculo;
 
 	public ControladorVeiculos() {
 		this.telaVeiculos = new TelaVeiculos();
 		this.telaCadastroVeiculo = new TelaCadastroVeiculo();
-		this.veiculos = new ArrayList<>();
+		this.veiculos = new VeiculosDAO();
+
 	}
 
 	public static ControladorVeiculos getInstance() {
@@ -28,7 +29,7 @@ public class ControladorVeiculos {
 
 	public void cadastrarVeiculo(Veiculo v) {
 		if (!this.checkExists(v.getPlaca())) {
-			this.veiculos.add(v);
+			this.veiculos.put(v);
 		} else {
 			System.out.println("Veiculo de mesma placa já existe");
 		}
@@ -44,7 +45,7 @@ public class ControladorVeiculos {
 			} else if (tipo.equals(Tipo.CAMINHONETE)) {
 				novo = new Caminhonete(placa, modelo, marca, ano, km);
 			}
-			this.veiculos.add(novo);
+			this.veiculos.put(novo);
 //			ControladorPrincipal.getInstance().adicionarChave(placa);
 		} else {
 			System.out.println("Veiculo de mesma placa já existe");
@@ -64,7 +65,7 @@ public class ControladorVeiculos {
 	}
 
 	public Veiculo pegaVeiculo(String placa) {
-		for (Veiculo v : this.veiculos) {
+		for (Veiculo v : this.veiculos.getVeiculos()) {
 			if (this.checkExists(placa)) {
 				return v;
 			}
@@ -73,7 +74,7 @@ public class ControladorVeiculos {
 	}
 
 	public boolean checkExists(String placa) {
-		for (Veiculo v : this.veiculos) {
+		for (Veiculo v : this.veiculos.getVeiculos()) {
 			if (v.getPlaca().equals(placa)) {
 				return true;
 			}
@@ -82,7 +83,7 @@ public class ControladorVeiculos {
 	}
 
     public ArrayList<Veiculo> getVeiculos() {
-        return veiculos;
+        return veiculos.getVeiculos();
     }
 
     public void voltarMenuPrincipal() {

@@ -26,14 +26,13 @@ public class Funcionario {
 	private ArrayList<Veiculo> tiposDeVeiculo;
 	private Chave chave;
 
-	public Funcionario(Integer numeroMatricula, String nome, Integer dataNascimento, Integer telefone, Cargo cargo,
-					   ArrayList<Veiculo> tiposDeVeiculo) {
+	public Funcionario(Integer numeroMatricula, String nome, Integer dataNascimento, Integer telefone, Cargo cargo) {
 		this.numeroMatricula = numeroMatricula;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.telefone = telefone;
 		this.cargo = cargo;
-		this.tiposDeVeiculo = tiposDeVeiculo;
+		this.tiposDeVeiculo = new ArrayList<>();
 	}
 
 	public Integer getNumeroMatricula() {

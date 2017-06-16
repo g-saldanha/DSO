@@ -6,8 +6,10 @@
 package br.ufsc.ine5605.grupo3.controladores;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.Exception.CadastroIncorretoException;
+import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaCadastroFuncionarios;
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaFuncionarios;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario.Cargo;
@@ -22,9 +24,12 @@ public class ControladorFuncionario {
 	private TelaFuncionarios telaFuncionarios;
 	private FuncionarioDAO funcionarios;
 	private static ControladorFuncionario instance;
+	private TelaCadastroFuncionarios telaCadastroFuncionarios;
 
 	private ControladorFuncionario() {
 		this.telaFuncionarios = new TelaFuncionarios();
+		this.telaCadastroFuncionarios = new TelaCadastroFuncionarios();
+		this.funcionarios = new FuncionarioDAO();
 
 	}
 
@@ -46,8 +51,7 @@ public class ControladorFuncionario {
 		this.funcionarios.put(f);
 	}
 
-	public void cadastraFuncionario(int numeroMatricula, String nome, int dataNascimento, int telefone, Cargo cargo,
-			ArrayList<Veiculo> tiposDeVeiculo) {
+	public void cadastraFuncionario(Integer numeroMatricula, String nome, Integer dataNascimento, Integer telefone, Cargo cargo) {
 		try {
 			this.verificaMatricula(numeroMatricula);
 		} catch (CadastroIncorretoException e) {
@@ -55,8 +59,7 @@ public class ControladorFuncionario {
 			return;
 		}
 
-		Funcionario novoFuncionario = new Funcionario(numeroMatricula, nome, dataNascimento, telefone, cargo,
-				tiposDeVeiculo);
+		Funcionario novoFuncionario = new Funcionario(numeroMatricula, nome, dataNascimento, telefone, cargo);
 
 		this.funcionarios.put(novoFuncionario);
 	}
@@ -79,10 +82,10 @@ public class ControladorFuncionario {
 		}
 		return null;
 	}
-
+// MensagemNãoHaFuncionario, qual a aplicação dela?:
 	public boolean haFuncionarios() {
 		if (this.funcionarios.isEmpty()) {
-//			this.telaFuncionario.mensagemNaoHaFuncionarios();
+//			this.telaFuncionarios.mensagemNaoHaFuncionarios();
 			return false;
 		}
 		return true;
@@ -90,11 +93,12 @@ public class ControladorFuncionario {
 
 	public void exibeFuncionariosCadastrados() {
 		if (this.funcionarios.isEmpty()) {
-//			this.telaFuncionario.mensagemNaoHaFuncionarios();
+//			this.telaFuncionarios.mensagemNaoHaFuncionarios();
 			return;
 		}
+//		Aonde é criado esse método?
 		for (Funcionario funcionario : this.funcionarios.getList()) {
-//			this.telaFuncionario.exibeFuncionario(funcionario);
+//			this.telaFuncionarios.exibeFuncionario(funcionario);
 		}
 	}
 
@@ -120,10 +124,23 @@ public class ControladorFuncionario {
 
 	public static void desbloqueia(Funcionario blok) {
 		blok.desbloquear();
-
 	}
+//      Onde fica esse código?
+	public void alteraFuncionario(Funcionario funcionario){
+//		this.funcionarios.altera(funcionario);
+	}
+
+//	Não entendi o por que dessa função aqui
+//	public HashMap<Integer, Funcionario> getFuncionario(){
+//		return this.funcionarios.getFuncionarios();
+//	}
 
     public void voltarMenuPrincipal() {
 		ControladorPrincipal.getInstance().voltarMenuPrincipal();
+    }
+
+    public void exibeTelaCadastroFuncionario(){
+		telaFuncionarios.setVisible(false);
+		telaCadastroFuncionarios.setVisible(true);
     }
 }
