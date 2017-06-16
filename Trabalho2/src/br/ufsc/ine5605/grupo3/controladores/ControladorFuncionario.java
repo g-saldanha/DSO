@@ -124,6 +124,6 @@ public class ControladorFuncionario {
 	}
 
     public void voltarMenuPrincipal() {
-
+		ControladorPrincipal.getInstance().voltarMenuPrincipal();
     }
 }

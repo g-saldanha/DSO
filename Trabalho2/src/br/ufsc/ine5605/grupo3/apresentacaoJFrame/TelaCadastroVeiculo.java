@@ -165,7 +165,6 @@ public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener 
 	    
 //	    Tamanho da Tela
 	    setSize(800,600);
-	    setVisible(true);
 	    
 //	    fechar
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

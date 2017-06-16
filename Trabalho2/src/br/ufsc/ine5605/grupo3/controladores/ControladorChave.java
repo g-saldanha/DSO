@@ -131,4 +131,8 @@ public class ControladorChave {
 		ControladorPrincipal.getInstance().bloquearFuncionario(f);
 
 	}
+
+	public void voltarMenuPrincipal() {
+		ControladorPrincipal.getInstance().voltarMenuPrincipal();
+	}
 }
