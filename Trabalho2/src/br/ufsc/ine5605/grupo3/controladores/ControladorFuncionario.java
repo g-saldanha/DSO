@@ -161,4 +161,12 @@ public class ControladorFuncionario {
 		}
 		return "Funcionario não existe ou não pode ser alterado";
 	}
+
+	public ArrayList<Integer> getMatriculas() {
+		ArrayList<Integer> matriculas = new ArrayList<>();
+		for (Funcionario f : this.funcionarios.getFuncionarios()) {
+			matriculas.add(f.getNumeroMatricula());
+		}
+		return matriculas;
+	}
 }

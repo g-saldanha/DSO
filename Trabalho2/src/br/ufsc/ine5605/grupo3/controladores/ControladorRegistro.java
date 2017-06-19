@@ -14,6 +14,7 @@ public class ControladorRegistro {
 
 	private ControladorRegistro(){
 		this.telaRegistros = new TelaRegistros();
+		this.registros = new RegistrosDAO();
 	}
 
 	public static ControladorRegistro getInstance(){
@@ -24,10 +25,11 @@ public class ControladorRegistro {
 	}
 
 	public void exibeTelaRegistro(){
+		this.telaRegistros.atualizaLista();
 		this.telaRegistros.setVisible(true);
 	}
 
-	public void exibTelaRegistrosPorFiltro(int matricula) {
+	public void exibTelaRegistrosPorFiltro(Integer matricula) {
 		for (Registro registro : this.registros.getRegistros()) {
 			if(matricula == registro.getFuncionario().getNumeroMatricula()){
 //				telaRegistro.exibeRegistros(registro);
@@ -51,8 +53,8 @@ public class ControladorRegistro {
 		}
 	}
 
-	public void adicionarRegistro(int date, int mes, int hours, Funcionario f, Veiculo v, boolean b, String string) {
-		Registro r = new Registro(date, mes, hours, f, v, b, string);
+	public void adicionarRegistro(Long id, Integer date, Integer mes, Integer hours, Funcionario f, Veiculo v, boolean b, String string) {
+		Registro r = new Registro(id, date, mes, hours, f, v, b, string);
 		this.registros.botar(r);
 	}
 
@@ -62,6 +64,14 @@ public class ControladorRegistro {
 
 	public ArrayList<String> getPlacas(){
 		return ControladorPrincipal.getInstance().getPlacas();
+	}
+
+	public ArrayList<Integer> getMatriculas() {
+		return ControladorPrincipal.getInstance().getMatriculas();
+	}
+
+	public Registro getRegistro(Long id) {
+		return this.registros.get(id);
 	}
 
 

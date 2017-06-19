@@ -5,17 +5,17 @@ import java.io.Serializable;
 public class Registro implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private int data;
-	private int mes;
-	private int hora;
+	private Integer data;
+	private Integer mes;
+	private Integer hora;
 	private Funcionario funcionario;
 	private Veiculo veiculo;
 	private boolean motivo;
-	private int kmAndados;
+	private Integer kmAndados;
 	private String mensagem;
 
-	public Registro(int data, int mes, int hora, Funcionario funcionario, Veiculo veiculo, boolean motivo, String mensagem) {
-
+	public Registro(Long id, Integer data, Integer mes, Integer hora, Funcionario funcionario, Veiculo veiculo, boolean motivo, String mensagem) {
+		this.id = id;
 		this.data = data;
 		this.mes = mes;
 		this.hora = hora;
@@ -26,26 +26,26 @@ public class Registro implements Serializable{
 	}
 
 
-	public int getData() {
+	public Integer getData() {
 		return this.data;
 	}
 
-	public int getMes(){
+	public Integer getMes(){
 		return this.mes;
 	}
 
 
-	public void setData(int data) {
+	public void setData(Integer data) {
 		this.data = data;
 	}
 
 
-	public int getHora() {
+	public Integer getHora() {
 		return this.hora;
 	}
 
 
-	public void setHora(int hora) {
+	public void setHora(Integer hora) {
 		this.hora = hora;
 	}
 
@@ -88,12 +88,12 @@ public class Registro implements Serializable{
 	}
 
 
-	public int getKmAndados() {
+	public Integer getKmAndados() {
 		return this.kmAndados;
 	}
 
 
-	public void setKmAndados(int kmAndados) {
+	public void setKmAndados(Integer kmAndados) {
 		this.kmAndados = kmAndados;
 	}
 

@@ -7,6 +7,7 @@ package br.ufsc.ine5605.grupo3.controladores;
 
 import java.util.ArrayList;
 
+import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaPrincipal;
 import br.ufsc.ine5605.grupo3.entidades.Chave;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
@@ -18,10 +19,10 @@ import br.ufsc.ine5605.grupo3.entidades.Veiculo;
 public class ControladorPrincipal {
 
     private static ControladorPrincipal instance;
-    private br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaPrincipal telaPrincipal;
+    private TelaPrincipal telaPrincipal;
 
     private ControladorPrincipal() {
-        this.telaPrincipal = new br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaPrincipal();
+        this.telaPrincipal = new TelaPrincipal();
     }
 
      public static ControladorPrincipal getInstance(){
@@ -53,8 +54,8 @@ public class ControladorPrincipal {
 		return ControladorChave.getInstance().getChave(placa);
 	}
 
-	public void adicionarRegistro(int date, int mes, int hours, Funcionario f, Veiculo v, boolean b, String string) {
-		ControladorRegistro.getInstance().adicionarRegistro(date, mes, hours, f, v,b, string);
+	public void adicionarRegistro(Long id, Integer date, Integer mes, Integer hours, Funcionario f, Veiculo v, boolean b, String string) {
+		ControladorRegistro.getInstance().adicionarRegistro(id, date, mes, hours, f, v,b, string);
 
 	}
 
@@ -95,5 +96,9 @@ public class ControladorPrincipal {
 	public ArrayList<String> getPlacas() {
 		return ControladorVeiculos.getInstance().getPlacas();
 
+	}
+
+	public ArrayList<Integer> getMatriculas() {
+		return ControladorFuncionario.getInstance().getMatriculas();
 	}
 }

@@ -9,4 +9,11 @@ public class GeradorId {
 		}
 		return ID++;
 	}
+
+	public static Long getNextRegisterID(){
+		if(!ControladorRegistro.getInstance().getTodosRegistros().isEmpty()){
+			return ID = ControladorRegistro.getInstance().getTodosRegistros().size() + 1L;
+		}
+		return ID++;
+	}
 }

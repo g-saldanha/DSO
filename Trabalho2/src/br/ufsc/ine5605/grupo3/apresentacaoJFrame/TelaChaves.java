@@ -177,13 +177,13 @@ public class TelaChaves extends JFrame implements Tela, ActionListener{
         }
 
         if (e.getActionCommand().equals("Devolver")){
-            int m = Integer.parseInt(JOptionPane.showInputDialog("Insira Sua Matrícula"));
+            Integer m = Integer.parseInt(JOptionPane.showInputDialog("Insira Sua Matrícula"));
             Long id = (Long) this.tChaves.getValueAt(this.tChaves.getSelectedRow(), 0);
             ControladorChave.getInstance().devolverChave(ControladorChave.getInstance().pegaFuncionario(m), ControladorChave.getInstance().getChave(id));
         }
 
         if (e.getActionCommand().equals("Remover")){
-            int m = Integer.parseInt(JOptionPane.showInputDialog("Insira Sua Matrícula"));
+            Integer m = Integer.parseInt(JOptionPane.showInputDialog("Insira Sua Matrícula"));
             Long id = (Long) this.tChaves.getValueAt(this.tChaves.getSelectedRow(), 0);
 
             ControladorChave.getInstance().deletarChave(id);

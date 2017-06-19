@@ -78,7 +78,7 @@ public class ControladorChave {
 		this.telaChaves.setVisible(true);
 	}
 
-	public Funcionario pegaFuncionario(int matricula) {
+	public Funcionario pegaFuncionario(Integer matricula) {
 		return ControladorPrincipal.getInstance().pegaFuncionario(matricula);
 	}
 
@@ -130,8 +130,8 @@ public class ControladorChave {
 
 	}
 
-	public void adicionarRegistro(int date, int mes, int hours, Funcionario f, Veiculo v, boolean b, String string) {
-		ControladorPrincipal.getInstance().adicionarRegistro(date, mes, hours, f, v, b, string);
+	public void adicionarRegistro(Integer date, Integer mes, Integer hours, Funcionario f, Veiculo v, boolean b, String string) {
+		ControladorPrincipal.getInstance().adicionarRegistro(GeradorId.getNextRegisterID(), date, mes, hours, f, v, b, string);
 	}
 
 	public void bloquearFuncionario(Funcionario f) {

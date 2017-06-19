@@ -112,7 +112,6 @@ public class TelaVeiculos extends JFrame implements Tela, ActionListener{
 
         //      Configurando Layout da tela
         this.setSize(800, 600);
-        this.setVisible(true);
 
 
         //        Botão de fechar
