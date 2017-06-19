@@ -1,13 +1,22 @@
 package br.ufsc.ine5605.grupo3.apresentacaoJFrame;
 
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 import br.ufsc.ine5605.grupo3.controladores.ControladorVeiculos;
 import br.ufsc.ine5605.grupo3.entidades.Tipo;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener {
     private JLabel lPlaca;
@@ -25,154 +34,162 @@ public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener 
     private JButton bVoltar;
     private JButton bSair;
     private JButton bCadastrar;
+    private Veiculo vEditar;
 
 
     public TelaCadastroVeiculo() {
-        super("Cadastro/Edição de Veículos");
+        super("Cadastro de Veículos");
         this.inic();
+    }
+
+    public TelaCadastroVeiculo(String v){
+    	super("Edição de Veículos");
+    	this.inic();
+    	this.vEditar = ControladorVeiculos.getInstance().pegaVeiculo(v);
+    	this.edit();
     }
 
     @Override
     public void inic() {
 //        Configurando, instanciando o Layout e constraints
-        Container container = getContentPane();
+        Container container = this.getContentPane();
         container.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
 //        Criando os botões, labels e combos
-        lPlaca = new JLabel();
-        lModelo = new JLabel();
-        lMarca = new JLabel();
-        lAno = new JLabel();
-        lKm = new JLabel();
-        lTipo = new JLabel();
-        tPlaca = new JTextField();
-        tModelo = new JTextField();
-        tMarca = new JTextField();
-        tAno = new JTextField();
-        tKm = new JTextField();
-        cTipo = new JComboBox<Tipo>(Tipo.values());
-        bCadastrar = new JButton();
-        bSair = new JButton();
-        bCadastrar = new JButton();
-        bVoltar = new JButton();
+        this.lPlaca = new JLabel();
+        this.lModelo = new JLabel();
+        this.lMarca = new JLabel();
+        this.lAno = new JLabel();
+        this.lKm = new JLabel();
+        this.lTipo = new JLabel();
+        this.tPlaca = new JTextField();
+        this.tModelo = new JTextField();
+        this.tMarca = new JTextField();
+        this.tAno = new JTextField();
+        this.tKm = new JTextField();
+        this.cTipo = new JComboBox<Tipo>(Tipo.values());
+        this.bCadastrar = new JButton();
+        this.bSair = new JButton();
+        this.bCadastrar = new JButton();
+        this.bVoltar = new JButton();
 
 //        Colocando os textos nas labels e botões
-        lPlaca.setText("Digite a Placa: ");
-        lModelo.setText("Digite o Modelo:");
-        lMarca.setText("Digite a Marca:");
-        lAno.setText("Digite o Ano:");
-        lKm.setText("Digite o Km:");
-        lTipo.setText("Digite o Tipo de Veículo:");
-        bCadastrar.setText("Cadastrar Veículo");
-        bVoltar.setText("Voltar");
-        bSair.setText("Sair");
-        
+        this.lPlaca.setText("Digite a Placa: ");
+        this.lModelo.setText("Digite o Modelo:");
+        this.lMarca.setText("Digite a Marca:");
+        this.lAno.setText("Digite o Ano:");
+        this.lKm.setText("Digite o Km:");
+        this.lTipo.setText("Digite o Tipo de Veículo:");
+        this.bCadastrar.setText("Cadastrar Veículo");
+        this.bVoltar.setText("Voltar");
+        this.bSair.setText("Sair");
+
 //          Configurando os Eventos dos botões
-	    bCadastrar.setActionCommand("Cadastrar");
-	    bCadastrar.addActionListener(this);
-	    
-	    bVoltar.setActionCommand("Voltar");
-	    bVoltar.addActionListener(this);
-	    
-	    bSair.setActionCommand("Sair");
-	    bSair.addActionListener(this);
-	    
+	    this.bCadastrar.setActionCommand("Cadastrar");
+	    this.bCadastrar.addActionListener(this);
+
+	    this.bVoltar.setActionCommand("Voltar");
+	    this.bVoltar.addActionListener(this);
+
+	    this.bSair.setActionCommand("Sair");
+	    this.bSair.addActionListener(this);
+
 //	    Configurando o tamaho dos Campos de texto
-	    tKm.setPreferredSize(textFieldLayout());
-	    tAno.setPreferredSize(textFieldLayout());
-	    tModelo.setPreferredSize(textFieldLayout());
-	    tPlaca.setPreferredSize(textFieldLayout());
-	    
+	    this.tKm.setPreferredSize(this.textFieldLayout());
+	    this.tAno.setPreferredSize(this.textFieldLayout());
+	    this.tModelo.setPreferredSize(this.textFieldLayout());
+	    this.tPlaca.setPreferredSize(this.textFieldLayout());
+
 //	    Colocando os componentes na tela
 
 //	    Placa
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 0;
 	    constraints.gridy = 1;
-	    container.add(lPlaca, constraints);
+	    container.add(this.lPlaca, constraints);
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 1;
 	    constraints.gridy = 1;
-	    container.add(tPlaca, constraints);
-	    
+	    container.add(this.tPlaca, constraints);
+
 //	    Modelo
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 0;
 	    constraints.gridy = 2;
-	    container.add(lModelo, constraints);
+	    container.add(this.lModelo, constraints);
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 1;
 	    constraints.gridy = 2;
-	    container.add(tModelo, constraints);
-	    
+	    container.add(this.tModelo, constraints);
+
 //	    Marca
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 0;
 	    constraints.gridy = 3;
-	    container.add(lMarca, constraints);
+	    container.add(this.lMarca, constraints);
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 1;
 	    constraints.gridy = 3;
-	    container.add(tMarca, constraints);
-	    
+	    container.add(this.tMarca, constraints);
+
 //      Ano
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 0;
 	    constraints.gridy = 4;
-		container.add(lAno, constraints);
+		container.add(this.lAno, constraints);
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 1;
 	    constraints.gridy = 4;
-	    container.add(tAno, constraints);
-	    
+	    container.add(this.tAno, constraints);
+
 //	    KM
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 0;
 	    constraints.gridy = 5;
-		container.add(lKm, constraints);
+		container.add(this.lKm, constraints);
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 1;
 	    constraints.gridy = 5;
-	    container.add(tKm, constraints);
-	    
+	    container.add(this.tKm, constraints);
+
 //	    Tipo
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 0;
 	    constraints.gridy = 6;
-		container.add(lTipo, constraints);
+		container.add(this.lTipo, constraints);
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 1;
 	    constraints.gridy = 6;
-	    container.add(cTipo, constraints);
-	    
+	    container.add(this.cTipo, constraints);
+
 //	    Botões
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 1;
 	    constraints.gridy = 7;
-	    container.add(bCadastrar, constraints);
-	    
+	    container.add(this.bCadastrar, constraints);
+
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 0;
 	    constraints.gridy = 9;
-	    container.add(bSair, constraints);
-	    
+	    container.add(this.bSair, constraints);
+
 	    constraints.fill = GridBagConstraints.HORIZONTAL;
 	    constraints.gridx = 2;
 	    constraints.gridy = 9;
-	    container.add(bVoltar, constraints);
-	    
-	    
+	    container.add(this.bVoltar, constraints);
+
+
 //	    Tamanho da Tela
-	    setSize(800,600);
-	    
+	    this.setSize(800,600);
+
 //	    fechar
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
     }
-	
-	
+
+
 	@Override
     public void atualizaLista() {
 //Do nothing
@@ -183,32 +200,49 @@ public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener 
 		this.dispose();
     }
 
+    public void edit(){
+    	this.tPlaca.setText(this.vEditar.getPlaca());
+    	this.tModelo.setText(this.vEditar.getModelo());
+    	this.tMarca.setText(this.vEditar.getMarca());
+    	this.tAno.setText("" + this.vEditar.getAno());
+    	this.tKm.setText("" + this.vEditar.getKm());
+    }
+
+    public void limpa(){
+    	this.tPlaca.setText(null);
+    	this.tModelo.setText(null);
+    	this.tMarca.setText(null);
+    	this.tAno.setText(null);
+    	this.tKm.setText(null);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
     	if (e.getActionCommand().equals("Cadastrar")){
-    		Integer ano = Integer.parseInt(tAno.getText());
-    		Integer km = Integer.parseInt(tKm.getText());
-    		
-    		ControladorVeiculos.getInstance().cadastraVeiculo(tPlaca.getText(), tModelo.getText(), tMarca.getText(), ano, km, (Tipo) cTipo.getSelectedItem());
-    	    JOptionPane.showMessageDialog(null, "Veículo Placa " + tPlaca.getText() + "Cadastrado com sucesso!");
-    	    
-    	    setVisible(false);
+    		Integer ano = Integer.parseInt(this.tAno.getText());
+    		Integer km = Integer.parseInt(this.tKm.getText());
+
+    		String m = ControladorVeiculos.getInstance().cadastraVeiculo(this.tPlaca.getText(), this.tModelo.getText(), this.tMarca.getText(), ano, km, (Tipo) this.cTipo.getSelectedItem());
+    	    JOptionPane.showMessageDialog(null, m);
+    	    this.limpa();
+    	    this.setVisible(false);
     	    ControladorVeiculos.getInstance().exibeTelaVeiculos();
-    	    
+
 	    }
-	    
+
 	    if (e.getActionCommand().equals("Voltar")){
-    	    setVisible(false);
+	    	this.limpa();
+    	    this.setVisible(false);
 		    ControladorVeiculos.getInstance().exibeTelaVeiculos();
 	    }
-	    
+
 	    if (e.getActionCommand().equals("Sair")){
-	    	sair();
+	    	this.sair();
 	    }
-	    
-	
+
+
     }
-    
+
     public Dimension textFieldLayout(){
         return new Dimension(100,20);
     }

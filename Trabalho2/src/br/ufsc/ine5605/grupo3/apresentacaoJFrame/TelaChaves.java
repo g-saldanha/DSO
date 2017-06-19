@@ -1,14 +1,23 @@
 package br.ufsc.ine5605.grupo3.apresentacaoJFrame;
 
+import java.awt.Container;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 import br.ufsc.ine5605.grupo3.controladores.ControladorChave;
 import br.ufsc.ine5605.grupo3.controladores.ControladorPrincipal;
 import br.ufsc.ine5605.grupo3.entidades.Chave;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import br.ufsc.ine5605.grupo3.entidades.Funcionario;
 
 public class TelaChaves extends JFrame implements Tela, ActionListener{
 //    Atributos
@@ -29,104 +38,102 @@ public class TelaChaves extends JFrame implements Tela, ActionListener{
     @Override
     public void inic() {
 //        Instanciar Container e Layout
-        Container container = getContentPane();
+        Container container = this.getContentPane();
         container.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
 //        Instanciando os componentes
-        bemVindo = new JLabel();
-        lista = new JLabel();
-        tChaves = new JTable();
-        pegar = new JButton();
-        bDevolver = new JButton();
-        bRemover = new JButton();
-        bVoltar = new JButton();
-        bSair = new JButton();
+        this.bemVindo = new JLabel();
+        this.lista = new JLabel();
+        this.tChaves = new JTable();
+        this.pegar = new JButton();
+        this.bDevolver = new JButton();
+        this.bRemover = new JButton();
+        this.bVoltar = new JButton();
+        this.bSair = new JButton();
 
 //        Colocando os textos nos componentes
-        bemVindo.setText("Bem vindo ao Claviculário");
-        lista.setText("Lista de Chaves");
-        pegar.setText("Pegar Chave");
-        bDevolver.setText("Devolver Chave");
-        bRemover.setText("Remover Chave");
-        bVoltar.setText("Voltar");
-        bSair.setText("Sair");
+        this.bemVindo.setText("Bem vindo ao Claviculário");
+        this.lista.setText("Lista de Chaves");
+        this.pegar.setText("Pegar Chave");
+        this.bDevolver.setText("Devolver Chave");
+        this.bRemover.setText("Remover Chave");
+        this.bVoltar.setText("Voltar");
+        this.bSair.setText("Sair");
 
 //        Configurando ações dos botões
-        pegar.setActionCommand("Pegar");
-        pegar.addActionListener(this);
+        this.pegar.setActionCommand("Pegar");
+        this.pegar.addActionListener(this);
 
-        bDevolver.setActionCommand("Devolver");
-        bDevolver.addActionListener(this);
+        this.bDevolver.setActionCommand("Devolver");
+        this.bDevolver.addActionListener(this);
 
-        bRemover.setActionCommand("Remover");
-        bRemover.addActionListener(this);
+        this.bRemover.setActionCommand("Remover");
+        this.bRemover.addActionListener(this);
 
-        bSair.setActionCommand("Sair");
-        bSair.addActionListener(this);
+        this.bSair.setActionCommand("Sair");
+        this.bSair.addActionListener(this);
 
-        bVoltar.setActionCommand("Voltar");
-        bVoltar.addActionListener(this);
+        this.bVoltar.setActionCommand("Voltar");
+        this.bVoltar.addActionListener(this);
 
 //        Adicionando e instanciando na Tela os componentes
         constraints.gridx = 1;
         constraints.gridy = 0;
-        container.add(bemVindo, constraints);
+        container.add(this.bemVindo, constraints);
         constraints.gridx = 0;
         constraints.gridy = 1;
-        container.add(pegar, constraints);
+        container.add(this.pegar, constraints);
         constraints.gridx = 1;
         constraints.gridy = 1;
-        container.add(bDevolver, constraints);
+        container.add(this.bDevolver, constraints);
         constraints.gridx = 2;
         constraints.gridy = 1;
-        container.add(bRemover, constraints);
+        container.add(this.bRemover, constraints);
         constraints.gridx = 0;
         constraints.gridy = 4;
-        container.add(bSair, constraints);
+        container.add(this.bSair, constraints);
         constraints.gridx = 2;
         constraints.gridy = 4;
-        container.add(bVoltar, constraints);
+        container.add(this.bVoltar, constraints);
         constraints.gridx = 1;
         constraints.gridy = 2;
-        container.add(lista, constraints);
+        container.add(this.lista, constraints);
 //        tabela
-        tChaves.setFillsViewportHeight(true);
+        this.tChaves.setFillsViewportHeight(true);
         constraints.fill = GridBagConstraints.CENTER;
         constraints.gridy = 3;
         constraints.gridheight = 5;
         constraints.gridheight = 5;
-        scrollPane = new JScrollPane(tChaves);
-        container.add(scrollPane, constraints);
+        this.scrollPane = new JScrollPane(this.tChaves);
+        container.add(this.scrollPane, constraints);
 //        Fim tabela
 
 
 
 
 //        Configurando o Layout
-        setSize(800, 600);
-        setVisible(true);
+        this.setSize(800, 600);
 
 //        Botão de fechar
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     @Override
     public void atualizaLista() {
         DefaultTableModel tModelo = new DefaultTableModel();
-        tModelo.addColumn("Chave");
+        tModelo.addColumn("Chave ID");
         tModelo.addColumn("Placa");
         tModelo.addColumn("Veiculo");
         tModelo.addColumn("Alugada");
-        tModelo.addColumn("Quem Alugou");
 
         for (Chave c :
              ControladorChave.getInstance().getChaves()) {
-            tModelo.addRow(new Object[]{ControladorChave.getInstance().checkExists(c.getPlaca()), c.getPlaca(), c.getModelo(), c.getEstado() });
+            tModelo.addRow(new Object[]{c.getID(), c.getPlaca(), c.getModelo(), c.getEstado()});
         }
 
-        tChaves.setModel(tModelo);
-        repaint();
+        this.tChaves.setModel(tModelo);
+        this.repaint();
 
 
     }
@@ -138,26 +145,48 @@ public class TelaChaves extends JFrame implements Tela, ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         if(e.getActionCommand().equals("Pegar")){
-            int j =  Integer.parseInt(JOptionPane.showInputDialog("Insira Sua Matrícula"));
-            String placa = (String) tChaves.getValueAt(tChaves.getSelectedRow(),1);
-            if(ControladorPrincipal.getInstance().pegaFuncionario(j) != null) {
-                ControladorChave.getInstance().cederChave(ControladorChave.getInstance().pegaFuncionario(j), ControladorChave.getInstance().getChave(placa));
-            } else {
-                JOptionPane.showMessageDialog(null, "Matricula Inexistente, favor digite uma matrícula correta");
-            }
+        	try {
+        		Long id = (Long) this.tChaves.getValueAt(this.tChaves.getSelectedRow(), 0);
+            	Integer j =  Integer.parseInt(JOptionPane.showInputDialog("Insira Sua Matrícula"));
+            	Funcionario f = ControladorPrincipal.getInstance().pegaFuncionario(j);
+                if(f != null) {
+                	String m;
+                    int result = ControladorChave.getInstance().cederChave(ControladorChave.getInstance().pegaFuncionario(j), ControladorChave.getInstance().getChave(id));
+					if (result == 0) {
+						m = "Chave Liberada com sucesso a " + f.getNome();
+					} else if (result == -1) {
+						m = "Usuario " + f.getNome() +  " nao possui acesso a chave";
+					} else if (result == -2) {
+						m = "Usuario " + f.getNome() + " já possui chave";
+					} else if (result == -3) {
+						m = "Usuario "+ f.getNome() + " está Bloqueado";
+					} else {
+						m = "Chave já está alugada";
+					}
+					JOptionPane.showMessageDialog(null, m);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Matricula Inexistente, favor digite uma matrícula correta");
+                }
+			} catch (ArrayIndexOutOfBoundsException e2) {
+				JOptionPane.showMessageDialog(null, "Selecione a chave que deseja pegar");
+			}
+
         }
 
         if (e.getActionCommand().equals("Devolver")){
             int m = Integer.parseInt(JOptionPane.showInputDialog("Insira Sua Matrícula"));
-            String placa = (String) tChaves.getValueAt(tChaves.getSelectedRow(), 1);
-            ControladorChave.getInstance().devolverChave(ControladorChave.getInstance().pegaFuncionario(m), ControladorChave.getInstance().getChave(placa));
+            Long id = (Long) this.tChaves.getValueAt(this.tChaves.getSelectedRow(), 0);
+            ControladorChave.getInstance().devolverChave(ControladorChave.getInstance().pegaFuncionario(m), ControladorChave.getInstance().getChave(id));
         }
 
         if (e.getActionCommand().equals("Remover")){
             int m = Integer.parseInt(JOptionPane.showInputDialog("Insira Sua Matrícula"));
-            String placa = (String) tChaves.getValueAt(tChaves.getSelectedRow(), 1);
-            ControladorChave.getInstance().deletarChave(placa);
+            Long id = (Long) this.tChaves.getValueAt(this.tChaves.getSelectedRow(), 0);
+
+            ControladorChave.getInstance().deletarChave(id);
         }
 
         if (e.getActionCommand().equals("Voltar")){

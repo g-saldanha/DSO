@@ -6,19 +6,26 @@
 package br.ufsc.ine5605.grupo3.entidades;
 
 import br.ufsc.ine5605.grupo3.controladores.ControladorPrincipal;
+import br.ufsc.ine5605.grupo3.controladores.GeradorId;
+
+import java.io.Serializable;
 
 /**
  *
  * @author 08801473931
  */
-public class Chave {
+public class Chave implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
     private String placa;
 	private boolean isAlugada;
+	private Long id;
 	
 	
 	public Chave(String placa) {
 		this.placa = placa;
 		this.isAlugada = false;
+		this.id = GeradorId.getNextID();
 	}
 	
 	public String getPlaca() {
@@ -46,4 +53,8 @@ public class Chave {
 	    Veiculo v = ControladorPrincipal.getInstance().pegaVeiculo(getPlaca());
         return v.getModelo();
     }
+	
+	public Long getID() {
+		return id;
+	}
 }

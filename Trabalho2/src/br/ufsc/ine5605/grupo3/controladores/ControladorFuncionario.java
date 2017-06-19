@@ -6,13 +6,12 @@
 package br.ufsc.ine5605.grupo3.controladores;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import br.ufsc.ine5605.grupo3.apresentacaoJFrame.Exception.CadastroIncorretoException;
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaCadastroFuncionarios;
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaFuncionarios;
+import br.ufsc.ine5605.grupo3.apresentacaoJFrame.Exception.CadastroIncorretoException;
+import br.ufsc.ine5605.grupo3.entidades.Cargo;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
-import br.ufsc.ine5605.grupo3.entidades.Funcionario.Cargo;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
 
 /**
@@ -28,7 +27,6 @@ public class ControladorFuncionario {
 
 	private ControladorFuncionario() {
 		this.telaFuncionarios = new TelaFuncionarios();
-		this.telaCadastroFuncionarios = new TelaCadastroFuncionarios();
 		this.funcionarios = new FuncionarioDAO();
 
 	}
@@ -51,17 +49,17 @@ public class ControladorFuncionario {
 		this.funcionarios.put(f);
 	}
 
-	public void cadastraFuncionario(Integer numeroMatricula, String nome, Integer dataNascimento, Integer telefone, Cargo cargo) {
+	public String cadastraFuncionario(Integer numeroMatricula, String nome, Integer dataNascimento, Integer telefone, Cargo cargo) {
 		try {
 			this.verificaMatricula(numeroMatricula);
 		} catch (CadastroIncorretoException e) {
-			System.out.println("Funcionario Existente");
-			return;
+			return "Funcionario Existente";
 		}
 
 		Funcionario novoFuncionario = new Funcionario(numeroMatricula, nome, dataNascimento, telefone, cargo);
 
 		this.funcionarios.put(novoFuncionario);
+		return "Funcionario" + nome + "Cadastrado com Sucesso";
 	}
 
 	public void excluiFuncionario(Funcionario funcionario) {
@@ -75,8 +73,8 @@ public class ControladorFuncionario {
 	}
 
 	public Funcionario getFuncionario(Integer numeroMatricula) {
-		for (Funcionario funcionario : this.funcionarios.getList()) {
-			if (funcionario.getNumeroMatricula() == numeroMatricula) {
+		for (Funcionario funcionario : this.funcionarios.getFuncionarios()) {
+			if (funcionario.getNumeroMatricula().equals(numeroMatricula)) {
 				return funcionario;
 			}
 		}
@@ -104,6 +102,7 @@ public class ControladorFuncionario {
 
 	public void exibeTelaFuncionario() {
 		this.telaFuncionarios.setVisible(true);
+		this.telaFuncionarios.atualizaLista();
 	}
 
 	public void verificaMatricula(int matricula) throws CadastroIncorretoException {
@@ -125,22 +124,41 @@ public class ControladorFuncionario {
 	public static void desbloqueia(Funcionario blok) {
 		blok.desbloquear();
 	}
-//      Onde fica esse código?
-	public void alteraFuncionario(Funcionario funcionario){
-//		this.funcionarios.altera(funcionario);
-	}
+
 
 //	Não entendi o por que dessa função aqui
-//	public HashMap<Integer, Funcionario> getFuncionario(){
-//		return this.funcionarios.getFuncionarios();
-//	}
+	public ArrayList<Funcionario> getListaFuncionarios(){
+		return this.funcionarios.getFuncionarios();
+	}
 
     public void voltarMenuPrincipal() {
 		ControladorPrincipal.getInstance().voltarMenuPrincipal();
     }
 
     public void exibeTelaCadastroFuncionario(){
-		telaFuncionarios.setVisible(false);
-		telaCadastroFuncionarios.setVisible(true);
+		this.telaFuncionarios.setVisible(false);
+		this.telaCadastroFuncionarios = new TelaCadastroFuncionarios();
+		this.telaCadastroFuncionarios.setVisible(true);
     }
+
+	public void exibeTelaCadastroFuncionario(Funcionario f) {
+		this.telaFuncionarios.setVisible(false);
+		this.telaCadastroFuncionarios = new TelaCadastroFuncionarios(f);
+		this.telaCadastroFuncionarios.setVisible(true);
+
+	}
+
+	public String alteraFuncionario(Integer matricula, String nome, Integer nascimento, Integer telefone, Cargo cargo) {
+		for (Funcionario f : this.funcionarios.getFuncionarios()) {
+			if (f.getNumeroMatricula().equals(matricula)) {
+				f.setCargo(cargo);
+				f.setDataNascimento(nascimento);
+				f.setNome(nome);
+				f.setTelefone(telefone);
+				this.funcionarios.persist();
+				return "Funcionario " + nome + " alterado com sucesso";
+			}
+		}
+		return "Funcionario não existe ou não pode ser alterado";
+	}
 }

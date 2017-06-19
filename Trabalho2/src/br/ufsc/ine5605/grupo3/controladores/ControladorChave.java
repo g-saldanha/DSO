@@ -1,21 +1,22 @@
 package br.ufsc.ine5605.grupo3.controladores;
 
-import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaChaves;
-import br.ufsc.ine5605.grupo3.entidades.Chave;
-import br.ufsc.ine5605.grupo3.entidades.Funcionario;
-import br.ufsc.ine5605.grupo3.entidades.Funcionario.Cargo;
-import br.ufsc.ine5605.grupo3.entidades.Veiculo;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaChaves;
+import br.ufsc.ine5605.grupo3.entidades.Cargo;
+import br.ufsc.ine5605.grupo3.entidades.Chave;
+import br.ufsc.ine5605.grupo3.entidades.Funcionario;
+import br.ufsc.ine5605.grupo3.entidades.Veiculo;
+
 public class ControladorChave {
 	private static ControladorChave instance;
-	private static ArrayList<Chave> chaves;
+	private static ChavesDAO chaves;
 	private TelaChaves telaChaves;
 
 	private ControladorChave() {
 		this.telaChaves = new TelaChaves();
+		this.chaves = new ChavesDAO();
 	}
 
 	public static ControladorChave getInstance() {
@@ -27,50 +28,54 @@ public class ControladorChave {
 	}
 
 	public void adicionarChave(String placa) {
-		if (this.checkExists(placa) == -1) {
-			chaves.add(new Chave(placa));
+		if (!this.checkExists(placa)) {
+			this.chaves.botar(new Chave(placa));
 		}
 	}
 
-	public void deletarChave(String placa) {
-		int index = this.checkExists(placa);
-
-		if (index != -1) {
-			chaves.remove(index);
+	public void deletarChave(Long id) {
+		if (this.pegaChavePorId(id) != null && !this.pegaChavePorId(id).isAlugada()) {
+			chaves.remove(this.pegaChavePorId(id));
 		}
 	}
 
-	public void exibirChaves() {
-		int index = 0;
-		for (Chave c : chaves) {
-//			this.telaChave.exibeTelaExibicao(c, index);
-			index++;
+	private Chave pegaChavePorId(Long id) {
+		for (Chave c : chaves.getChaves()
+		     ) {
+			if (c.getID().equals(id)){
+				return c;
+			}
 		}
+		return null;
 	}
 
 	public ArrayList<Chave> getChaves() {
-		return chaves;
+		return chaves.getChaves();
 	}
 
-	public Integer checkExists(String placa) {
-		int index = 0;
-		for (Chave c : chaves) {
+	public boolean checkExists(String placa) {
+		for (Chave c : chaves.getChaves()) {
 			if (c.getPlaca().equals(placa)) {
-				return index;
+				return true;
 			}
-			index++;
 		}
-		return -1;
+		return false;
 	}
 
-	public Chave getChave(String placa) {
-		int index = this.checkExists(placa);
+	public Chave getChave(Long id) {
+		for (Chave c: chaves.getChaves()
+		     ) {
+			if (c.getID().equals(id)) {
+				return c;
+			}
 
-		return index != -1 ? chaves.get(index) : null;
+		}
+		return null;
 	}
 
 	public void exibeTelaChave() {
-		telaChaves.setVisible(true);
+		this.telaChaves.atualizaLista();
+		this.telaChaves.setVisible(true);
 	}
 
 	public Funcionario pegaFuncionario(int matricula) {
@@ -91,8 +96,10 @@ public class ControladorChave {
 							ControladorPrincipal.getInstance().pegaVeiculo(c.getPlaca()), false, "Retirada : Acesso a chave previamente alugada");
 					return -4;
 				}
+
 				f.setChave(c);
 				c.setAlugada(true);
+				this.chaves.persiste();
 				this.adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f,
 						ControladorPrincipal.getInstance().pegaVeiculo(c.getPlaca()), true, "Retirada : Acesso Permitido ao Veiculo");
 				return 0;
@@ -134,5 +141,15 @@ public class ControladorChave {
 
 	public void voltarMenuPrincipal() {
 		ControladorPrincipal.getInstance().voltarMenuPrincipal();
+	}
+
+
+	public Chave getChave(String placa) {
+		for (Chave c : chaves.getChaves()){
+			if(c.getPlaca().equals(placa)){
+				return c;
+			}
+		}
+		return null;
 	}
 }

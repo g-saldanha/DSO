@@ -5,6 +5,7 @@
  */
 package br.ufsc.ine5605.grupo3.entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,16 +13,13 @@ import java.util.List;
  *
  * @author Caio
  */
-public class Funcionario {
+public class Funcionario implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer numeroMatricula;
 	private String nome;
 	private Integer dataNascimento;
 	private Integer telefone;
-
-	public enum Cargo {
-		DIRETORIA, COMUM
-	};
-	Cargo cargo;
+	private Cargo cargo;
 	boolean bloqueado = false;
 	private ArrayList<Veiculo> tiposDeVeiculo;
 	private Chave chave;
@@ -119,3 +117,5 @@ public class Funcionario {
 
 	}
 }
+
+

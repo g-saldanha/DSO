@@ -5,11 +5,14 @@
  */
 package br.ufsc.ine5605.grupo3.entidades;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Caio
  */
-public class Veiculo {
+public class Veiculo implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String placa;
 	private String modelo;
 	private String marca;

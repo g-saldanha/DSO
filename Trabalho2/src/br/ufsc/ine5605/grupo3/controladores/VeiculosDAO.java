@@ -90,7 +90,7 @@ public class VeiculosDAO {
     }
 
     public ArrayList<Veiculo> getVeiculos() {
-        return new ArrayList<Veiculo>(this.getList());
+        return new ArrayList<>(this.getList());
     }
 
 }

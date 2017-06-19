@@ -1,10 +1,14 @@
 package br.ufsc.ine5605.grupo3.controladores;
 
+import java.util.ArrayList;
+
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaCadastroVeiculo;
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaVeiculos;
-import br.ufsc.ine5605.grupo3.entidades.*;
-
-import java.util.ArrayList;
+import br.ufsc.ine5605.grupo3.entidades.Caminhonete;
+import br.ufsc.ine5605.grupo3.entidades.Carro;
+import br.ufsc.ine5605.grupo3.entidades.Moto;
+import br.ufsc.ine5605.grupo3.entidades.Tipo;
+import br.ufsc.ine5605.grupo3.entidades.Veiculo;
 
 public class ControladorVeiculos {
 	private static ControladorVeiculos instance;
@@ -27,15 +31,16 @@ public class ControladorVeiculos {
 		return instance;
 	}
 
-	public void cadastrarVeiculo(Veiculo v) {
+	public String cadastrarVeiculo(Veiculo v) {
 		if (!this.checkExists(v.getPlaca())) {
 			this.veiculos.put(v);
 		} else {
-			System.out.println("Veiculo de mesma placa já existe");
+			return "Veiculo de mesma placa já existe";
 		}
+		return "Veículo Placa " + v.getPlaca() + " Cadastrado com sucesso";
 	}
 
-	public void cadastraVeiculo(String placa, String modelo, String marca, Integer ano, Integer km, Tipo tipo) {
+	public String cadastraVeiculo(String placa, String modelo, String marca, Integer ano, Integer km, Tipo tipo) {
 		if (!this.checkExists(placa)) {
 			Veiculo novo = null;
 			if (tipo.equals(Tipo.MOTO)) {
@@ -46,21 +51,23 @@ public class ControladorVeiculos {
 				novo = new Caminhonete(placa, modelo, marca, ano, km);
 			}
 			this.veiculos.put(novo);
-//			ControladorPrincipal.getInstance().adicionarChave(placa);
+
+			ControladorPrincipal.getInstance().adicionarChave(placa);
+			return "Veículo Placa " + placa + " Cadastrado com sucesso";
 		} else {
-			System.out.println("Veiculo de mesma placa já existe");
+			return "Veiculo de mesma placa já existe";
 		}
 	}
 
 	public void removeVeiculo(String placa) {
 		if (this.checkExists(placa)) {
 			Veiculo v = this.pegaVeiculo(placa);
-			if (ControladorPrincipal.getInstance().pegaChave(placa).isAlugada()) {
-				System.out.println("Veiculo Alugado Não Pode Ser Excluido");
-				return;
-			}
+//			if (ControladorPrincipal.getInstance().pegaChave(placa).isAlugada()) {
+//				System.out.println("Veiculo Alugado Não Pode Ser Excluido");
+//				return;
+//			}
 			this.veiculos.remove(v);
-			ControladorPrincipal.getInstance().deletarChave(placa);
+//			ControladorPrincipal.getInstance().deletarChave(ControladorChave.getInstance().getChave(placa).getID());
 		}
 	}
 
@@ -83,7 +90,7 @@ public class ControladorVeiculos {
 	}
 
     public ArrayList<Veiculo> getVeiculos() {
-        return veiculos.getVeiculos();
+        return this.veiculos.getVeiculos();
     }
 
     public void voltarMenuPrincipal() {
@@ -91,11 +98,26 @@ public class ControladorVeiculos {
     }
 
     public void exibeTelaVeiculos() {
-		telaVeiculos.atualizaLista();
-	    telaVeiculos.setVisible(true);
+		this.telaVeiculos.atualizaLista();
+	    this.telaVeiculos.setVisible(true);
     }
 
     public void exibeTelaCadastroVeiculo(){
-		telaCadastroVeiculo.setVisible(true);
+		this.telaCadastroVeiculo.setVisible(true);
+	}
+
+	public void exibeTelaEditaVeiculo(String placa) {
+		this.telaCadastroVeiculo = new TelaCadastroVeiculo(placa);
+		this.telaCadastroVeiculo.setVisible(true);
+
+	}
+
+	public ArrayList<String> getPlacas() {
+		ArrayList<String> placas = new ArrayList<>();
+		for (Veiculo v : this.veiculos.getVeiculos()) {
+			placas.add(v.getPlaca());
+		}
+		return placas;
+
 	}
 }
