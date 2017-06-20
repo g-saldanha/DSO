@@ -10,8 +10,9 @@ package br.ufsc.ine5605.grupo3.apresentacaoJFrame.Exception;
  * @author Caio
  */
 public class CadastroIncorretoException extends Exception {
-    
+
     public CadastroIncorretoException(String erro){
         super(erro);
     }
+
 }

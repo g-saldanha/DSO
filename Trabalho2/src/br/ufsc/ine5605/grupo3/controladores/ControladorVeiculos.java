@@ -73,7 +73,7 @@ public class ControladorVeiculos {
 
 	public Veiculo pegaVeiculo(String placa) {
 		for (Veiculo v : this.veiculos.getVeiculos()) {
-			if (this.checkExists(placa)) {
+			if (v.getPlaca().equals(placa)) {
 				return v;
 			}
 		}

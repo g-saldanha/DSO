@@ -184,10 +184,16 @@ public class TelaCadastroFuncionarios extends JFrame implements Tela, ActionList
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Cadastrar")) {
-			String msg = ControladorFuncionario.getInstance().cadastraFuncionario(Integer.parseInt(this.tfMatricula.getText()), this.tfNome.getText(), Integer.parseInt(this.tfDataNascimento.getText()), Integer.parseInt(this.tfTelefone.getText()), (Cargo) this.bjCargos.getSelectedItem());
-			this.limpa();
-			JOptionPane.showMessageDialog(null, msg);
+			if(this.bjCargos.getSelectedItem().equals(Cargo.COMUM)){
+				this.setVisible(false);
+				ControladorFuncionario.getInstance().exibeTelaPermissões(Integer.parseInt(this.tfMatricula.getText()), this.tfNome.getText(), Integer.parseInt(this.tfDataNascimento.getText()), Integer.parseInt(this.tfTelefone.getText()), (Cargo) this.bjCargos.getSelectedItem());
+			} else {
+				String msg = ControladorFuncionario.getInstance().cadastraFuncionario(Integer.parseInt(this.tfMatricula.getText()), this.tfNome.getText(), Integer.parseInt(this.tfDataNascimento.getText()), Integer.parseInt(this.tfTelefone.getText()), (Cargo) this.bjCargos.getSelectedItem());
+				this.limpa();
+				JOptionPane.showMessageDialog(null, msg);
+			}
 			this.setVisible(false);
+
 			ControladorFuncionario.getInstance().exibeTelaFuncionario();
 		}
 		if (e.getActionCommand().equals("Editar")) {

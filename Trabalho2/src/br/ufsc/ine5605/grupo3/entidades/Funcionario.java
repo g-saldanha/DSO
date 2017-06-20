@@ -23,6 +23,7 @@ public class Funcionario implements Serializable {
 	boolean bloqueado = false;
 	private ArrayList<Veiculo> tiposDeVeiculo;
 	private Chave chave;
+	private int counter = 0;
 
 	public Funcionario(Integer numeroMatricula, String nome, Integer dataNascimento, Integer telefone, Cargo cargo) {
 		this.numeroMatricula = numeroMatricula;
@@ -31,6 +32,15 @@ public class Funcionario implements Serializable {
 		this.telefone = telefone;
 		this.cargo = cargo;
 		this.tiposDeVeiculo = new ArrayList<>();
+	}
+
+	public Funcionario(Integer i, String string, Integer j, Integer k, Cargo cargo2, ArrayList<Veiculo> veiculos) {
+		this.numeroMatricula = i;
+		this.nome = string;
+		this.dataNascimento = j;
+		this.telefone = k;
+		this.cargo = cargo2;
+		this.tiposDeVeiculo = veiculos;
 	}
 
 	public Integer getNumeroMatricula() {
@@ -116,6 +126,20 @@ public class Funcionario implements Serializable {
 		this.bloqueado = false;
 
 	}
+
+	public void addCounter() {
+		this.counter ++;
+		if(this.counter >= 3){
+			this.bloquear();
+		}
+
+	}
+
+	public void resetCounter() {
+		this.counter = 0;
+
+	}
+
 }
 
 

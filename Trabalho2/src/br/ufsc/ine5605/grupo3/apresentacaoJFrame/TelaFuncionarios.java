@@ -1,6 +1,7 @@
 package br.ufsc.ine5605.grupo3.apresentacaoJFrame;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -48,6 +49,7 @@ public class TelaFuncionarios extends JFrame implements Tela, ActionListener {
 	private JButton bSair;
 	private JTable tbFuncionarios;
 	private JScrollPane scrollPane;
+	private JButton bVerVeiculos;
 
 
 	public TelaFuncionarios() {
@@ -82,6 +84,7 @@ public class TelaFuncionarios extends JFrame implements Tela, ActionListener {
 		this.bEditar = new JButton();
 		this.bSair = new JButton();
 		this.tbFuncionarios = new JTable();
+		this.bVerVeiculos = new JButton("Ver Veiculos");
 
 //		Colocando os textos nos componentes
 		this.bemVindo.setText("Bem vindo a Tela de Funcionários");
@@ -101,6 +104,7 @@ public class TelaFuncionarios extends JFrame implements Tela, ActionListener {
 		this.bVoltar.setText("Voltar");
 		this.bSair.setText("Sair");
 
+
 //		Colocando as ações nos botões
 		this.bAdicionar.setActionCommand("Adicionar");
 		this.bAdicionar.addActionListener(this);
@@ -117,11 +121,18 @@ public class TelaFuncionarios extends JFrame implements Tela, ActionListener {
 		this.bSair.setActionCommand("Sair");
 		this.bSair.addActionListener(this);
 
+		this.bVerVeiculos.setActionCommand("Ver");
+		this.bVerVeiculos.addActionListener(this);
+
 //        Adicionando e instanciando na Tela os componentes
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.gridx = 1;
 		constraints.gridy = 0;
 		container.add(this.bemVindo, constraints);
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		container.add(this.bVerVeiculos, constraints);
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.gridx = 0;
 		constraints.gridy = 1;
@@ -148,6 +159,7 @@ public class TelaFuncionarios extends JFrame implements Tela, ActionListener {
 		container.add(this.tbFuncionarios, constraints);
 //        tabela
 		this.tbFuncionarios.setFillsViewportHeight(true);
+		this.tbFuncionarios.setPreferredScrollableViewportSize(new Dimension(300, 100));
 		constraints.fill = GridBagConstraints.CENTER;
 		constraints.gridy = 3;
 		constraints.gridheight = 6;
@@ -212,6 +224,23 @@ public class TelaFuncionarios extends JFrame implements Tela, ActionListener {
 		}
 		if (e.getActionCommand().equals("Sair")){
 			this.sair();
+		}
+		if (e.getActionCommand().equals("Ver")) {
+			String msg = "Placas:";
+			Cargo c = (Cargo) this.tbFuncionarios.getValueAt(this.tbFuncionarios.getSelectedRow(), 4);
+			if(c.equals(Cargo.DIRETORIA)){
+				JOptionPane.showMessageDialog(null, "Selecione um Funcionario que não seja Diretoria");
+			} else {
+				try {
+					for (Veiculo v :
+						ControladorFuncionario.getInstance().getFuncionario((Integer) this.tbFuncionarios.getValueAt(this.tbFuncionarios.getSelectedRow(), 0)).getTiposDeVeiculo()) {
+						msg += "\n"+ v.getPlaca() + "," +"Modelo: "+v.getModelo();
+					}
+					JOptionPane.showMessageDialog(null, msg);
+				} catch (ArrayIndexOutOfBoundsException e2) {
+					JOptionPane.showMessageDialog(null, "Selecione um Funcionario que não seja Diretoria");
+				}
+			}
 		}
 	}
 }

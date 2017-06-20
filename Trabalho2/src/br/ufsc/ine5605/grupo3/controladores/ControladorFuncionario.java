@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaCadastroFuncionarios;
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaFuncionarios;
+import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaPermissaoVeiculos;
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.Exception.CadastroIncorretoException;
 import br.ufsc.ine5605.grupo3.entidades.Cargo;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
@@ -24,6 +25,7 @@ public class ControladorFuncionario {
 	private FuncionarioDAO funcionarios;
 	private static ControladorFuncionario instance;
 	private TelaCadastroFuncionarios telaCadastroFuncionarios;
+	private TelaPermissaoVeiculos telaPermissoes;
 
 	private ControladorFuncionario() {
 		this.telaFuncionarios = new TelaFuncionarios();
@@ -169,4 +171,27 @@ public class ControladorFuncionario {
 		}
 		return matriculas;
 	}
+
+	public void exibeTelaPermissões(Integer i, String string, Integer j, Integer k, Cargo cargo) {
+		this.telaCadastroFuncionarios.setVisible(false);
+		this.telaFuncionarios.setVisible(false);
+		this.telaPermissoes = new TelaPermissaoVeiculos(i, string, j, k, cargo);
+		this.telaPermissoes.setVisible(true);
+
+	}
+
+	public String cadastraFuncionario(Integer i, String string, Integer j, Integer k, Cargo cargo, ArrayList<Veiculo> veiculos) {
+		try {
+			this.verificaMatricula(i);
+		} catch (CadastroIncorretoException e) {
+			return "Funcionario Existente";
+		}
+
+		Funcionario novoFuncionario = new Funcionario(i, string, j, k, cargo, veiculos);
+
+		this.funcionarios.put(novoFuncionario);
+		return "Funcionario" + string + "Cadastrado com Sucesso";
+
+	}
+
 }

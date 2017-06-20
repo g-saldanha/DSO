@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaChaves;
+import br.ufsc.ine5605.grupo3.apresentacaoJFrame.Exception.CadastroBloqueadoException;
 import br.ufsc.ine5605.grupo3.entidades.Cargo;
 import br.ufsc.ine5605.grupo3.entidades.Chave;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
@@ -82,11 +83,11 @@ public class ControladorChave {
 		return ControladorPrincipal.getInstance().pegaFuncionario(matricula);
 	}
 
-	public int cederChave(Funcionario f, Chave c) {
+	public int cederChave(Funcionario f, Chave c) throws CadastroBloqueadoException {
 		if (f.getBloqueado()) {
 			this.adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f, null,
 					false, "Retirada : Usuario Bloqueado");
-			return -3;
+			throw new CadastroBloqueadoException("Usuario");
 		}
 
 		if (f.getChave() == null) {
@@ -102,10 +103,12 @@ public class ControladorChave {
 				this.chaves.persiste();
 				this.adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f,
 						ControladorPrincipal.getInstance().pegaVeiculo(c.getPlaca()), true, "Retirada : Acesso Permitido ao Veiculo");
+				f.resetCounter();
 				return 0;
 			} else {
 				this.adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f,
 						ControladorPrincipal.getInstance().pegaVeiculo(c.getPlaca()), false, " Retirada : Funcionario nào possui acesso ao veiculo escolhido");
+				f.addCounter();
 				return -1;
 			}
 		} else {
@@ -116,12 +119,6 @@ public class ControladorChave {
 	}
 
 	public int devolverChave(Funcionario f, Chave c) {
-		if (f.getBloqueado()) {
-			this.adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f, null,
-					false, "Retirada : Usuario Bloqueado");
-			return -2;
-		}
-
 		f.setChave(null);
 		c.setAlugada(false);
 		this.adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f,
