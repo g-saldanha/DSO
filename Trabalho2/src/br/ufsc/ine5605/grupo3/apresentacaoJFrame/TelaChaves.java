@@ -185,13 +185,13 @@ public class TelaChaves extends JFrame implements Tela, ActionListener {
 					try {
 						int result = ControladorChave.getInstance().cederChave(ControladorChave.getInstance().pegaFuncionario(j), ControladorChave.getInstance().getChave(id));
 						if (result == 0) {
-							m = "Chave Liberada com sucesso a " + f.getNome();
+							m = "CHAVE_LIBERADA" + f.getNome();
 						} else if (result == -1) {
 							m = "Usuario " + f.getNome() + " nao possui acesso a chave";
 						} else if (result == -2) {
 							m = "Usuario " + f.getNome() + " já possui chave";
 						} else {
-							m = "Chave já está alugada";
+							m = "CHAVE_ALUGADA";
 						}
 					} catch (CadastroBloqueadoException ex) {
 						m = ex.getMessage();
@@ -202,7 +202,7 @@ public class TelaChaves extends JFrame implements Tela, ActionListener {
 					JOptionPane.showMessageDialog(null, "Matricula Inexistente, favor digite uma matrícula correta");
 				}
 			} catch (ArrayIndexOutOfBoundsException e2) {
-				JOptionPane.showMessageDialog(null, "Selecione a chave que deseja pegar");
+				JOptionPane.showMessageDialog(null, "CHAVE_SELECIONAR_PEGAR");
 			}
 
 		}
