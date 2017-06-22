@@ -5,6 +5,10 @@
  */
 package br.ufsc.ine5605.grupo3.controladores;
 
+import java.io.IOException;
+
+import br.ufsc.ine5605.grupo3.mensagens.CarregaPropriedades;
+
 /**
  *
  * @author Caio & Gabriel
@@ -13,10 +17,12 @@ public class Claviculario {
 
     /**
      * @param args the command line arguments
+     * @throws IOException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         ControladorPrincipal.getInstance();
+        CarregaPropriedades cP = new CarregaPropriedades();
 
     }
 

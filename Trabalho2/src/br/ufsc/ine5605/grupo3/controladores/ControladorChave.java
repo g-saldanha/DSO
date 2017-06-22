@@ -33,8 +33,8 @@ public class ControladorChave {
 			this.chaves.botar(new Chave(placa));
 		}
 	}
-
-	public void deletarChave(Long id) {
+// Arrumar método
+	public void deletarChave(Long id, Integer m) {
 		if (this.pegaChavePorId(id) != null && !this.pegaChavePorId(id).isAlugada()) {
 			chaves.remove(this.pegaChavePorId(id));
 		}

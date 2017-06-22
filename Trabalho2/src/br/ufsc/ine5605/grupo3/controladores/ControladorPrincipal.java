@@ -38,8 +38,8 @@ public class ControladorPrincipal {
     	ControladorChave.getInstance().adicionarChave(Placa);
     }
 
-    public void deletarChave(Long id){
-    	ControladorChave.getInstance().deletarChave(id);
+    public void deletarChave(Long id, Integer matricula){
+    	ControladorChave.getInstance().deletarChave(id, matricula);
     }
 
 	public Veiculo pegaVeiculo(String opt) {

@@ -22,6 +22,8 @@ import br.ufsc.ine5605.grupo3.controladores.ControladorPrincipal;
 import br.ufsc.ine5605.grupo3.entidades.Chave;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
+import br.ufsc.ine5605.grupo3.enums.EnumsChaves;
+import br.ufsc.ine5605.grupo3.mensagens.Messages;
 
 public class TelaChaves extends JFrame implements Tela, ActionListener {
 	// Atributos
@@ -37,13 +39,13 @@ public class TelaChaves extends JFrame implements Tela, ActionListener {
 	private JButton bFiltroPorMatricula;
 
 	public TelaChaves() {
-		this.inic();
+		inic();
 	}
 
 	@Override
 	public void inic() {
 		// Instanciar Container e Layout
-		Container container = this.getContentPane();
+		Container container = getContentPane();
 		container.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
 
@@ -63,27 +65,27 @@ public class TelaChaves extends JFrame implements Tela, ActionListener {
 		this.lista.setText("Lista de Chaves");
 		this.pegar.setText("Pegar Chave");
 		this.bDevolver.setText("Devolver Chave");
-		this.bRemover.setText("Remover Chave");
-		this.bVoltar.setText("Voltar");
-		this.bSair.setText("Sair");
+		this.bRemover.setText(Messages.getString(Messages.REMOVER));
+		this.bVoltar.setText(Messages.getString(Messages.VOLTAR));
+		this.bSair.setText(Messages.getString(Messages.SAIR));
 
 		// Configurando ações dos botões
-		this.pegar.setActionCommand("Pegar");
+		this.pegar.setActionCommand(Messages.getString(Messages.PEGAR));
 		this.pegar.addActionListener(this);
 
-		this.bDevolver.setActionCommand("Devolver");
+		this.bDevolver.setActionCommand(Messages.getString(Messages.DEVOLVER));
 		this.bDevolver.addActionListener(this);
 
-		this.bRemover.setActionCommand("Remover");
+		this.bRemover.setActionCommand(Messages.getString(Messages.REMOVER));
 		this.bRemover.addActionListener(this);
 
-		this.bSair.setActionCommand("Sair");
+		this.bSair.setActionCommand(Messages.getString(Messages.SAIR));
 		this.bSair.addActionListener(this);
 
-		this.bVoltar.setActionCommand("Voltar");
+		this.bVoltar.setActionCommand(Messages.getString(Messages.VOLTAR));
 		this.bVoltar.addActionListener(this);
 
-		this.bFiltroPorMatricula.setActionCommand("Ver");
+		this.bFiltroPorMatricula.setActionCommand(Messages.getString(Messages.VER));
 		this.bFiltroPorMatricula.addActionListener(this);
 
 		// Adicionando e instanciando na Tela os componentes
@@ -126,16 +128,16 @@ public class TelaChaves extends JFrame implements Tela, ActionListener {
 		this.setSize(800, 600);
 
 		// Botão de fechar
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	@Override
 	public void atualizaLista() {
 		DefaultTableModel tModelo = new DefaultTableModel();
-		tModelo.addColumn("Chave ID");
-		tModelo.addColumn("Placa");
-		tModelo.addColumn("Veiculo");
-		tModelo.addColumn("Alugada");
+		tModelo.addColumn(EnumsChaves.COLUNA1.toString());
+		tModelo.addColumn(EnumsChaves.COLUNA2.toString());
+		tModelo.addColumn(EnumsChaves.COLUNA3.toString());
+		tModelo.addColumn(EnumsChaves.COLUNA4.toString());
 
 		for (Chave c : ControladorChave.getInstance().getChaves()) {
 			tModelo.addRow(new Object[] { c.getID(), c.getPlaca(), c.getModelo(), c.getEstado() });
@@ -148,10 +150,10 @@ public class TelaChaves extends JFrame implements Tela, ActionListener {
 
 	public void atualizaLista(Funcionario f) {
 		DefaultTableModel tModelo = new DefaultTableModel();
-		tModelo.addColumn("Chave ID");
-		tModelo.addColumn("Placa");
-		tModelo.addColumn("Veiculo");
-		tModelo.addColumn("Alugada");
+		tModelo.addColumn(EnumsChaves.COLUNA1.toString());
+		tModelo.addColumn(EnumsChaves.COLUNA2.toString());
+		tModelo.addColumn(EnumsChaves.COLUNA3.toString());
+		tModelo.addColumn(EnumsChaves.COLUNA4.toString());
 
 		for (Chave c : ControladorChave.getInstance().getChaves()) {
 			for(Veiculo v : f.getTiposDeVeiculo()){
@@ -169,29 +171,29 @@ public class TelaChaves extends JFrame implements Tela, ActionListener {
 
 	@Override
 	public void sair() {
-		this.dispose();
+		dispose();
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e){
 
-		if (e.getActionCommand().equals("Pegar")) {
+		if (e.getActionCommand().equals(Messages.getString(Messages.PEGAR))){
 			try {
 				Long id = (Long) this.tChaves.getValueAt(this.tChaves.getSelectedRow(), 0);
-				Integer j = Integer.parseInt(JOptionPane.showInputDialog("Insira Sua Matrícula"));
+				Integer j = Integer.parseInt(JOptionPane.showInputDialog(Messages.getString(Messages.JOPINPUT_MATRICULA)));
 				Funcionario f = ControladorPrincipal.getInstance().pegaFuncionario(j);
 				if (f != null) {
 					String m;
 					try {
 						int result = ControladorChave.getInstance().cederChave(ControladorChave.getInstance().pegaFuncionario(j), ControladorChave.getInstance().getChave(id));
 						if (result == 0) {
-							m = "CHAVE_LIBERADA" + f.getNome();
+							m = Messages.getString(Messages.CHAVE_LIBERADA) + f.getNome();
 						} else if (result == -1) {
 							m = "Usuario " + f.getNome() + " nao possui acesso a chave";
 						} else if (result == -2) {
 							m = "Usuario " + f.getNome() + " já possui chave";
 						} else {
-							m = "CHAVE_ALUGADA";
+							m = Messages.getString(Messages.CHAVE_ALUGADA);
 						}
 					} catch (CadastroBloqueadoException ex) {
 						m = ex.getMessage();
@@ -199,48 +201,49 @@ public class TelaChaves extends JFrame implements Tela, ActionListener {
 					JOptionPane.showMessageDialog(null, m);
 
 				} else {
-					JOptionPane.showMessageDialog(null, "Matricula Inexistente, favor digite uma matrícula correta");
+					JOptionPane.showMessageDialog(null, Messages.getString(Messages.MATRICULA_INEXISTENTE));
 				}
 			} catch (ArrayIndexOutOfBoundsException e2) {
-				JOptionPane.showMessageDialog(null, "CHAVE_SELECIONAR_PEGAR");
+				String msg = Messages.getString(Messages.CHAVE_SELECIONAR_PEGAR);
+				JOptionPane.showMessageDialog(null, msg);
 			}
 
 		}
 
-		if (e.getActionCommand().equals("Devolver")) {
+		if (e.getActionCommand().equals(Messages.getString(Messages.DEVOLVER))) {
 			try {
-				String i = JOptionPane.showInputDialog("Insira Sua Matrícula");
+				String i = JOptionPane.showInputDialog(Messages.getString(Messages.JOPINPUT_MATRICULA));
 				Integer m = Integer.parseInt(i != null? i : "0");
 				Long id = (Long) this.tChaves.getValueAt(this.tChaves.getSelectedRow(), 0);
 				ControladorChave.getInstance().devolverChave(ControladorChave.getInstance().pegaFuncionario(m), ControladorChave.getInstance().getChave(id));
 			} catch (ArrayIndexOutOfBoundsException e2) {
-				JOptionPane.showMessageDialog(null, "Selecione uma chave");
+				JOptionPane.showMessageDialog(null, Messages.getString(Messages.SELECIONE_CHAVE));
 			}
 
 		}
 
-		if (e.getActionCommand().equals("Remover")) {
-			Integer m = Integer.parseInt(JOptionPane.showInputDialog("Insira Sua Matrícula"));
+		if (e.getActionCommand().equals(Messages.getString(Messages.REMOVER))) {
+			Integer m = Integer.parseInt(JOptionPane.showInputDialog(Messages.getString(Messages.JOPINPUT_MATRICULA)));
 			Long id = (Long) this.tChaves.getValueAt(this.tChaves.getSelectedRow(), 0);
 
-			ControladorChave.getInstance().deletarChave(id);
+			ControladorChave.getInstance().deletarChave(id, m);
 		}
 
-		if (e.getActionCommand().equals("Voltar")) {
-			this.setVisible(false);
+		if (e.getActionCommand().equals(Messages.getString(Messages.VOLTAR))) {
+			setVisible(false);
 			ControladorChave.getInstance().voltarMenuPrincipal();
 		}
 
-		if (e.getActionCommand().equals("Sair")) {
-			this.sair();
+		if (e.getActionCommand().equals(Messages.getString(Messages.SAIR))) {
+			sair();
 		}
 
-		if (e.getActionCommand().equals("Ver")) {
-			String mat =  JOptionPane.showInputDialog("Digite o numero da matricula");
+		if (e.getActionCommand().equals(Messages.getString(Messages.VER))) {
+			String mat =  JOptionPane.showInputDialog(Messages.getString(Messages.JOPINPUT_MATRICULA));
 
 			Funcionario f =ControladorFuncionario.getInstance().getFuncionario(Integer.parseInt(mat));
 			if(f == null){
-				JOptionPane.showMessageDialog(null, "Matricula não Existe");
+				JOptionPane.showMessageDialog(null, Messages.getString(Messages.MATRICULA_INEXISTENTE));
 			} else{
 				this.atualizaLista(f);
 			}
