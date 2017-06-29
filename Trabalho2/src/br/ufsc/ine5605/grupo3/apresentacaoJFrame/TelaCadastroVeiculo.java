@@ -18,9 +18,14 @@ import javax.swing.JTextField;
 import br.ufsc.ine5605.grupo3.controladores.ControladorVeiculos;
 import br.ufsc.ine5605.grupo3.entidades.Tipo;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
+import br.ufsc.ine5605.grupo3.mensagens.Messages;
 
 public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener {
-    private JLabel lPlaca;
+    /**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	private JLabel lPlaca;
     private JLabel lModelo;
     private JLabel lMarca;
     private JLabel lAno;
@@ -39,12 +44,12 @@ public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener 
 
 
     public TelaCadastroVeiculo() {
-        super("Cadastro de Veículos");
+        super(Messages.TITULO_CADVEICULOS);
         inic();
     }
 
     public TelaCadastroVeiculo(String v){
-    	super("Edição de Veículos");
+    	super(Messages.TITULO_EDVEICULOS);
     	inic();
     	this.vEditar = ControladorVeiculos.getInstance().pegaVeiculo(v);
     	edit();
@@ -69,31 +74,31 @@ public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener 
         this.tMarca = new JTextField();
         this.tAno = new JTextField();
         this.tKm = new JTextField();
-        this.cTipo = new JComboBox<Tipo>(Tipo.values());
+        this.cTipo = new JComboBox<>(Tipo.values());
         this.bCadastrar = new JButton();
         this.bSair = new JButton();
         this.bCadastrar = new JButton();
         this.bVoltar = new JButton();
 
 //        Colocando os textos nas labels e botões
-        this.lPlaca.setText("Digite a Placa: ");
-        this.lModelo.setText("Digite o Modelo:");
-        this.lMarca.setText("Digite a Marca:");
-        this.lAno.setText("Digite o Ano:");
-        this.lKm.setText("Digite o Km:");
-        this.lTipo.setText("Digite o Tipo de Veículo:");
-        this.bCadastrar.setText("Cadastrar Veículo");
-        this.bVoltar.setText("Voltar");
-        this.bSair.setText("Sair");
+        this.lPlaca.setText(Messages.VEICULOS_LB6);
+        this.lModelo.setText(Messages.VEICULOS_LB7);
+        this.lMarca.setText(Messages.VEICULOS_LB8);
+        this.lAno.setText(Messages.VEICULOS_LB9);
+        this.lKm.setText(Messages.VEICULOS_LB10);
+        this.lTipo.setText(Messages.VEICULOS_LB11);
+        this.bCadastrar.setText(Messages.VEICULOS_BT1);
+        this.bVoltar.setText(Messages.VOLTAR);
+        this.bSair.setText(Messages.SAIR);
 
 //          Configurando os Eventos dos botões
-	    this.bCadastrar.setActionCommand("Cadastrar");
+	    this.bCadastrar.setActionCommand(Messages.CADASTRAR);
 	    this.bCadastrar.addActionListener(this);
 
-	    this.bVoltar.setActionCommand("Voltar");
+	    this.bVoltar.setActionCommand(Messages.VOLTAR);
 	    this.bVoltar.addActionListener(this);
 
-	    this.bSair.setActionCommand("Sair");
+	    this.bSair.setActionCommand(Messages.SAIR);
 	    this.bSair.addActionListener(this);
 
 //	    Configurando o tamaho dos Campos de texto
@@ -193,7 +198,7 @@ public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener 
 
 	@Override
     public void atualizaLista() {
-//Do nothing
+		//Do nothing
     }
 
     @Override
@@ -219,7 +224,7 @@ public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    	if (e.getActionCommand().equals("Cadastrar")){
+    	if (e.getActionCommand().equals(Messages.CADASTRAR)){
     		Integer ano = Integer.parseInt(this.tAno.getText());
     		Integer km = Integer.parseInt(this.tKm.getText());
 
@@ -227,7 +232,6 @@ public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener 
 			try {
 				m = ControladorVeiculos.getInstance().cadastraVeiculo(this.tPlaca.getText(), this.tModelo.getText(), this.tMarca.getText(), ano, km, (Tipo) this.cTipo.getSelectedItem());
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
     	    JOptionPane.showMessageDialog(null, m);
@@ -237,13 +241,13 @@ public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener 
 
 	    }
 
-	    if (e.getActionCommand().equals("Voltar")){
+	    if (e.getActionCommand().equals(Messages.VOLTAR)){
 	    	limpa();
     	    setVisible(false);
 		    ControladorVeiculos.getInstance().exibeTelaVeiculos();
 	    }
 
-	    if (e.getActionCommand().equals("Sair")){
+	    if (e.getActionCommand().equals(Messages.SAIR)){
 	    	sair();
 	    }
 

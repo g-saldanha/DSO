@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import br.ufsc.ine5605.grupo3.controladores.ControladorPrincipal;
 import br.ufsc.ine5605.grupo3.controladores.ControladorRegistro;
 import br.ufsc.ine5605.grupo3.entidades.Registro;
+import br.ufsc.ine5605.grupo3.mensagens.Messages;
 
 public class TelaRegistros extends JFrame implements Tela, ActionListener {
 /**
@@ -69,31 +70,31 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
         this.bVerMensagem = new JButton("Ver Mensagem");
 
 //    Configurando texto
-        this.bemVindo.setText("Bem vindo a Tela de registros");
-        this.lista.setText("Lista de Registros");
-        this.bSair.setText("Sair");
-        this.bVoltar.setText("Voltar");
+        this.bemVindo.setText(Messages.REGISTROS_LB2);
+        this.lista.setText(Messages.REGISTROS_LB1);
+        this.bSair.setText(Messages.SAIR);
+        this.bVoltar.setText(Messages.VOLTAR);
 
 //        Configurando ações dos botões
-        this.bVerTodos.setActionCommand("Todos");
+        this.bVerTodos.setActionCommand(Messages.REGISTROS_BT1);
         this.bVerTodos.addActionListener(this);
 
-        this.bFiltroPorMatricula.setActionCommand("Matricula");
+        this.bFiltroPorMatricula.setActionCommand(Messages.REGISTROS_BT2);
         this.bFiltroPorMatricula.addActionListener(this);
 
-        this.bFiltroPorMotivo.setActionCommand("Motivo");
+        this.bFiltroPorMotivo.setActionCommand(Messages.REGISTROS_BT3);
         this.bFiltroPorMotivo.addActionListener(this);
 
-        this.bFiltroPorPlaca.setActionCommand("Placa");
+        this.bFiltroPorPlaca.setActionCommand(Messages.REGISTROS_BT4);
         this.bFiltroPorPlaca.addActionListener(this);
 
-        this.bVoltar.setActionCommand("Voltar");
+        this.bVoltar.setActionCommand(Messages.VOLTAR);
         this.bVoltar.addActionListener(this);
 
-        this.bSair.setActionCommand("Sair");
+        this.bSair.setActionCommand(Messages.SAIR);
         this.bSair.addActionListener(this);
 
-        this.bVerMensagem.setActionCommand("Ver");
+        this.bVerMensagem.setActionCommand(Messages.VER);
 		this.bVerMensagem.addActionListener(this);
 
 //        Setando Layout
@@ -158,13 +159,13 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
 
     public void tModelo(){
     	this.tModelo = new DefaultTableModel();
-    	this.tModelo.addColumn("Registro");
-    	this.tModelo.addColumn("Data");
-    	this.tModelo.addColumn("Hora");
-    	this.tModelo.addColumn("Funcionario");
-    	this.tModelo.addColumn("Veículo");
-    	this.tModelo.addColumn("Km Andados");
-    	this.tModelo.addColumn("Motivo");
+    	this.tModelo.addColumn(Messages.REGISTROS_COL1);
+    	this.tModelo.addColumn(Messages.REGISTROS_COL2);
+    	this.tModelo.addColumn(Messages.REGISTROS_COL3);
+    	this.tModelo.addColumn(Messages.REGISTROS_COL4);
+    	this.tModelo.addColumn(Messages.REGISTROS_COL5);
+    	this.tModelo.addColumn(Messages.REGISTROS_COL6);
+    	this.tModelo.addColumn(Messages.REGISTROS_COL7);
     }
 
     @Override
@@ -219,7 +220,7 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("Placa")) {
+		if (e.getActionCommand().equals(Messages.REGISTROS_BT4)) {
 			this.cPlaca = new JComboBox<String>();
 			try {
 				this.cPlaca.setModel(new DefaultComboBoxModel<String>(new Vector<>(ControladorRegistro.getInstance().getPlacas())));
@@ -229,7 +230,7 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
 			JOptionPane.showMessageDialog( null, this.cPlaca, "Selecione uma Placa", JOptionPane.QUESTION_MESSAGE);
 			this.atualizaLista((String) this.cPlaca.getSelectedItem());
 		}
-		if (e.getActionCommand().equals("Motivo")) {
+		if (e.getActionCommand().equals(Messages.REGISTROS_BT3)) {
 			String[] motivos = new String[]{"Permissão", "Negação"};
 			this.cMotivo = new JComboBox<String>(motivos);
 			JOptionPane.showMessageDialog( null, this.cMotivo, "Selecione um Motivo", JOptionPane.QUESTION_MESSAGE);
@@ -239,21 +240,21 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
 			}
 			this.atualizaLista(motivo);
 		}
-		if (e.getActionCommand().equals("Matricula")) {
+		if (e.getActionCommand().equals(Messages.REGISTROS_BT2)) {
 			this.cMatricula = new JComboBox<Integer>();
 			try {
 				this.cMatricula.setModel(new DefaultComboBoxModel<Integer>(new Vector<>(ControladorRegistro.getInstance().getMatriculas())));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			JOptionPane.showMessageDialog( null, this.cPlaca, "Selecione uma Matricula", JOptionPane.QUESTION_MESSAGE);
+			JOptionPane.showMessageDialog( null, this.cPlaca, Messages.JOPDIALOG_MATRICULA, JOptionPane.QUESTION_MESSAGE);
 			this.atualizaLista((Integer) this.cMatricula.getSelectedItem());
 		}
 
-		if(e.getActionCommand().equals("Todos")){
+		if(e.getActionCommand().equals(Messages.REGISTROS_BT1)){
 			this.atualizaLista();
 		}
-		if (e.getActionCommand().equals("Voltar")) {
+		if (e.getActionCommand().equals(Messages.VOLTAR)) {
 			setVisible(false);
 			try {
 				ControladorPrincipal.getInstance().voltarMenuPrincipal();
@@ -261,11 +262,11 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
 				e1.printStackTrace();
 			}
 		}
-		if(e.getActionCommand().equals("Sair")){
+		if(e.getActionCommand().equals(Messages.SAIR)){
 			sair();
 		}
 
-		if (e.getActionCommand().equals("Ver")) {
+		if (e.getActionCommand().equals(Messages.VER)) {
 			try {
 				Registro r = ControladorRegistro.getInstance().getRegistro((Long) this.tRegistros.getValueAt(this.tRegistros.getSelectedRow(), 0));
 				JOptionPane.showMessageDialog(null, r.getMensagem());

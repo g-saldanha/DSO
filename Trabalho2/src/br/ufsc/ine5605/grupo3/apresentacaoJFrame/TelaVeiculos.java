@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 import br.ufsc.ine5605.grupo3.controladores.ControladorVeiculos;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
+import br.ufsc.ine5605.grupo3.mensagens.Messages;
 
 public class TelaVeiculos extends JFrame implements Tela, ActionListener{
 
@@ -54,28 +55,28 @@ public class TelaVeiculos extends JFrame implements Tela, ActionListener{
 
 
 //        Inserindo o texto nos componentes
-        this.bemVindo.setText("Bem Vindo a Tela de Veículos");
-        this.lista.setText("Lista de Veículos");
-        this.adicionar.setText("Adicionar Veículos");
-        this.editar.setText("Editar Veículos");
-        this.remover.setText("Remover Veículos");
-        this.voltar.setText("Voltar");
-        this.sair.setText("Sair");
+        this.bemVindo.setText(Messages.VEICULOS_LB1);
+        this.lista.setText(Messages.VEICULOS_LB2);
+        this.adicionar.setText(Messages.VEICULOS_LB3);
+        this.editar.setText(Messages.VEICULOS_LB4);
+        this.remover.setText(Messages.VEICULOS_LB5);
+        this.voltar.setText(Messages.VOLTAR);
+        this.sair.setText(Messages.SAIR);
 
 //        Configurando eventos dos botões
-        this.adicionar.setActionCommand("Adicionar");
+        this.adicionar.setActionCommand(Messages.ADICIONAR);
         this.adicionar.addActionListener(this);
 
-        this.editar.setActionCommand("Editar");
+        this.editar.setActionCommand(Messages.EDITAR);
         this.editar.addActionListener(this);
 
-        this.remover.setActionCommand("Remover");
+        this.remover.setActionCommand(Messages.REMOVER);
         this.remover.addActionListener(this);
 
-        this.voltar.setActionCommand("Voltar");
+        this.voltar.setActionCommand(Messages.VOLTAR);
         this.voltar.addActionListener(this);
 
-        this.sair.setActionCommand("Sair");
+        this.sair.setActionCommand(Messages.SAIR);
         this.sair.addActionListener(this);
 
 //        Adicionando e instanciando na Tela os componentes
@@ -122,12 +123,12 @@ public class TelaVeiculos extends JFrame implements Tela, ActionListener{
     @Override
     public void atualizaLista(){
         DefaultTableModel tbModelo = new DefaultTableModel();
-        tbModelo.addColumn("Placa");
-        tbModelo.addColumn("Modelo");
-        tbModelo.addColumn("Marca");
-        tbModelo.addColumn("Ano");
-        tbModelo.addColumn("Km");
-        tbModelo.addColumn("Tipo");
+        tbModelo.addColumn(Messages.VEICULOS_COL1);
+        tbModelo.addColumn(Messages.VEICULOS_COL2);
+        tbModelo.addColumn(Messages.VEICULOS_COL3);
+        tbModelo.addColumn(Messages.VEICULOS_COL4);
+        tbModelo.addColumn(Messages.VEICULOS_COL5);
+        tbModelo.addColumn(Messages.VEICULOS_COL6);
 
         for (Veiculo v : ControladorVeiculos.getInstance().getVeiculos()) {
             tbModelo.addRow(new Object[]{v.getPlaca(),v.getModelo(),v.getMarca(),
@@ -146,39 +147,38 @@ public class TelaVeiculos extends JFrame implements Tela, ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Adicionar")) {
+        if (e.getActionCommand().equals(Messages.ADICIONAR)) {
             setVisible(false);
             ControladorVeiculos.getInstance().exibeTelaCadastroVeiculo();
         }
 
-        if (e.getActionCommand().equals("Editar")){
+        if (e.getActionCommand().equals(Messages.EDITAR)){
         	String placa = (String) this.tVeiculos.getValueAt(this.tVeiculos.getSelectedRow(), 0);
         	if(placa != null){
         		ControladorVeiculos.getInstance().exibeTelaEditaVeiculo(placa);
         	}
 
         }
-        if (e.getActionCommand().equals("Remover")){
+        if (e.getActionCommand().equals(Messages.REMOVER)){
             String v = (String) this.tVeiculos.getValueAt(this.tVeiculos.getSelectedRow(), 0);
             ControladorVeiculos.getInstance().removeVeiculo(v);
             if (ControladorVeiculos.getInstance().getVeiculos().contains(ControladorVeiculos.getInstance().pegaVeiculo(v))){
-            	JOptionPane.showMessageDialog(null, "Não deletou");
+            	JOptionPane.showMessageDialog(null, Messages.VEICULOS_MSG1);
             } else {
-            	JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
+            	JOptionPane.showMessageDialog(null, Messages.formatString(Messages.VEICULOS_MSG2, ControladorVeiculos.getInstance().pegaVeiculo(v).getPlaca()));
             }
             atualizaLista();
         }
-        if (e.getActionCommand().equals("Voltar")){
+        if (e.getActionCommand().equals(Messages.VOLTAR)){
             setVisible(false);
             try {
 				ControladorVeiculos.getInstance().voltarMenuPrincipal();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
         }
-        if (e.getActionCommand().equals("Sair")){
+        if (e.getActionCommand().equals(Messages.SAIR)){
             sair();
         }
 

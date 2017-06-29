@@ -213,15 +213,15 @@ public class TelaFuncionarios extends JFrame implements Tela, ActionListener {
 			sair();
 		}
 		if (e.getActionCommand().equals(Messages.VER)) {
-			String msg = "Placas:";
 			Cargo c = (Cargo) this.tbFuncionarios.getValueAt(this.tbFuncionarios.getSelectedRow(), 4);
 			if(c.equals(Cargo.DIRETORIA)){
 				JOptionPane.showMessageDialog(null, Messages.FUNCIONARIOS_MSG2);
 			} else {
 				try {
+					String msg = "";
 					for (Veiculo v :
 						ControladorFuncionario.getInstance().getFuncionario((Integer) this.tbFuncionarios.getValueAt(this.tbFuncionarios.getSelectedRow(), 0)).getTiposDeVeiculo()) {
-						msg += "\n"+ v.getPlaca() + "," +"Modelo: "+v.getModelo();
+						msg += Messages.formatString(Messages.FUNCIONARIOS_MSG4, v.getPlaca(), v.getModelo());
 					}
 					JOptionPane.showMessageDialog(null, msg);
 				} catch (ArrayIndexOutOfBoundsException e2) {

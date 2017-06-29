@@ -20,6 +20,7 @@ import br.ufsc.ine5605.grupo3.controladores.ControladorFuncionario;
 import br.ufsc.ine5605.grupo3.controladores.ControladorVeiculos;
 import br.ufsc.ine5605.grupo3.entidades.Cargo;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
+import br.ufsc.ine5605.grupo3.mensagens.Messages;
 
 public class TelaPermissaoVeiculos extends JFrame implements ActionListener{
 
@@ -43,35 +44,35 @@ public class TelaPermissaoVeiculos extends JFrame implements ActionListener{
 
 
 	public TelaPermissaoVeiculos(Integer i, String string, Integer j, Integer k, Cargo cargo) {
-		super("Tela de Permissões de Veículos");
+		super(Messages.TITULO_PERMISSAO);
 		this.i = i;
 		this.string = string;
 		this.j = j;
 		this.k = k;
 		this.cargo = cargo;
-		this.inic();
+		inic();
 	}
 
 
 	public void inic() {
 //		configurando
-		Container container = this.getContentPane();
+		Container container = getContentPane();
 		container.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
 
 //		instanciando componentes
-		this.bemVindo = new JLabel("Escolha o veículo que os Funcionario terá acesso");
-		this.escolha = new JLabel("Lista de Veículos");
-		this.bCancelar = new JButton("Cancelar");
-		this.bConfirmar = new JButton("Confirmar");
+		this.bemVindo = new JLabel(Messages.VEICULOS_LB12);
+		this.escolha = new JLabel(Messages.VEICULOS_LB2);
+		this.bCancelar = new JButton(Messages.CANCELAR);
+		this.bConfirmar = new JButton(Messages.CONFIRMAR);
 		this.veiculosPermitidos = new JTable();
 
 
 //		configuração dos botoes
-		this.bCancelar.setActionCommand("Cancelar");
+		this.bCancelar.setActionCommand(Messages.CANCELAR);
 		this.bCancelar.addActionListener(this);
 
-		this.bConfirmar.setActionCommand("Confirmar");
+		this.bConfirmar.setActionCommand(Messages.CONFIRMAR);
 		this.bConfirmar.addActionListener(this);
 
 		constraints.fill = GridBagConstraints.CENTER;
@@ -99,9 +100,9 @@ public class TelaPermissaoVeiculos extends JFrame implements ActionListener{
 		constraints.gridwidth = 3;
 		constraints.gridheight = 4;
 		DefaultTableModel tModelo = new DefaultTableModel();
-		tModelo.addColumn("Placa");
-		tModelo.addColumn("Modelo");
-		tModelo.addColumn("Tipo");
+		tModelo.addColumn(Messages.VEICULOS_COL1);
+		tModelo.addColumn(Messages.VEICULOS_COL2);
+		tModelo.addColumn(Messages.VEICULOS_COL6);
 		for (Veiculo v : ControladorVeiculos.getInstance().getVeiculos()) {
 			tModelo.addRow(new Object[]{v.getPlaca(),v.getModelo(),v.getTipo()});
 		}
@@ -112,7 +113,7 @@ public class TelaPermissaoVeiculos extends JFrame implements ActionListener{
 
 		this.setSize(800,600);
 
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
 
@@ -120,7 +121,7 @@ public class TelaPermissaoVeiculos extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    	if(e.getActionCommand().equals("Confirmar")){
+    	if(e.getActionCommand().equals(Messages.CONFIRMAR)){
     		ArrayList<Veiculo> veiculos = new ArrayList<>();
     		int[] linhas = this.veiculosPermitidos.getSelectedRows();
     		for (int i : linhas) {
@@ -131,8 +132,8 @@ public class TelaPermissaoVeiculos extends JFrame implements ActionListener{
 			JOptionPane.showMessageDialog(null, msg);
 			ControladorFuncionario.getInstance().exibeTelaFuncionario();
     	}
-    	if(e.getActionCommand().equals("Cancelar")){
-    		this.setVisible(false);
+    	if(e.getActionCommand().equals(Messages.CANCELAR)){
+    		setVisible(false);
     		ControladorFuncionario.getInstance().exibeTelaCadastroFuncionario();
     	}
     }

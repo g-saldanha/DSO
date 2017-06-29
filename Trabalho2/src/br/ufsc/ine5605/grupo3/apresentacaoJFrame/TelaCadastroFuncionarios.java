@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import br.ufsc.ine5605.grupo3.controladores.ControladorFuncionario;
 import br.ufsc.ine5605.grupo3.entidades.Cargo;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
+import br.ufsc.ine5605.grupo3.mensagens.Messages;
 
 /**
  * Created by gabriel on 16/06/17.
@@ -39,55 +40,55 @@ public class TelaCadastroFuncionarios extends JFrame implements Tela, ActionList
 	private Funcionario f;
 
 	public TelaCadastroFuncionarios() {
-		this.inic();
+		inic();
 	}
 
 	public TelaCadastroFuncionarios(Funcionario funcionario){
 		this.f = funcionario;
-		this.inic();
-		this.edita();
+		inic();
+		edita();
 	}
 
 	@Override
 	public void inic() {
 //		Criando Container e Layout
-		Container container = this.getContentPane();
+		Container container = getContentPane();
 		container.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
 
 //		Instanciando Botões, Labels e afins e botando o texto
 		if (this.f == null) {
-			this.bemVindo = new JLabel("Cadastro de Funcionários");
+			this.bemVindo = new JLabel(Messages.FUNCIONARIOS_LB7_1);
 		} else {
-			this.bemVindo = new JLabel("Edição de Funcionários");
+			this.bemVindo = new JLabel(Messages.FUNCIONARIOS_LB7_2);
 		}
-		this.lbMatricula = new JLabel("Digite a Matricula");
+		this.lbMatricula = new JLabel(Messages.FUNCIONARIOS_LB8);
 		this.tfMatricula = new JTextField();
-		this.lbNome = new JLabel("Digite o Nome");
+		this.lbNome = new JLabel(Messages.FUNCIONARIOS_LB9);
 		this.tfNome = new JTextField();
-		this.lbTelefone = new JLabel("Digite o Telefone");
+		this.lbTelefone = new JLabel(Messages.FUNCIONARIOS_LB10);
 		this.tfTelefone = new JTextField();
-		this.lbDataNascimento = new JLabel("Digite a Data de Nascimento");
+		this.lbDataNascimento = new JLabel(Messages.FUNCIONARIOS_LB11);
 		this.tfDataNascimento = new JTextField();
-		this.lbCargo = new JLabel("Escolha o Cargo");
+		this.lbCargo = new JLabel(Messages.FUNCIONARIOS_LB12);
 		this.bjCargos = new JComboBox<>(Cargo.values());
 		if (this.f == null) {
-			this.btCadastro = new JButton("Cadastrar");
-			this.btCadastro.setActionCommand("Cadastrar");
+			this.btCadastro = new JButton(Messages.CADASTRAR);
+			this.btCadastro.setActionCommand(Messages.CADASTRAR);
 			this.btCadastro.addActionListener(this);
 		} else {
-			this.btCadastro = new JButton("Editar");
-			this.btCadastro.setActionCommand("Editar");
+			this.btCadastro = new JButton(Messages.EDITAR);
+			this.btCadastro.setActionCommand(Messages.EDITAR);
 			this.btCadastro.addActionListener(this);
 		}
-		this.btCancelar = new JButton("Cancelar");
-		this.btSair = new JButton("Sair");
+		this.btCancelar = new JButton(Messages.CANCELAR);
+		this.btSair = new JButton(Messages.SAIR);
 
 //		Configurando ações nos botões
-		this.btCancelar.setActionCommand("Cancelar");
+		this.btCancelar.setActionCommand(Messages.CANCELAR);
 		this.btCancelar.addActionListener(this);
 
-		this.btSair.setActionCommand("Sair");
+		this.btSair.setActionCommand(Messages.SAIR);
 		this.btSair.addActionListener(this);
 
 //		Criando componentes na tela
@@ -154,7 +155,7 @@ public class TelaCadastroFuncionarios extends JFrame implements Tela, ActionList
 		this.setSize(800,600);
 
 //		Fechar
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
 
@@ -178,37 +179,37 @@ public class TelaCadastroFuncionarios extends JFrame implements Tela, ActionList
 
 	@Override
 	public void sair() {
-		this.dispose();
+		dispose();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("Cadastrar")) {
+		if (e.getActionCommand().equals(Messages.CADASTRAR)) {
 			if(this.bjCargos.getSelectedItem().equals(Cargo.COMUM)){
-				this.setVisible(false);
+				setVisible(false);
 				ControladorFuncionario.getInstance().exibeTelaPermissões(Integer.parseInt(this.tfMatricula.getText()), this.tfNome.getText(), Integer.parseInt(this.tfDataNascimento.getText()), Integer.parseInt(this.tfTelefone.getText()), (Cargo) this.bjCargos.getSelectedItem());
 			} else {
 				String msg = ControladorFuncionario.getInstance().cadastraFuncionario(Integer.parseInt(this.tfMatricula.getText()), this.tfNome.getText(), Integer.parseInt(this.tfDataNascimento.getText()), Integer.parseInt(this.tfTelefone.getText()), (Cargo) this.bjCargos.getSelectedItem());
-				this.limpa();
+				limpa();
 				JOptionPane.showMessageDialog(null, msg);
 			}
-			this.setVisible(false);
+			setVisible(false);
 
 			ControladorFuncionario.getInstance().exibeTelaFuncionario();
 		}
-		if (e.getActionCommand().equals("Editar")) {
+		if (e.getActionCommand().equals(Messages.EDITAR)) {
 			String msg = ControladorFuncionario.getInstance().alteraFuncionario(Integer.parseInt(this.tfMatricula.getText()), this.tfNome.getText(), Integer.parseInt(this.tfDataNascimento.getText()), Integer.parseInt(this.tfTelefone.getText()), (Cargo) this.bjCargos.getSelectedItem());
 			JOptionPane.showMessageDialog(null, msg);
-			this.limpa();
-			this.setVisible(false);
+			limpa();
+			setVisible(false);
 			ControladorFuncionario.getInstance().exibeTelaFuncionario();
 		}
-		if(e.getActionCommand().equals("Cancelar")){
-			this.setVisible(false);
+		if(e.getActionCommand().equals(Messages.CANCELAR)){
+			setVisible(false);
 			ControladorFuncionario.getInstance().exibeTelaFuncionario();
 		}
-		if (e.getActionCommand().equals("Sair")) {
-			this.sair();
+		if (e.getActionCommand().equals(Messages.SAIR)) {
+			sair();
 		}
 	}
 }
