@@ -1,5 +1,6 @@
 package br.ufsc.ine5605.grupo3.controladores;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaRegistros;
@@ -62,11 +63,11 @@ public class ControladorRegistro {
 		return this.registros.getRegistros();
 	}
 
-	public ArrayList<String> getPlacas(){
+	public ArrayList<String> getPlacas() throws IOException{
 		return ControladorPrincipal.getInstance().getPlacas();
 	}
 
-	public ArrayList<Integer> getMatriculas() {
+	public ArrayList<Integer> getMatriculas() throws IOException {
 		return ControladorPrincipal.getInstance().getMatriculas();
 	}
 

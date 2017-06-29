@@ -5,6 +5,7 @@
  */
 package br.ufsc.ine5605.grupo3.controladores;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaCadastroFuncionarios;
@@ -43,7 +44,7 @@ public class ControladorFuncionario {
 
 	public void cadastraFuncionario(Funcionario f){
 		try {
-			this.verificaMatricula(f.getNumeroMatricula());
+			verificaMatricula(f.getNumeroMatricula());
 		} catch (CadastroIncorretoException e) {
 			System.out.println("Funcionario Existente");
 			return;
@@ -53,7 +54,7 @@ public class ControladorFuncionario {
 
 	public String cadastraFuncionario(Integer numeroMatricula, String nome, Integer dataNascimento, Integer telefone, Cargo cargo) {
 		try {
-			this.verificaMatricula(numeroMatricula);
+			verificaMatricula(numeroMatricula);
 		} catch (CadastroIncorretoException e) {
 			return "Funcionario Existente";
 		}
@@ -74,7 +75,7 @@ public class ControladorFuncionario {
 		}
 	}
 
-	public Funcionario getFuncionario(Integer numeroMatricula) {
+	public Funcionario getFuncionario(Integer numeroMatricula) throws CadastroIncorretoException, IOException {
 		for (Funcionario funcionario : this.funcionarios.getFuncionarios()) {
 			if (funcionario.getNumeroMatricula().equals(numeroMatricula)) {
 				return funcionario;
@@ -115,7 +116,7 @@ public class ControladorFuncionario {
 		}
 	}
 
-	public Veiculo pegaVeiculo(String opt) {
+	public Veiculo pegaVeiculo(String opt) throws IOException {
 		return ControladorPrincipal.getInstance().pegaVeiculo(opt);
 	}
 
@@ -133,7 +134,7 @@ public class ControladorFuncionario {
 		return this.funcionarios.getFuncionarios();
 	}
 
-    public void voltarMenuPrincipal() {
+    public void voltarMenuPrincipal() throws IOException {
 		ControladorPrincipal.getInstance().voltarMenuPrincipal();
     }
 
@@ -182,7 +183,7 @@ public class ControladorFuncionario {
 
 	public String cadastraFuncionario(Integer i, String string, Integer j, Integer k, Cargo cargo, ArrayList<Veiculo> veiculos) {
 		try {
-			this.verificaMatricula(i);
+			verificaMatricula(i);
 		} catch (CadastroIncorretoException e) {
 			return "Funcionario Existente";
 		}

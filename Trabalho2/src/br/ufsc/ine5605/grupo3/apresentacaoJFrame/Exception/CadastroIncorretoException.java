@@ -5,14 +5,26 @@
  */
 package br.ufsc.ine5605.grupo3.apresentacaoJFrame.Exception;
 
+import br.ufsc.ine5605.grupo3.mensagens.Messages;
+
 /**
  *
  * @author Caio
  */
 public class CadastroIncorretoException extends Exception {
 
-    public CadastroIncorretoException(String erro){
+    /**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public CadastroIncorretoException(String erro){
         super(erro);
+    }
+
+    @Override
+    public String getMessage() {
+    	return Messages.MATRICULA_INEXISTENTE;
     }
 
 }

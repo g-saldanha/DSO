@@ -1,5 +1,6 @@
 package br.ufsc.ine5605.grupo3.controladores;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaCadastroVeiculo;
@@ -32,7 +33,7 @@ public class ControladorVeiculos {
 	}
 
 	public String cadastrarVeiculo(Veiculo v) {
-		if (!this.checkExists(v.getPlaca())) {
+		if (!checkExists(v.getPlaca())) {
 			this.veiculos.put(v);
 		} else {
 			return "Veiculo de mesma placa já existe";
@@ -40,8 +41,8 @@ public class ControladorVeiculos {
 		return "Veículo Placa " + v.getPlaca() + " Cadastrado com sucesso";
 	}
 
-	public String cadastraVeiculo(String placa, String modelo, String marca, Integer ano, Integer km, Tipo tipo) {
-		if (!this.checkExists(placa)) {
+	public String cadastraVeiculo(String placa, String modelo, String marca, Integer ano, Integer km, Tipo tipo) throws IOException {
+		if (!checkExists(placa)) {
 			Veiculo novo = null;
 			if (tipo.equals(Tipo.MOTO)) {
 				novo = new Moto(placa, modelo, marca, ano, km);
@@ -60,8 +61,8 @@ public class ControladorVeiculos {
 	}
 
 	public void removeVeiculo(String placa) {
-		if (this.checkExists(placa)) {
-			Veiculo v = this.pegaVeiculo(placa);
+		if (checkExists(placa)) {
+			Veiculo v = pegaVeiculo(placa);
 //			if (ControladorPrincipal.getInstance().pegaChave(placa).isAlugada()) {
 //				System.out.println("Veiculo Alugado Não Pode Ser Excluido");
 //				return;
@@ -93,7 +94,7 @@ public class ControladorVeiculos {
         return this.veiculos.getVeiculos();
     }
 
-    public void voltarMenuPrincipal() {
+    public void voltarMenuPrincipal() throws IOException {
 	    ControladorPrincipal.getInstance().voltarMenuPrincipal();
     }
 

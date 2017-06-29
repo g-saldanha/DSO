@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
@@ -45,13 +46,13 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
 	private JButton bVerMensagem;
 
     public TelaRegistros() {
-        this.inic();
+        inic();
     }
 
     @Override
     public void inic(){
 //        Definir Container e Layout
-        Container container = this.getContentPane();
+        Container container = getContentPane();
         container.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
@@ -151,7 +152,7 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
 	   this.setSize(800,600);
 
 //	   Configurando fechar tela
-	   this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	   setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
 
@@ -168,7 +169,7 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
 
     @Override
     public void atualizaLista() {
-    	this.tModelo();
+    	tModelo();
     	for (Registro r : ControladorRegistro.getInstance().getTodosRegistros()) {
 			this.tModelo.addRow(new Object[]{r.getId(),r.getData()+"/"+r.getMesDoAno(),r.getHora(),r.getFuncionario().getNome(),r.getVeiculo().getPlaca(),r.getKmAndados(),r.getTipoMotivo(),});
 		}
@@ -179,7 +180,7 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
     }
 
     public void atualizaLista(String placa){
-    	this.tModelo();
+    	tModelo();
     	for (Registro r : ControladorRegistro.getInstance().getTodosRegistros()) {
     		if(r.getVeiculo().getPlaca().equals(placa)){
     			this.tModelo.addRow(new Object[]{r.getId(),r.getData()+"/"+r.getMesDoAno(),r.getHora(),r.getFuncionario().getNome(),r.getVeiculo().getPlaca(),r.getKmAndados(),r.getTipoMotivo(),});
@@ -190,7 +191,7 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
     }
 
     public void atualizaLista(boolean motivo){
-    	this.tModelo();
+    	tModelo();
     	for (Registro r : ControladorRegistro.getInstance().getTodosRegistros()) {
     		if(r.getMotivo() == motivo){
     			this.tModelo.addRow(new Object[]{r.getId(),r.getData()+"/"+r.getMesDoAno(),r.getHora(),r.getFuncionario().getNome(),r.getVeiculo().getPlaca(),r.getKmAndados(),r.getTipoMotivo(),});
@@ -201,7 +202,7 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
     }
 
     public void atualizaLista(Integer matricula){
-    	this.tModelo();
+    	tModelo();
     	for (Registro r : ControladorRegistro.getInstance().getTodosRegistros()) {
     		if(r.getFuncionario().getNumeroMatricula().equals(matricula)){
     			this.tModelo.addRow(new Object[]{r.getId(),r.getData()+"/"+r.getMesDoAno(),r.getHora(),r.getFuncionario().getNome(),r.getVeiculo().getPlaca(),r.getKmAndados(),r.getTipoMotivo(),});
@@ -213,14 +214,18 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
 
     @Override
     public void sair() {
-        this.dispose();
+        dispose();
     }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Placa")) {
 			this.cPlaca = new JComboBox<String>();
-			this.cPlaca.setModel(new DefaultComboBoxModel<String>(new Vector<>(ControladorRegistro.getInstance().getPlacas())));
+			try {
+				this.cPlaca.setModel(new DefaultComboBoxModel<String>(new Vector<>(ControladorRegistro.getInstance().getPlacas())));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			JOptionPane.showMessageDialog( null, this.cPlaca, "Selecione uma Placa", JOptionPane.QUESTION_MESSAGE);
 			this.atualizaLista((String) this.cPlaca.getSelectedItem());
 		}
@@ -236,7 +241,11 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
 		}
 		if (e.getActionCommand().equals("Matricula")) {
 			this.cMatricula = new JComboBox<Integer>();
-			this.cMatricula.setModel(new DefaultComboBoxModel<Integer>(new Vector<>(ControladorRegistro.getInstance().getMatriculas())));
+			try {
+				this.cMatricula.setModel(new DefaultComboBoxModel<Integer>(new Vector<>(ControladorRegistro.getInstance().getMatriculas())));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			JOptionPane.showMessageDialog( null, this.cPlaca, "Selecione uma Matricula", JOptionPane.QUESTION_MESSAGE);
 			this.atualizaLista((Integer) this.cMatricula.getSelectedItem());
 		}
@@ -245,11 +254,15 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
 			this.atualizaLista();
 		}
 		if (e.getActionCommand().equals("Voltar")) {
-			this.setVisible(false);
-			ControladorPrincipal.getInstance().voltarMenuPrincipal();
+			setVisible(false);
+			try {
+				ControladorPrincipal.getInstance().voltarMenuPrincipal();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		if(e.getActionCommand().equals("Sair")){
-			this.sair();
+			sair();
 		}
 
 		if (e.getActionCommand().equals("Ver")) {

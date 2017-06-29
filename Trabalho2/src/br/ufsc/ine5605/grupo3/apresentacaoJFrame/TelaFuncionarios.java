@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,6 +23,7 @@ import br.ufsc.ine5605.grupo3.controladores.ControladorPrincipal;
 import br.ufsc.ine5605.grupo3.entidades.Cargo;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
+import br.ufsc.ine5605.grupo3.mensagens.Messages;
 
 /**
  *
@@ -53,75 +55,57 @@ public class TelaFuncionarios extends JFrame implements Tela, ActionListener {
 
 
 	public TelaFuncionarios() {
-		super("Tela de Funcionarios");
-		this.inic();
+		super(Messages.TELA_FUNCIONARIOS);
+		inic();
 	}
 
 	@Override
 	public void inic() {
 //	Configurando Container e tipo de layout
-		Container container = this.getContentPane();
+		Container container = getContentPane();
 		container.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
 
 //		Instanciando os componentes
-		this.bemVindo = new JLabel();
-		this.lMatricula = new JLabel();
+		this.bemVindo = new JLabel(Messages.FUNCIONARIOS_LB1);
+		this.lMatricula = new JLabel(Messages.JOPINPUT_MATRICULA);
 		this.tMatricula = new JTextField();
-		this.lNome = new JLabel();
+		this.lNome = new JLabel(Messages.FUNCIONARIOS_LB2);
 		this.tNome = new JTextField();
-		this.lDataNasc = new JLabel();
+		this.lDataNasc = new JLabel(Messages.FUNCIONARIOS_LB3);
 		this.tDataNasc = new JTextField();
-		this.lTelefone = new JLabel();
+		this.lTelefone = new JLabel(Messages.FUNCIONARIOS_LB4);
 		this.tTelefone = new JTextField();
-		this.lCargo = new JLabel();
+		this.lCargo = new JLabel(Messages.FUNCIONARIOS_LB5);
 		this.cCargo = new JComboBox<>();
-		this.lTipos = new JLabel();
+		this.lTipos = new JLabel(Messages.FUNCIONARIOS_LB6);
 		this.cTipo = new JComboBox<>();
-		this.bAdicionar = new JButton();
-		this.bRemover = new JButton();
-		this.bVoltar = new JButton();
-		this.bEditar = new JButton();
-		this.bSair = new JButton();
+		this.bAdicionar = new JButton(Messages.FUNCIONARIOS_BT1);
+		this.bRemover = new JButton(Messages.REMOVER);
+		this.bVoltar = new JButton(Messages.VOLTAR);
+		this.bEditar = new JButton(Messages.FUNCIONARIOS_BT2);
+		this.bSair = new JButton(Messages.SAIR);
 		this.tbFuncionarios = new JTable();
-		this.bVerVeiculos = new JButton("Ver Veiculos");
-
-//		Colocando os textos nos componentes
-		this.bemVindo.setText("Bem vindo a Tela de Funcionários");
-		this.bSair.setText("Sair");
-		this.bEditar.setText("Texto");
-		this.bVoltar.setText("Voltar");
-		this.bRemover.setText("Remover");
-		this.bAdicionar.setText("Adicionar");
-		this.lMatricula.setText("Digite a Matricula");
-		this.lNome.setText("Digite o nome");
-		this.lDataNasc.setText("Digite a Data de Nascimento");
-		this.lTelefone.setText("Digite o Telefone");
-		this.lCargo.setText("Escolha o Cargo");
-		this.lTipos.setText("Escolha o tipo de Veículo");
-		this.bAdicionar.setText("Adicionar Funcionário");
-		this.bEditar.setText("Editar Funcionário");
-		this.bVoltar.setText("Voltar");
-		this.bSair.setText("Sair");
+		this.bVerVeiculos = new JButton(Messages.FUNCIONARIOS_BT3);
 
 
 //		Colocando as ações nos botões
-		this.bAdicionar.setActionCommand("Adicionar");
+		this.bAdicionar.setActionCommand(Messages.ADICIONAR);
 		this.bAdicionar.addActionListener(this);
 
-		this.bEditar.setActionCommand("Editar");
+		this.bEditar.setActionCommand(Messages.EDITAR);
 		this.bEditar.addActionListener(this);
 
-		this.bRemover.setActionCommand("Remover");
+		this.bRemover.setActionCommand(Messages.REMOVER);
 		this.bRemover.addActionListener(this);
 
-		this.bVoltar.setActionCommand("Voltar");
+		this.bVoltar.setActionCommand(Messages.VOLTAR);
 		this.bVoltar.addActionListener(this);
 
-		this.bSair.setActionCommand("Sair");
+		this.bSair.setActionCommand(Messages.SAIR);
 		this.bSair.addActionListener(this);
 
-		this.bVerVeiculos.setActionCommand("Ver");
+		this.bVerVeiculos.setActionCommand(Messages.VER);
 		this.bVerVeiculos.addActionListener(this);
 
 //        Adicionando e instanciando na Tela os componentes
@@ -171,19 +155,18 @@ public class TelaFuncionarios extends JFrame implements Tela, ActionListener {
 		this.setSize(800,600);
 
 //		Botão de Fechar
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
 
 	@Override
 	public void atualizaLista() {
 		DefaultTableModel tModelo = new DefaultTableModel();
-		tModelo.addColumn("Matricula");
-		tModelo.addColumn("Nome");
-		tModelo.addColumn("Nascimento");
-		tModelo.addColumn("Telefone");
-		tModelo.addColumn("Cargo");
-//		tModelo.addColumn("Tipo");
+		tModelo.addColumn(Messages.FUNCIONARIOS_COL1);
+		tModelo.addColumn(Messages.FUNCIONARIOS_COL2);
+		tModelo.addColumn(Messages.FUNCIONARIOS_COL3);
+		tModelo.addColumn(Messages.FUNCIONARIOS_COL4);
+		tModelo.addColumn(Messages.FUNCIONARIOS_COL5);
 
 		for (Funcionario f : ControladorFuncionario.getInstance().getListaFuncionarios()){
 			tModelo.addRow(new Object[]{f.getNumeroMatricula(), f.getNome(), f.getDataNascimento(), f.getTelefone(), f.getCargo()});
@@ -196,40 +179,44 @@ public class TelaFuncionarios extends JFrame implements Tela, ActionListener {
 
 	@Override
 	public void sair() {
-		this.dispose();
+		dispose();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("Adicionar")){
+		if (e.getActionCommand().equals(Messages.ADICIONAR)){
 			ControladorFuncionario.getInstance().exibeTelaCadastroFuncionario();
 		}
-		if (e.getActionCommand().equals("Editar")){
+		if (e.getActionCommand().equals(Messages.EDITAR)){
 			try {
 				Funcionario f = ControladorFuncionario.getInstance().getFuncionario((Integer) this.tbFuncionarios.getValueAt(this.tbFuncionarios.getSelectedRow(), 0));
 				ControladorFuncionario.getInstance().exibeTelaCadastroFuncionario(f);
 			} catch (ArrayIndexOutOfBoundsException e2) {
-				JOptionPane.showMessageDialog(null, "Selecione um Funcionário");
+				JOptionPane.showMessageDialog(null, Messages.FUNCIONARIOS_MSG1);
 			}
 
 		}
-		if (e.getActionCommand().equals("Remover")){
+		if (e.getActionCommand().equals(Messages.REMOVER)){
 			Integer m = (Integer) this.tbFuncionarios.getValueAt(this.tbFuncionarios.getSelectedRow(),0);
 			ControladorFuncionario.getInstance().excluiFuncionario(ControladorFuncionario.getInstance().getFuncionario(m));
 		}
-		if (e.getActionCommand().equals("Voltar")){
+		if (e.getActionCommand().equals(Messages.VOLTAR)){
 
-			this.setVisible(false);
-			ControladorPrincipal.getInstance().voltarMenuPrincipal();
+			setVisible(false);
+			try {
+				ControladorPrincipal.getInstance().voltarMenuPrincipal();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
-		if (e.getActionCommand().equals("Sair")){
-			this.sair();
+		if (e.getActionCommand().equals(Messages.SAIR)){
+			sair();
 		}
-		if (e.getActionCommand().equals("Ver")) {
+		if (e.getActionCommand().equals(Messages.VER)) {
 			String msg = "Placas:";
 			Cargo c = (Cargo) this.tbFuncionarios.getValueAt(this.tbFuncionarios.getSelectedRow(), 4);
 			if(c.equals(Cargo.DIRETORIA)){
-				JOptionPane.showMessageDialog(null, "Selecione um Funcionario que não seja Diretoria");
+				JOptionPane.showMessageDialog(null, Messages.FUNCIONARIOS_MSG2);
 			} else {
 				try {
 					for (Veiculo v :
@@ -238,7 +225,7 @@ public class TelaFuncionarios extends JFrame implements Tela, ActionListener {
 					}
 					JOptionPane.showMessageDialog(null, msg);
 				} catch (ArrayIndexOutOfBoundsException e2) {
-					JOptionPane.showMessageDialog(null, "Selecione um Funcionario que não seja Diretoria");
+					JOptionPane.showMessageDialog(null, Messages.FUNCIONARIOS_MSG3);
 				}
 			}
 		}

@@ -1,6 +1,6 @@
 package br.ufsc.ine5605.grupo3.enums;
 
-public enum EnumsChaves {
+public enum EnumsComponentesChaves {
 	COLUNA1("Chave ID"),
 	COLUNA2("Placa"),
 	COLUNA3("Veiculo"),
@@ -8,7 +8,7 @@ public enum EnumsChaves {
 
 	private final String mensagens;
 
-	private EnumsChaves(final String mensagens){
+	private EnumsComponentesChaves(final String mensagens){
 		this.mensagens = mensagens;
 	}
 

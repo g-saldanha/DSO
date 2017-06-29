@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -39,20 +40,20 @@ public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener 
 
     public TelaCadastroVeiculo() {
         super("Cadastro de Veículos");
-        this.inic();
+        inic();
     }
 
     public TelaCadastroVeiculo(String v){
     	super("Edição de Veículos");
-    	this.inic();
+    	inic();
     	this.vEditar = ControladorVeiculos.getInstance().pegaVeiculo(v);
-    	this.edit();
+    	edit();
     }
 
     @Override
     public void inic() {
 //        Configurando, instanciando o Layout e constraints
-        Container container = this.getContentPane();
+        Container container = getContentPane();
         container.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
@@ -96,10 +97,10 @@ public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener 
 	    this.bSair.addActionListener(this);
 
 //	    Configurando o tamaho dos Campos de texto
-	    this.tKm.setPreferredSize(this.textFieldLayout());
-	    this.tAno.setPreferredSize(this.textFieldLayout());
-	    this.tModelo.setPreferredSize(this.textFieldLayout());
-	    this.tPlaca.setPreferredSize(this.textFieldLayout());
+	    this.tKm.setPreferredSize(textFieldLayout());
+	    this.tAno.setPreferredSize(textFieldLayout());
+	    this.tModelo.setPreferredSize(textFieldLayout());
+	    this.tPlaca.setPreferredSize(textFieldLayout());
 
 //	    Colocando os componentes na tela
 
@@ -184,7 +185,7 @@ public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener 
 	    this.setSize(800,600);
 
 //	    fechar
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
     }
@@ -197,7 +198,7 @@ public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener 
 
     @Override
     public void sair() {
-		this.dispose();
+		dispose();
     }
 
     public void edit(){
@@ -222,22 +223,28 @@ public class TelaCadastroVeiculo extends JFrame implements Tela, ActionListener 
     		Integer ano = Integer.parseInt(this.tAno.getText());
     		Integer km = Integer.parseInt(this.tKm.getText());
 
-    		String m = ControladorVeiculos.getInstance().cadastraVeiculo(this.tPlaca.getText(), this.tModelo.getText(), this.tMarca.getText(), ano, km, (Tipo) this.cTipo.getSelectedItem());
+    		String m = null;
+			try {
+				m = ControladorVeiculos.getInstance().cadastraVeiculo(this.tPlaca.getText(), this.tModelo.getText(), this.tMarca.getText(), ano, km, (Tipo) this.cTipo.getSelectedItem());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
     	    JOptionPane.showMessageDialog(null, m);
-    	    this.limpa();
-    	    this.setVisible(false);
+    	    limpa();
+    	    setVisible(false);
     	    ControladorVeiculos.getInstance().exibeTelaVeiculos();
 
 	    }
 
 	    if (e.getActionCommand().equals("Voltar")){
-	    	this.limpa();
-    	    this.setVisible(false);
+	    	limpa();
+    	    setVisible(false);
 		    ControladorVeiculos.getInstance().exibeTelaVeiculos();
 	    }
 
 	    if (e.getActionCommand().equals("Sair")){
-	    	this.sair();
+	    	sair();
 	    }
 
 

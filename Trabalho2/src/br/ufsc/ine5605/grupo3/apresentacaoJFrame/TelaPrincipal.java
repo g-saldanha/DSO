@@ -1,11 +1,17 @@
 package br.ufsc.ine5605.grupo3.apresentacaoJFrame;
 
-import br.ufsc.ine5605.grupo3.controladores.ControladorPrincipal;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Container;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import br.ufsc.ine5605.grupo3.controladores.ControladorPrincipal;
+import br.ufsc.ine5605.grupo3.mensagens.Messages;
 
 public class TelaPrincipal extends JFrame implements Tela, ActionListener {
     private JLabel bemVindo;
@@ -14,64 +20,71 @@ public class TelaPrincipal extends JFrame implements Tela, ActionListener {
     private JButton bChaves;
     private JButton bRelatorios;
     private JButton bSair;
+   	String telaFuncionarios = "telaFuncionarios";
+	String telaVeiculos = "telaVeiculos";
+	String telaChaves = "telaChaves";
+	String telaRegistros = "telaRegistros";
 
     public TelaPrincipal()  {
-        super("Claviculario - Grupo03 - DSO - P. Jean");
-        this.inic();
+        super(Messages.TITULO_INICIO);
+        inic();
     }
 
     @Override
     public void inic() {
+
+
+
 //        Configurando constraints e instanciando layout
-        Container container = this.getContentPane();
+        Container container = getContentPane();
         container.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
 //        Criando os botões e labels
-        bemVindo = new JLabel();
-        bFuncionarios = new JButton();
-        bVeiculos = new JButton();
-        bChaves = new JButton();
-        bRelatorios = new JButton();
-        bSair = new JButton();
+        this.bemVindo = new JLabel();
+        this.bFuncionarios = new JButton();
+        this.bVeiculos = new JButton();
+        this.bChaves = new JButton();
+        this.bRelatorios = new JButton();
+        this.bSair = new JButton();
 
 //        Inserindo o texto neles
-        bemVindo.setText("Bem Vindo ao Claviculário");
-        bFuncionarios.setText("Ir para Funcionarios");
-        bVeiculos.setText("Ir para Veículos");
-        bChaves.setText("Ir para Chaves");
-        bRelatorios.setText("Ir para Relatórios");
-        bSair.setText("Sair");
+        this.bemVindo.setText(Messages.CHAVES_LB1);
+        this.bFuncionarios.setText(Messages.PRINCIPAL_BT1);
+        this.bVeiculos.setText(Messages.PRINCIPAL_BT2);
+        this.bChaves.setText(Messages.PRINCIPAL_BT3);
+        this.bRelatorios.setText(Messages.PRINCIPAL_BT4);
+        this.bSair.setText(Messages.SAIR);
 
 //        Configurando botões
-        bFuncionarios.setActionCommand("telaFuncionarios");
-        bFuncionarios.addActionListener(this);
+        this.bFuncionarios.setActionCommand(this.telaFuncionarios);
+        this.bFuncionarios.addActionListener(this);
 
-        bVeiculos.setActionCommand("telaVeiculos");
-        bVeiculos.addActionListener(this);
+        this.bVeiculos.setActionCommand(this.telaVeiculos);
+        this.bVeiculos.addActionListener(this);
 
-        bChaves.setActionCommand("telaChaves");
-        bChaves.addActionListener(this);
+        this.bChaves.setActionCommand(this.telaChaves);
+        this.bChaves.addActionListener(this);
 
-        bRelatorios.setActionCommand("telaRegistros");
-        bRelatorios.addActionListener(this);
+        this.bRelatorios.setActionCommand(this.telaRegistros);
+        this.bRelatorios.addActionListener(this);
 
-        bSair.setActionCommand("Sair");
-        bSair.addActionListener(this);
+        this.bSair.setActionCommand(Messages.SAIR);
+        this.bSair.addActionListener(this);
 
 //        Adicionando e instanciando na Tela os componentes
         constraints.gridy = 0;
-        container.add(bemVindo, constraints);
+        container.add(this.bemVindo, constraints);
         constraints.gridy = 1;
-        container.add(bFuncionarios, constraints);
+        container.add(this.bFuncionarios, constraints);
         constraints.gridy = 2;
-        container.add(bVeiculos, constraints);
+        container.add(this.bVeiculos, constraints);
         constraints.gridy = 3;
-        container.add(bChaves, constraints);
+        container.add(this.bChaves, constraints);
         constraints.gridy = 4;
-        container.add(bRelatorios, constraints);
+        container.add(this.bRelatorios, constraints);
         constraints.gridy = 5;
-        container.add(bSair, constraints);
+        container.add(this.bSair, constraints);
 
 
 //      Configurando Layout da tela
@@ -89,29 +102,29 @@ public class TelaPrincipal extends JFrame implements Tela, ActionListener {
 
     @Override
     public void sair() {
-        this.dispose();
+        dispose();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("telaFuncionarios")){
+        if (e.getActionCommand().equals(this.telaFuncionarios)){
             ControladorPrincipal.getInstance().exibeTelaFuncionarios();
         }
 
-        if (e.getActionCommand().equals("telaVeiculos")){
+        if (e.getActionCommand().equals(this.telaVeiculos)){
             ControladorPrincipal.getInstance().exibeTelaVeiculos();
         }
 
-        if (e.getActionCommand().equals("telaChaves")){
+        if (e.getActionCommand().equals(this.telaChaves)){
             ControladorPrincipal.getInstance().exibeTelaChaves();
         }
 
-        if (e.getActionCommand().equals("telaRegistros")){
+        if (e.getActionCommand().equals(this.telaRegistros)){
             ControladorPrincipal.getInstance().exibeTelaRegistros();
         }
 
-        if (e.getActionCommand().equals("Sair")){
-            this.sair();
+        if (e.getActionCommand().equals(Messages.SAIR)){
+            sair();
         }
 
     }

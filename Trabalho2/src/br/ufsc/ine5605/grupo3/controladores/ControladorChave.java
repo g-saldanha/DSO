@@ -1,5 +1,6 @@
 package br.ufsc.ine5605.grupo3.controladores;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -9,6 +10,7 @@ import br.ufsc.ine5605.grupo3.entidades.Cargo;
 import br.ufsc.ine5605.grupo3.entidades.Chave;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
+import br.ufsc.ine5605.grupo3.mensagens.Messages;
 
 public class ControladorChave {
 	private static ControladorChave instance;
@@ -29,14 +31,14 @@ public class ControladorChave {
 	}
 
 	public void adicionarChave(String placa) {
-		if (!this.checkExists(placa)) {
+		if (!checkExists(placa)) {
 			this.chaves.botar(new Chave(placa));
 		}
 	}
 // Arrumar método
 	public void deletarChave(Long id, Integer m) {
-		if (this.pegaChavePorId(id) != null && !this.pegaChavePorId(id).isAlugada()) {
-			chaves.remove(this.pegaChavePorId(id));
+		if (pegaChavePorId(id) != null && !pegaChavePorId(id).isAlugada()) {
+			chaves.remove(pegaChavePorId(id));
 		}
 	}
 
@@ -79,13 +81,13 @@ public class ControladorChave {
 		this.telaChaves.setVisible(true);
 	}
 
-	public Funcionario pegaFuncionario(Integer matricula) {
+	public Funcionario pegaFuncionario(Integer matricula) throws IOException {
 		return ControladorPrincipal.getInstance().pegaFuncionario(matricula);
 	}
 
-	public int cederChave(Funcionario f, Chave c) throws CadastroBloqueadoException {
+	public String cederChave(Funcionario f, Chave c) throws CadastroBloqueadoException, IOException {
 		if (f.getBloqueado()) {
-			this.adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f, null,
+			adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f, null,
 					false, "Retirada : Usuario Bloqueado");
 			throw new CadastroBloqueadoException("Usuario");
 		}
@@ -93,45 +95,46 @@ public class ControladorChave {
 		if (f.getChave() == null) {
 			if (f.getCargo() == Cargo.DIRETORIA || f.checaPlacas(c)) {
 				if (c.isAlugada()) {
-					this.adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f,
+					adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f,
 							ControladorPrincipal.getInstance().pegaVeiculo(c.getPlaca()), false, "Retirada : Acesso a chave previamente alugada");
-					return -4;
+					return  Messages.CHAVE_ALUGADA;
 				}
 
 				f.setChave(c);
 				c.setAlugada(true);
 				this.chaves.persiste();
-				this.adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f,
+				adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f,
 						ControladorPrincipal.getInstance().pegaVeiculo(c.getPlaca()), true, "Retirada : Acesso Permitido ao Veiculo");
 				f.resetCounter();
-				return 0;
+				return  Messages.CHAVE_LIBERADA;
 			} else {
-				this.adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f,
+				adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f,
 						ControladorPrincipal.getInstance().pegaVeiculo(c.getPlaca()), false, " Retirada : Funcionario nào possui acesso ao veiculo escolhido");
 				f.addCounter();
-				return -1;
+				return Messages.formatString(Messages.CHAVES_R1, f.getNome());
 			}
 		} else {
-			this.adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f,
+			adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f,
 					ControladorPrincipal.getInstance().pegaVeiculo(c.getPlaca()), false, "Retirada : Funcionario já possui uma chave alugada");
-			return -2;
+			return Messages.formatString(Messages.CHAVES_R2, f.getNome());
 		}
+
 	}
 
-	public int devolverChave(Funcionario f, Chave c) {
+	public int devolverChave(Funcionario f, Chave c) throws IOException {
 		f.setChave(null);
 		c.setAlugada(false);
-		this.adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f,
+		adicionarRegistro(Calendar.getInstance().getTime().getDate(), Calendar.getInstance().getTime().getMonth(), Calendar.getInstance().getTime().getHours(), f,
 				ControladorPrincipal.getInstance().pegaVeiculo(c.getPlaca()), true, "Devolucao : Chave devolvida com sucesso");
 		return 0;
 
 	}
 
-	public void adicionarRegistro(Integer date, Integer mes, Integer hours, Funcionario f, Veiculo v, boolean b, String string) {
+	public void adicionarRegistro(Integer date, Integer mes, Integer hours, Funcionario f, Veiculo v, boolean b, String string) throws IOException {
 		ControladorPrincipal.getInstance().adicionarRegistro(GeradorId.getNextRegisterID(), date, mes, hours, f, v, b, string);
 	}
 
-	public void bloquearFuncionario(Funcionario f) {
+	public void bloquearFuncionario(Funcionario f) throws IOException {
 		ControladorPrincipal.getInstance().bloquearFuncionario(f);
 
 	}

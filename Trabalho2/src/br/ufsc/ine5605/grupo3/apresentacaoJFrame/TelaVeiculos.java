@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,13 +32,13 @@ public class TelaVeiculos extends JFrame implements Tela, ActionListener{
     private JButton sair;
 
     public TelaVeiculos(){
-        this.inic();
+        inic();
     }
 
     @Override
     public void inic() {
 //      Configurando constraints e instanciando layout
-        Container container = this.getContentPane();
+        Container container = getContentPane();
         container.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
@@ -115,7 +116,7 @@ public class TelaVeiculos extends JFrame implements Tela, ActionListener{
 
 
         //        Botão de fechar
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     @Override
@@ -139,14 +140,14 @@ public class TelaVeiculos extends JFrame implements Tela, ActionListener{
 
     @Override
     public void sair() {
-        this.dispose();
+        dispose();
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Adicionar")) {
-            this.setVisible(false);
+            setVisible(false);
             ControladorVeiculos.getInstance().exibeTelaCadastroVeiculo();
         }
 
@@ -165,15 +166,20 @@ public class TelaVeiculos extends JFrame implements Tela, ActionListener{
             } else {
             	JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
             }
-            this.atualizaLista();
+            atualizaLista();
         }
         if (e.getActionCommand().equals("Voltar")){
-            this.setVisible(false);
-            ControladorVeiculos.getInstance().voltarMenuPrincipal();
+            setVisible(false);
+            try {
+				ControladorVeiculos.getInstance().voltarMenuPrincipal();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
         }
         if (e.getActionCommand().equals("Sair")){
-            this.sair();
+            sair();
         }
 
     }

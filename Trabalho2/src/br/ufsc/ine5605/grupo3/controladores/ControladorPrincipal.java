@@ -5,12 +5,15 @@
  */
 package br.ufsc.ine5605.grupo3.controladores;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.TelaPrincipal;
+import br.ufsc.ine5605.grupo3.apresentacaoJFrame.Exception.CadastroIncorretoException;
 import br.ufsc.ine5605.grupo3.entidades.Chave;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
+import br.ufsc.ine5605.grupo3.mensagens.Messages;
 
 /**
  *
@@ -21,11 +24,12 @@ public class ControladorPrincipal {
     private static ControladorPrincipal instance;
     private TelaPrincipal telaPrincipal;
 
-    private ControladorPrincipal() {
+    private ControladorPrincipal(){
         this.telaPrincipal = new TelaPrincipal();
+        Messages messages = new Messages();
     }
 
-     public static ControladorPrincipal getInstance(){
+     public static ControladorPrincipal getInstance() {
         if(instance == null) {
 			instance = new ControladorPrincipal();
 		}
@@ -46,7 +50,7 @@ public class ControladorPrincipal {
 		return ControladorVeiculos.getInstance().pegaVeiculo(opt);
 	}
 
-	public Funcionario pegaFuncionario(Integer matricula) {
+	public Funcionario pegaFuncionario(Integer matricula) throws IOException, CadastroIncorretoException {
 		return ControladorFuncionario.getInstance().getFuncionario(matricula);
 	}
 
@@ -69,27 +73,27 @@ public class ControladorPrincipal {
     }
 
 
-    public void voltarMenuPrincipal() {
+    public void voltarMenuPrincipal()throws IOException {
         this.telaPrincipal.setVisible(true);
     }
 
     public void exibeTelaVeiculos() {
-        this.fechaTelaPrincipal();
+        fechaTelaPrincipal();
 	    ControladorVeiculos.getInstance().exibeTelaVeiculos();
     }
 
     public void exibeTelaChaves(){
-        this.fechaTelaPrincipal();
+        fechaTelaPrincipal();
         ControladorChave.getInstance().exibeTelaChave();
     }
 
     public void exibeTelaRegistros(){
-        this.fechaTelaPrincipal();
+        fechaTelaPrincipal();
         ControladorRegistro.getInstance().exibeTelaRegistro();
     }
 
     public void exibeTelaFuncionarios(){
-        this.fechaTelaPrincipal();
+        fechaTelaPrincipal();
         ControladorFuncionario.getInstance().exibeTelaFuncionario();
     }
 

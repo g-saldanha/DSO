@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,29 +17,33 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import br.ufsc.ine5605.grupo3.apresentacaoJFrame.Exception.CadastroBloqueadoException;
+import br.ufsc.ine5605.grupo3.apresentacaoJFrame.Exception.CadastroIncorretoException;
 import br.ufsc.ine5605.grupo3.controladores.ControladorChave;
 import br.ufsc.ine5605.grupo3.controladores.ControladorFuncionario;
 import br.ufsc.ine5605.grupo3.controladores.ControladorPrincipal;
 import br.ufsc.ine5605.grupo3.entidades.Chave;
 import br.ufsc.ine5605.grupo3.entidades.Funcionario;
 import br.ufsc.ine5605.grupo3.entidades.Veiculo;
-import br.ufsc.ine5605.grupo3.enums.EnumsChaves;
-import br.ufsc.ine5605.grupo3.mensagens.Messages;
+import br.ufsc.ine5605.grupo3.mensagens.Messages;;
+
 
 public class TelaChaves extends JFrame implements Tela, ActionListener {
 	// Atributos
-	private JLabel bemVindo;
-	private JLabel lista;
+	private JLabel bemVindo; //LB1
+	private JLabel lista; //LB2
 	private JTable tChaves;
 	private JScrollPane scrollPane;
-	private JButton pegar;
-	private JButton bDevolver;
+	private JButton pegar; //BT1
+	private JButton bDevolver; //BT2
+	private JButton bFiltroPorMatricula; //BT3
 	private JButton bRemover;
 	private JButton bVoltar;
 	private JButton bSair;
-	private JButton bFiltroPorMatricula;
+	DefaultTableModel tModelo;
+
 
 	public TelaChaves() {
+		super(Messages.TITULO_CHAVES);
 		inic();
 	}
 
@@ -55,37 +60,37 @@ public class TelaChaves extends JFrame implements Tela, ActionListener {
 		this.tChaves = new JTable();
 		this.pegar = new JButton();
 		this.bDevolver = new JButton();
-		this.bRemover = new JButton();
+		this.bFiltroPorMatricula = new JButton(Messages.CHAVES_BT3);
 		this.bVoltar = new JButton();
 		this.bSair = new JButton();
-		this.bFiltroPorMatricula = new JButton("Ver Chaves por Matricula");
+		this.bRemover = new JButton();
 
 		// Colocando os textos nos componentes
-		this.bemVindo.setText("Bem vindo ao Claviculário");
-		this.lista.setText("Lista de Chaves");
-		this.pegar.setText("Pegar Chave");
-		this.bDevolver.setText("Devolver Chave");
-		this.bRemover.setText(Messages.getString(Messages.REMOVER));
-		this.bVoltar.setText(Messages.getString(Messages.VOLTAR));
-		this.bSair.setText(Messages.getString(Messages.SAIR));
+		this.bemVindo.setText(Messages.CHAVES_LB1);
+		this.lista.setText(Messages.CHAVES_LB2);
+		this.pegar.setText(Messages.CHAVES_BT1);
+		this.bDevolver.setText(Messages.CHAVES_BT2);
+		this.bRemover.setText(Messages.REMOVER);
+		this.bVoltar.setText(Messages.VOLTAR);
+		this.bSair.setText(Messages.SAIR);
 
 		// Configurando ações dos botões
-		this.pegar.setActionCommand(Messages.getString(Messages.PEGAR));
+		this.pegar.setActionCommand (Messages.PEGAR);
 		this.pegar.addActionListener(this);
 
-		this.bDevolver.setActionCommand(Messages.getString(Messages.DEVOLVER));
+		this.bDevolver.setActionCommand (Messages.DEVOLVER);
 		this.bDevolver.addActionListener(this);
 
-		this.bRemover.setActionCommand(Messages.getString(Messages.REMOVER));
+		this.bRemover.setActionCommand (Messages.REMOVER);
 		this.bRemover.addActionListener(this);
 
-		this.bSair.setActionCommand(Messages.getString(Messages.SAIR));
+		this.bSair.setActionCommand (Messages.SAIR);
 		this.bSair.addActionListener(this);
 
-		this.bVoltar.setActionCommand(Messages.getString(Messages.VOLTAR));
+		this.bVoltar.setActionCommand (Messages.VOLTAR);
 		this.bVoltar.addActionListener(this);
 
-		this.bFiltroPorMatricula.setActionCommand(Messages.getString(Messages.VER));
+		this.bFiltroPorMatricula.setActionCommand (Messages.VER);
 		this.bFiltroPorMatricula.addActionListener(this);
 
 		// Adicionando e instanciando na Tela os componentes
@@ -131,39 +136,47 @@ public class TelaChaves extends JFrame implements Tela, ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	private void criaColuna(){
+		this.tModelo = new DefaultTableModel();
+		this.tModelo.addColumn (Messages.CHAVES_COL1);
+		this.tModelo.addColumn (Messages.CHAVES_COL2);
+		this.tModelo.addColumn (Messages.CHAVES_COL3);
+		this.tModelo.addColumn (Messages.CHAVES_COL4);
+	}
+
 	@Override
 	public void atualizaLista() {
-		DefaultTableModel tModelo = new DefaultTableModel();
-		tModelo.addColumn(EnumsChaves.COLUNA1.toString());
-		tModelo.addColumn(EnumsChaves.COLUNA2.toString());
-		tModelo.addColumn(EnumsChaves.COLUNA3.toString());
-		tModelo.addColumn(EnumsChaves.COLUNA4.toString());
+		criaColuna();
 
 		for (Chave c : ControladorChave.getInstance().getChaves()) {
-			tModelo.addRow(new Object[] { c.getID(), c.getPlaca(), c.getModelo(), c.getEstado() });
+			try {
+				this.tModelo.addRow(new Object[] { c.getID(), c.getPlaca(), c.getModelo(), c.getEstado() });
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
-		this.tChaves.setModel(tModelo);
+		this.tChaves.setModel(this.tModelo);
 		this.repaint();
 
 	}
 
 	public void atualizaLista(Funcionario f) {
-		DefaultTableModel tModelo = new DefaultTableModel();
-		tModelo.addColumn(EnumsChaves.COLUNA1.toString());
-		tModelo.addColumn(EnumsChaves.COLUNA2.toString());
-		tModelo.addColumn(EnumsChaves.COLUNA3.toString());
-		tModelo.addColumn(EnumsChaves.COLUNA4.toString());
+		criaColuna();
 
 		for (Chave c : ControladorChave.getInstance().getChaves()) {
 			for(Veiculo v : f.getTiposDeVeiculo()){
 			if(c.getPlaca().equals(v.getPlaca())){
-				tModelo.addRow(new Object[] { c.getID(), c.getPlaca(), c.getModelo(), c.getEstado() });
+				try {
+					this.tModelo.addRow(new Object[] { c.getID(), c.getPlaca(), c.getModelo(), c.getEstado() });
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 
 
-		this.tChaves.setModel(tModelo);
+		this.tChaves.setModel(this.tModelo);
 		this.repaint();
 		}
 
@@ -173,81 +186,93 @@ public class TelaChaves extends JFrame implements Tela, ActionListener {
 	public void sair() {
 		dispose();
 	}
+	private void onClickPegar(){
+		String m;
+		try {
+			Long id = (Long) this.tChaves.getValueAt(this.tChaves.getSelectedRow(), 0);
+			Integer j = Integer.parseInt(JOptionPane.showInputDialog(Messages.JOPINPUT_MATRICULA));
+			Funcionario f = ControladorPrincipal.getInstance().pegaFuncionario(j);
+			m = ControladorChave.getInstance().cederChave(f, ControladorChave.getInstance().getChave(id));
+			JOptionPane.showMessageDialog(null, m);
+		} catch (ArrayIndexOutOfBoundsException e2) {
+			m = Messages.CHAVE_SELECIONAR_PEGAR;
+			JOptionPane.showMessageDialog(null, m);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (CadastroBloqueadoException ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+		}
+
+	}
 
 	@Override
-	public void actionPerformed(ActionEvent e){
+	public void actionPerformed(ActionEvent e) {
 
-		if (e.getActionCommand().equals(Messages.getString(Messages.PEGAR))){
-			try {
-				Long id = (Long) this.tChaves.getValueAt(this.tChaves.getSelectedRow(), 0);
-				Integer j = Integer.parseInt(JOptionPane.showInputDialog(Messages.getString(Messages.JOPINPUT_MATRICULA)));
-				Funcionario f = ControladorPrincipal.getInstance().pegaFuncionario(j);
-				if (f != null) {
-					String m;
-					try {
-						int result = ControladorChave.getInstance().cederChave(ControladorChave.getInstance().pegaFuncionario(j), ControladorChave.getInstance().getChave(id));
-						if (result == 0) {
-							m = Messages.getString(Messages.CHAVE_LIBERADA) + f.getNome();
-						} else if (result == -1) {
-							m = "Usuario " + f.getNome() + " nao possui acesso a chave";
-						} else if (result == -2) {
-							m = "Usuario " + f.getNome() + " já possui chave";
-						} else {
-							m = Messages.getString(Messages.CHAVE_ALUGADA);
-						}
-					} catch (CadastroBloqueadoException ex) {
-						m = ex.getMessage();
-					}
-					JOptionPane.showMessageDialog(null, m);
+		if (e.getActionCommand().equals(Messages.PEGAR)){
+			onClickPegar();
+		}
 
-				} else {
-					JOptionPane.showMessageDialog(null, Messages.getString(Messages.MATRICULA_INEXISTENTE));
-				}
-			} catch (ArrayIndexOutOfBoundsException e2) {
-				String msg = Messages.getString(Messages.CHAVE_SELECIONAR_PEGAR);
-				JOptionPane.showMessageDialog(null, msg);
-			}
+		if (e.getActionCommand().equals(Messages.DEVOLVER)) {
+			onClickDevolver();
 
 		}
 
-		if (e.getActionCommand().equals(Messages.getString(Messages.DEVOLVER))) {
-			try {
-				String i = JOptionPane.showInputDialog(Messages.getString(Messages.JOPINPUT_MATRICULA));
-				Integer m = Integer.parseInt(i != null? i : "0");
-				Long id = (Long) this.tChaves.getValueAt(this.tChaves.getSelectedRow(), 0);
-				ControladorChave.getInstance().devolverChave(ControladorChave.getInstance().pegaFuncionario(m), ControladorChave.getInstance().getChave(id));
-			} catch (ArrayIndexOutOfBoundsException e2) {
-				JOptionPane.showMessageDialog(null, Messages.getString(Messages.SELECIONE_CHAVE));
-			}
-
+		if (e.getActionCommand().equals (Messages.REMOVER)) {
+			onClickRemover();
 		}
 
-		if (e.getActionCommand().equals(Messages.getString(Messages.REMOVER))) {
-			Integer m = Integer.parseInt(JOptionPane.showInputDialog(Messages.getString(Messages.JOPINPUT_MATRICULA)));
-			Long id = (Long) this.tChaves.getValueAt(this.tChaves.getSelectedRow(), 0);
-
-			ControladorChave.getInstance().deletarChave(id, m);
+		if (e.getActionCommand().equals (Messages.VOLTAR)) {
+			onClickVoltar();
 		}
 
-		if (e.getActionCommand().equals(Messages.getString(Messages.VOLTAR))) {
-			setVisible(false);
-			ControladorChave.getInstance().voltarMenuPrincipal();
-		}
-
-		if (e.getActionCommand().equals(Messages.getString(Messages.SAIR))) {
+		if (e.getActionCommand().equals (Messages.SAIR)) {
 			sair();
 		}
 
-		if (e.getActionCommand().equals(Messages.getString(Messages.VER))) {
-			String mat =  JOptionPane.showInputDialog(Messages.getString(Messages.JOPINPUT_MATRICULA));
-
-			Funcionario f =ControladorFuncionario.getInstance().getFuncionario(Integer.parseInt(mat));
-			if(f == null){
-				JOptionPane.showMessageDialog(null, Messages.getString(Messages.MATRICULA_INEXISTENTE));
-			} else{
-				this.atualizaLista(f);
-			}
+		if (e.getActionCommand().equals (Messages.VER)) {
+			onClickVer();
 		}
+
+	}
+
+	private void onClickVoltar() {
+		setVisible(false);
+			ControladorChave.getInstance().voltarMenuPrincipal();
+
+	}
+
+	private void onClickRemover() {
+		Integer m = Integer.parseInt(JOptionPane.showInputDialog (Messages.JOPINPUT_MATRICULA));
+		Long id = (Long) this.tChaves.getValueAt(this.tChaves.getSelectedRow(), 0);
+
+		ControladorChave.getInstance().deletarChave(id, m);
+
+	}
+
+	private void onClickDevolver() {
+		try {
+			String i = JOptionPane.showInputDialog(Messages.JOPINPUT_MATRICULA);
+			Integer m = Integer.parseInt(i != null? i : "0");
+			Long id = (Long) this.tChaves.getValueAt(this.tChaves.getSelectedRow(), 0);
+			ControladorChave.getInstance().devolverChave(ControladorChave.getInstance().pegaFuncionario(m), ControladorChave.getInstance().getChave(id));
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, Messages.SELECIONE_CHAVE);
+			throw new ArrayIndexOutOfBoundsException();
+		}
+
+	}
+
+	private void onClickVer() throws IOException {
+		String mat =  JOptionPane.showInputDialog (Messages.JOPINPUT_MATRICULA);
+		Funcionario f;
+		try {
+			f = ControladorFuncionario.getInstance().getFuncionario(Integer.parseInt(mat));
+			atualizaLista(f);
+		} catch (CadastroIncorretoException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+
+
 
 	}
 }
