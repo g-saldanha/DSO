@@ -63,11 +63,11 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
         this.bSair = new JButton();
         this.bVoltar = new JButton();
         this.tRegistros = new JTable();
-        this.bFiltroPorPlaca = new JButton("Fitro por Placa");
-        this.bFiltroPorMotivo = new JButton("Filtro por Motivo");
-        this.bFiltroPorMatricula = new JButton("Filtro por Matricula");
-        this.bVerTodos = new JButton("Ver Todos");
-        this.bVerMensagem = new JButton("Ver Mensagem");
+        this.bFiltroPorPlaca = new JButton(Messages.REGISTROS_BT4);
+        this.bFiltroPorMotivo = new JButton(Messages.REGISTROS_BT3;
+        this.bFiltroPorMatricula = new JButton(Messages.REGISTROS_BT2);
+        this.bVerTodos = new JButton(Messages.REGISTRO_BT1);
+        this.bVerMensagem = new JButton(Messages.BT5);
 
 //    Configurando texto
         this.bemVindo.setText(Messages.REGISTROS_LB2);
@@ -227,15 +227,15 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			JOptionPane.showMessageDialog( null, this.cPlaca, "Selecione uma Placa", JOptionPane.QUESTION_MESSAGE);
+			JOptionPane.showMessageDialog( null, this.cPlaca, Messages.REGISTROS_MSG1, JOptionPane.QUESTION_MESSAGE);
 			this.atualizaLista((String) this.cPlaca.getSelectedItem());
 		}
 		if (e.getActionCommand().equals(Messages.REGISTROS_BT3)) {
-			String[] motivos = new String[]{"Permissão", "Negação"};
+			String[] motivos = new String[]{Messages.PERMISSAO, Messages.NEGACAO};
 			this.cMotivo = new JComboBox<String>(motivos);
-			JOptionPane.showMessageDialog( null, this.cMotivo, "Selecione um Motivo", JOptionPane.QUESTION_MESSAGE);
+			JOptionPane.showMessageDialog( null, this.cMotivo, Messages.REGISTROS_MSG2, JOptionPane.QUESTION_MESSAGE);
 			boolean motivo = false;
-			if(this.cMotivo.getSelectedItem().equals("Permissão")){
+			if(this.cMotivo.getSelectedItem().equals(Messages.PERMISSAO)){
 				motivo = true;
 			}
 			this.atualizaLista(motivo);
@@ -271,7 +271,7 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
 				Registro r = ControladorRegistro.getInstance().getRegistro((Long) this.tRegistros.getValueAt(this.tRegistros.getSelectedRow(), 0));
 				JOptionPane.showMessageDialog(null, r.getMensagem());
 			} catch (ArrayIndexOutOfBoundsException e2) {
-				JOptionPane.showMessageDialog(null, "Selecione um Registro");
+				JOptionPane.showMessageDialog(null, Messages.JOPDIALOG_REGISTRO);
 			}
 		}
 
