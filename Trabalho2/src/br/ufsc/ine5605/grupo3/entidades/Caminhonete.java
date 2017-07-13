@@ -10,7 +10,4 @@ public class Caminhonete extends Veiculo implements Serializable{
 		super(placa, modelo, marca, ano, km);
 		this.tipo = Tipo.CAMINHONETE;
 	}
-
-	
-
 }

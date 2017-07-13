@@ -5,11 +5,12 @@
  */
 package br.ufsc.ine5605.grupo3.entidades;
 
-import java.io.IOException;
-import java.io.Serializable;
-
 import br.ufsc.ine5605.grupo3.controladores.ControladorPrincipal;
 import br.ufsc.ine5605.grupo3.controladores.GeradorId;
+import br.ufsc.ine5605.grupo3.mensagens.Messages;
+
+import java.io.IOException;
+import java.io.Serializable;
 
 /**
  *
@@ -44,9 +45,9 @@ public class Chave implements Serializable {
 
 	public String getEstado() {
 		if(this.isAlugada) {
-			return "Sim";
+			return Messages.SIM;
 		} else {
-			return "Não";
+			return Messages.NAO;
 		}
 	}
 

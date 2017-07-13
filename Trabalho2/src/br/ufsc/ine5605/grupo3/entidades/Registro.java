@@ -1,5 +1,8 @@
 package br.ufsc.ine5605.grupo3.entidades;
 
+import br.ufsc.ine5605.grupo3.mensagens.Messages;
+
+import javax.swing.*;
 import java.io.Serializable;
 
 public class Registro implements Serializable{
@@ -76,9 +79,9 @@ public class Registro implements Serializable{
 
 	public String getTipoMotivo(){
 		if(this.getMotivo()){
-			return "Permissão";
+			return Messages.PERMISSAO;
 		} else {
-			return "Negação";
+			return Messages.NEGACAO;
 		}
 	}
 
@@ -121,7 +124,7 @@ public class Registro implements Serializable{
 		String mes = null;
 		switch (this.getMes()) {
 		case 1:
-			mes = "Janeiro";
+			mes"Janeiro";
 			break;
 		case 2:
 			mes = "Fevereiro";
@@ -156,7 +159,15 @@ public class Registro implements Serializable{
 		case 12:
 			mes = "Dezembro";
 			break;
+		default:
+			error();
+			break;
 		}
+
 		return mes;
+	}
+
+	private void error() {
+		JOptionPane.showMessageDialog(null, Messages.NAO);
 	}
 }

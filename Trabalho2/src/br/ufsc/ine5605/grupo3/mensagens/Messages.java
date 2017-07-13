@@ -9,6 +9,8 @@ import java.util.MissingResourceException;
 import java.util.Properties;
 
 public class Messages {
+
+
 	private File arquivo;
 	private Enumeration eKey;
 	private static Properties propriedades;
@@ -52,6 +54,12 @@ public class Messages {
 	public static final String JOPINPUT_MATRICULA = getString("JOPINPUT_MATRICULA");
 	public static final String JOPDIALOG_MATRICULA = getString("JOPDIALOG_MATRICULA");
 	public static final String MATRICULA_INEXISTENTE = getString("MATRICULA_INEXISTENTE");
+	public static final String JOPDIALOG_REGISTRO = "JOPDIALOG_REGISTRO";
+	public static final String PERMISSAO = "PERMISSAO";
+	public static final String NEGACAO = "NEGACAO";
+	public static final String NAO = "NAO";
+	public static final String SIM = "SIM";
+
 
 	/*============================================================
 						ACTION COMMAND - LISTENER

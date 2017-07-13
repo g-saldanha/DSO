@@ -21,7 +21,7 @@ public class Funcionario implements Serializable {
 	private Integer telefone;
 	private Cargo cargo;
 	boolean bloqueado = false;
-	private ArrayList<Veiculo> tiposDeVeiculo;
+	private List<Veiculo> tiposDeVeiculo;
 	private Chave chave;
 	private int counter = 0;
 
@@ -34,7 +34,7 @@ public class Funcionario implements Serializable {
 		this.tiposDeVeiculo = new ArrayList<>();
 	}
 
-	public Funcionario(Integer i, String string, Integer j, Integer k, Cargo cargo2, ArrayList<Veiculo> veiculos) {
+	public Funcionario(Integer i, String string, Integer j, Integer k, Cargo cargo2, List<Veiculo> veiculos) {
 		this.numeroMatricula = i;
 		this.nome = string;
 		this.dataNascimento = j;
@@ -87,7 +87,7 @@ public class Funcionario implements Serializable {
 		return this.tiposDeVeiculo;
 	}
 
-	public void setTiposDeVeiculo(ArrayList<Veiculo> tiposDeVeiculo) {
+	public void setTiposDeVeiculo(List<Veiculo> tiposDeVeiculo) {
 		this.tiposDeVeiculo = tiposDeVeiculo;
 	}
 

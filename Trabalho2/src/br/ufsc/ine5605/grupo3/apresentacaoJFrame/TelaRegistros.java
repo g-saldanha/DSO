@@ -66,8 +66,8 @@ public class TelaRegistros extends JFrame implements Tela, ActionListener {
         this.bFiltroPorPlaca = new JButton(Messages.REGISTROS_BT4);
         this.bFiltroPorMotivo = new JButton(Messages.REGISTROS_BT3;
         this.bFiltroPorMatricula = new JButton(Messages.REGISTROS_BT2);
-        this.bVerTodos = new JButton(Messages.REGISTRO_BT1);
-        this.bVerMensagem = new JButton(Messages.BT5);
+        this.bVerTodos = new JButton(Messages.REGISTROS_BT1);
+        this.bVerMensagem = new JButton(Messages.REGISTROS_BT5);
 
 //    Configurando texto
         this.bemVindo.setText(Messages.REGISTROS_LB2);
