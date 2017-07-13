@@ -1,5 +1,6 @@
 package br.ufsc.ine5605.grupo3.entidades;
 
+import br.ufsc.ine5605.grupo3.controladores.GeradorId;
 import br.ufsc.ine5605.grupo3.mensagens.Messages;
 
 import javax.swing.*;
@@ -17,8 +18,8 @@ public class Registro implements Serializable{
 	private Integer kmAndados;
 	private String mensagem;
 
-	public Registro(Long id, Integer data, Integer mes, Integer hora, Funcionario funcionario, Veiculo veiculo, boolean motivo, String mensagem) {
-		this.id = id;
+	public Registro(Integer data, Integer mes, Integer hora, Funcionario funcionario, Veiculo veiculo, boolean motivo, String mensagem) {
+		this.id = GeradorId.getNextRegisterID();
 		this.data = data;
 		this.mes = mes;
 		this.hora = hora;
@@ -121,50 +122,50 @@ public class Registro implements Serializable{
 	}
 
 	public String getMesDoAno(){
-		String mes = null;
+		String mesDoAno = null;
 		switch (this.getMes()) {
 		case 1:
-			mes"Janeiro";
+			mesDoAno = "Janeiro";
 			break;
 		case 2:
-			mes = "Fevereiro";
+			mesDoAno = "Fevereiro";
 			break;
 		case 3:
-			mes = "Março";
+			mesDoAno = "Março";
 			break;
 		case 4:
-			mes =  "Abril";
+			mesDoAno =  "Abril";
 			break;
 		case 5:
-			mes =  "Maio";
+			mesDoAno =  "Maio";
 			break;
 		case 6:
-			mes = "Junho";
+			mesDoAno = "Junho";
 			break;
 		case 7:
-			mes =  "Julho";
+			mesDoAno =  "Julho";
 			break;
 		case 8:
-			mes =  "Agosto";
+			mesDoAno =  "Agosto";
 			break;
 		case 9:
-			mes =  "Setembro";
+			mesDoAno =  "Setembro";
 			break;
 		case 10:
-			mes =  "Outubro";
+			mesDoAno =  "Outubro";
 			break;
 		case 11:
-			mes = "Novembro";
+			mesDoAno = "Novembro";
 			break;
 		case 12:
-			mes = "Dezembro";
+			mesDoAno = "Dezembro";
 			break;
 		default:
 			error();
 			break;
 		}
 
-		return mes;
+		return mesDoAno;
 	}
 
 	private void error() {

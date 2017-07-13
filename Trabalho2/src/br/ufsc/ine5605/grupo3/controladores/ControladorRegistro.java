@@ -54,8 +54,8 @@ public class ControladorRegistro {
 		}
 	}
 
-	public void adicionarRegistro(Long id, Integer date, Integer mes, Integer hours, Funcionario f, Veiculo v, boolean b, String string) {
-		Registro r = new Registro(id, date, mes, hours, f, v, b, string);
+	public void adicionarRegistro(Integer date, Integer mes, Integer hours, Funcionario f, Veiculo v, boolean b, String string) {
+		Registro r = new Registro(date, mes, hours, f, v, b, string);
 		this.registros.botar(r);
 	}
 

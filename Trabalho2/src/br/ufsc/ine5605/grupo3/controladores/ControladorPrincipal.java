@@ -59,7 +59,7 @@ public class ControladorPrincipal {
 	}
 
 	public void adicionarRegistro(Long id, Integer date, Integer mes, Integer hours, Funcionario f, Veiculo v, boolean b, String string) {
-		ControladorRegistro.getInstance().adicionarRegistro(id, date, mes, hours, f, v,b, string);
+		ControladorRegistro.getInstance().adicionarRegistro(date, mes, hours, f, v,b, string);
 
 	}
 
