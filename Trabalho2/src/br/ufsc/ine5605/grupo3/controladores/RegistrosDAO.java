@@ -16,20 +16,24 @@ import br.ufsc.ine5605.grupo3.entidades.Registro;
 public class RegistrosDAO {
 	private HashMap<Long, Registro> cacheRegistros;
 	private String nomeArquivo;
+	private FileInputStream fileInputStream;
 
-	public RegistrosDAO(){
+
+	public RegistrosDAO() throws IOException {
 		this.cacheRegistros = new HashMap<>();
 		this.nomeArquivo = "registros.cla";
 		try {
 //			Tenta Abrir fluxo de dados
-			FileInputStream fileInputStream = new FileInputStream(this.nomeArquivo);
-			fileInputStream.close();
+			fileInputStream = new FileInputStream(this.nomeArquivo);
+
 		} catch (FileNotFoundException e) {
 //			Deu ruim
 			new File(this.nomeArquivo);
 			this.persiste();
 		} catch (IOException e) {
-			System.out.println(e);
+			e.printStackTrace();
+		}finally {
+			fileInputStream.close();
 		}
 		this.carrega();
 	}

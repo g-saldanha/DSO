@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by gabriel on 16/06/17.
@@ -13,8 +14,13 @@ import java.util.HashMap;
 public class VeiculosDAO {
     private HashMap<String, Veiculo> cacheVeiculos;
     private String nomeArquivo;
+    private FileInputStream fileInputStream;
+    private ObjectInputStream objectInputStream;
+    private FileOutputStream fileOutputStream;
+    private ObjectOutputStream objectOutputStream;
 
-    public VeiculosDAO() {
+
+    public VeiculosDAO() throws IOException {
         this.cacheVeiculos = new HashMap<>();
         this.nomeArquivo = "veiculos.cla";
         try {
@@ -22,55 +28,53 @@ public class VeiculosDAO {
             FileInputStream fin = new FileInputStream(nomeArquivo);
             fin.close();
         } catch (FileNotFoundException e) {
-//            o famoso deu ruim;
+//            o famoso deu ruim
             new File(this.nomeArquivo);
             this.persist();
         } catch (IOException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         this.load();
     }
 
-    private void load() {
+    private void load() throws IOException {
         try {
-            FileInputStream fileInputStream = new FileInputStream(nomeArquivo);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+             fileInputStream = new FileInputStream(nomeArquivo);
+             objectInputStream = new ObjectInputStream(fileInputStream);
 
             this.cacheVeiculos = (HashMap<String, Veiculo>) objectInputStream.readObject();
 
+
+        } catch (ClassNotFoundException|IOException e) {
+            e.printStackTrace();
+        } finally {
             objectInputStream.close();
             fileInputStream.close();
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
-        } catch (IOException e) {
-            System.out.println(e);
-        } catch (ClassNotFoundException e) {
-            System.out.println(e);
         }
     }
 
-    private void persist() {
+    private void persist() throws IOException {
         try{
-            FileOutputStream arquivoOutSt = new FileOutputStream(nomeArquivo);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(arquivoOutSt);
+            fileOutputStream = new FileOutputStream(nomeArquivo);
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
             objectOutputStream.writeObject(this.cacheVeiculos);
 
-            arquivoOutSt.flush();
+            fileOutputStream.flush();
             objectOutputStream.flush();
 
-            arquivoOutSt.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            fileOutputStream.close();
             objectOutputStream.close();
 
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
-        } catch (IOException e) {
-            System.out.println(e);
         }
 
     }
 
-    public void put(Veiculo veiculo){
+    public void put(Veiculo veiculo) throws IOException {
         this.cacheVeiculos.put(veiculo.getPlaca(), veiculo);
         this.persist();
     }
@@ -80,7 +84,7 @@ public class VeiculosDAO {
     }
 
 
-    public void remove(Veiculo veiculo){
+    public void remove(Veiculo veiculo) throws IOException {
         this.cacheVeiculos.remove(veiculo.getPlaca(), veiculo);
                 this.persist();
     }
@@ -89,7 +93,7 @@ public class VeiculosDAO {
         return this.cacheVeiculos.values();
     }
 
-    public ArrayList<Veiculo> getVeiculos() {
+    public List<Veiculo> getVeiculos() {
         return new ArrayList<>(this.getList());
     }
 

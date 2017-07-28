@@ -1,45 +1,34 @@
 package br.ufsc.ine5605.grupo3.mensagens;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Enumeration;
+import java.io.*;
 import java.util.MissingResourceException;
 import java.util.Properties;
+
 
 public class Messages {
 
 
 	private File arquivo;
-	private Enumeration eKey;
 	private static Properties propriedades;
+	private InputStream entradaDoArquivo;
 
 	/******************************
 	 		* PERSISTÊNCIA *
 	 ******************************/
 
-	public Messages(){
+	public Messages() throws IOException {
+
 		try{
-			this.arquivo = new File("/home/gabriel/workspaceJava/DSO/Trabalho2/src/main/resources/messages.properties");
-			FileInputStream entradaDoArquivo = new FileInputStream(this.arquivo);
-			this.propriedades = new Properties();
-			this.propriedades.load(entradaDoArquivo);
-			entradaDoArquivo.close();
+				this.arquivo = new File("src/main/resources/messages.properties");
+				entradaDoArquivo = new FileInputStream(this.arquivo);
+				propriedades = new Properties();
+				propriedades.load(entradaDoArquivo);
 
-
-
-			this.eKey = this.propriedades.keys();
-
-
-
-
-		} catch(FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			entradaDoArquivo.close();
 		}
-
 	}
 
 /*********************************************************************************************************************
@@ -105,8 +94,8 @@ public class Messages {
 
 	public static final String TITULO_INICIO = getString("TITULO_INICIO");
 	public static final String PRINCIPAL_BT1 = getString("PRINCIPAL_BT1");
-	public static final String PRINCIPAL_BT2 = getString("PRINCIPAL_BT2");;
-	public static final String PRINCIPAL_BT3 = getString("PRINCIPAL_BT3");;
+	public static final String PRINCIPAL_BT2 = getString("PRINCIPAL_BT2");
+	public static final String PRINCIPAL_BT3 = getString("PRINCIPAL_BT3");
 	public static final String PRINCIPAL_BT4 = getString("PRINCIPAL_BT4");
 
 	/*============================================================
