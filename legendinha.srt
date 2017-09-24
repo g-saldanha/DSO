@@ -1,0 +1,47 @@
+1
+00:00:00,000 --> 00:00:02,999
+A misteriosa vida dos desenvolvedores
+
+2
+00:00:03,000 --> 00:00:04,500
+Tem sido incompreendida
+
+3
+00:00:05,000 --> 00:00:06,000
+há muito tempo
+
+4
+00:00:06,200 --> 00:00:8,000
+Até agora.
+
+5
+00:00:10,000 --> 00:00:13,000
+Esta é uma das espécies mais comuns
+
+6
+00:00:013,100 --> 00:00:14,000
+de Desenvolvedor
+
+7
+00:00:15,000 --> 00:00:17,000
+Este é o Desenvolvedor Clichê
+
+8
+00:00:18,200 --> 00:00:21,000
+que pode ser visto com a camiseta de conferência
+
+9
+00:00:21,200 --> 00:00:23,000
+e a pele pálida
+
+10
+00:00:23,200 --> 00:00:24,500
+A principal fonte de alimentação
+
+11
+00:00:25,000 --> 00:00:27,000
+é uma coca-cola
+
+12
+00:00:27,500 --> 00:00:31,000
+que é consumido em em grande quantidade
